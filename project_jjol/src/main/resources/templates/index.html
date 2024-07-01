@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <style>
+        body {
+            background-color: #FFFFFF;
+            color: #2C3E50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #ECF0F1;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #2C3E50;
+        }
+        .btn-primary {
+            background-color: #E74C3C;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #C0392B;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>JJol 온라인 강의 플랫폼</h1>
+    <p>최고의 강의를 제공합니다. 지금 시작해보세요!</p>
+    <a href="/lectures" class="btn btn-primary btn-lg mt-4">강의목록 보기</a>
+</div>
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

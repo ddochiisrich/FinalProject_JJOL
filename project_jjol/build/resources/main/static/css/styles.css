@@ -1,0 +1,124 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    /*text-align: center;*/
+    padding: 50px;
+    margin: 0;
+}
+
+.video-container {
+    position: relative;
+    width: 800px;
+    /*margin: 0 auto;*/
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+video {
+    width: 100%;
+    height: auto;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#seekBar {
+    width: 85%;
+}
+
+.playertoolbar {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+input {
+    --c: orange;
+    --g: 3px;
+    --l: 5px;
+    --s: 20px;
+    width: 400px;
+    height: var(--s);
+    --_c: color-mix(in srgb, var(--c), #000 var(--p,0%));
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+input:focus-visible,
+input:hover {
+    --p: 25%;
+}
+
+input:active,
+input:focus-visible {
+    --_b: var(--s);
+}
+
+input[type="range" i]::-webkit-slider-thumb {
+    height: var(--s);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    box-shadow: 0 0 0 var(--_b, var(--l)) inset var(--_c);
+    border-image: linear-gradient(90deg, var(--_c) 50%, #ababab 0) 0 1/calc(50% - var(--l)/2) 100vw/0 calc(100vw + var(--g));
+    -webkit-appearance: none;
+    appearance: none;
+    transition: .3s;
+}
+
+input[type="range"]::-moz-range-thumb {
+    height: var(--s);
+    width: var(--s);
+    background: none;
+    border-radius: 50%;
+    box-shadow: 0 0 0 var(--_b, var(--l)) inset var(--_c);
+    border-image: linear-gradient(90deg, var(--_c) 50%, #ababab 0) 0 1/calc(50% - var(--l)/2) 100vw/0 calc(100vw + var(--g));
+    -moz-appearance: none;
+    appearance: none;
+    transition: .3s;
+}
+
+@supports not (color: color-mix(in srgb, red, red)) {
+    input {
+        --_c: var(--c);
+    }
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 1.5rem;
+}
+
+button i {
+    color: black;
+    font-size: 1.5rem;
+}
+
+#timeDisplay {
+    font-size: 14px;
+}
+
+
+/**/
+.ptext {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+
+video {
+    width: 1440px;
+    height: 810px;
+}
+
+.video-container {
+    width: 810px;
+    height: 508px;
+}
+
