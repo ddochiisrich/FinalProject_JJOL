@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/main_layout}">
+    layout:decorate="~{layouts/main_layout}">
 
 <head>
-	<meta charset="utf-8">
-	<title>자료실 상세보기</title>
+    <meta charset="utf-8">
+    <title>자료실 상세보기</title>
 </head>
 
 <body>
-	<div class="student_view_main">
-		<div class="student_view">
-			<div class="student_view_title_wrap">
-				<div class="data_main_view">
-					<a onclick="location.href='#'"></a>
-				</div>
-				<div class="student_view_title">
-					<dt class="student_data_title" th:text="${datasharing.datasharing_title}">
-					<dd>
-						<span>JJol</span>
-						<span th:text="${dataa.data_name}"></span>
-						<span th:text="${#dates.format(datasharing.datasharing_date, 'yyyy-MM-dd')}"></span>
-					</dd>
-					</dt>
-				</div>
-				<div class="student_file_download">
-					<span th:text="${datasharing.datasharing_file}"></span>
-				</div>
-				<div class="student_view_main">
-					<span th:text="${datasharing.datasharing_content}"></span>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="student_view_main">
+        <div class="student_view">
+            <div class="student_view_title_wrap">
+                <!-- 자료 메인 뷰 -->
+                <div class="data_main_view">
+                    <!-- 여기에 필요한 링크 또는 버튼 추가 -->
+                    <a href="#" onclick="javascript:history.back();">뒤로 가기</a>
+                </div>
+                <!-- 자료 제목과 정보 -->
+                <div class="student_view_title">
+                    <h2 class="student_data_title" th:text="${datasharing.datasharingTitle}">제목 없음</h2>
+                    <dl>
+                        <dt>작성자:</dt>
+                        <dd>JJol</dd>
+                        <dt>작성일:</dt>
+                        <dd th:text="${#dates.format(datasharing.datasharingDate, 'yyyy-MM-dd')}">날짜 없음</dd>
+                    </dl>
+                </div>
+                <!-- 자료 다운로드 링크 -->
+                <div class="student_file_download">
+                    <a th:href="@{/downloadFile/{fileId}(fileId=${datasharing.datasharingFileId})}"
+                        th:text="${datasharing.datasharingFile}">파일 다운로드</a>
+                </div>
+                <!-- 자료 내용 -->
+                <div class="student_view_main">
+                    <p th:text="${datasharing.datasharingContent}">내용 없음</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
