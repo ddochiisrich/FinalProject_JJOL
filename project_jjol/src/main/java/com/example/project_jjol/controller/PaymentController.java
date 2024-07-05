@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.project_jjol.service.PaymentService;
 
-// hi
+// hi ㅎㅇㅋㅋ
 
 @RestController
 @RequestMapping("/api/payment")
