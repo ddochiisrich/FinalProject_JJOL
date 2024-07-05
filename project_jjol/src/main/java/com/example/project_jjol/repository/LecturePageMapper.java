@@ -14,12 +14,17 @@ public interface LecturePageMapper {
 
     @Update("UPDATE LecturePage SET start_time = #{startTime}, last_viewed = NOW() WHERE lecture_id = #{lectureId} AND user_id = #{userId} AND chapter_id = #{chapterId}")
     void updateLecturePage(LecturePage lecturePage);
-    
+
     @Update("UPDATE LecturePage SET start_time = 0, last_viewed = CURRENT_TIMESTAMP WHERE lecture_id = #{lectureId} AND user_id = #{userId}")
     void resetLecturePages(@Param("lectureId") int lectureId, @Param("userId") String userId);
-    
+
+    @Select("SELECT * FROM LecturePage WHERE lecture_id = #{lectureId} AND user_id = #{userId} ORDER BY last_viewed DESC LIMIT 1")
+    LecturePage findLastViewedPage(@Param("lectureId") int lectureId, @Param("userId") String userId);
+
     @Select("SELECT COUNT(*) > 0 FROM LecturePage WHERE user_id = #{userId} AND chapter_id = #{chapterId}")
     boolean hasUserViewedChapter(@Param("userId") String userId, @Param("chapterId") int chapterId);
-
+    
+    @Update("UPDATE LecturePage SET last_chapter_order = #{chapterOrder} WHERE lecture_id = #{lectureId} AND user_id = #{userId}")
+    void updateLastChapterOrder(@Param("lectureId") int lectureId, @Param("userId") String userId, @Param("chapterOrder") int chapterOrder);
 
 }

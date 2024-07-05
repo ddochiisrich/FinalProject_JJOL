@@ -46,7 +46,6 @@ public class LecturePageController {
         }
     }
 
-
     @PostMapping("/save")
     public ResponseEntity<Void> saveOrUpdateLecturePage(
             @RequestBody LecturePage lecturePage, 
@@ -59,4 +58,25 @@ public class LecturePageController {
         lecturePageService.saveOrUpdateLecturePage(lecturePage);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/{lectureId}/lastViewed")
+    public ResponseEntity<Map<String, Object>> getLastViewedChapter(
+            @PathVariable("lectureId") int lectureId,
+            HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        try {
+            Map<String, Object> lastViewedPage = lecturePageService.getLastViewedChapter(lectureId, loggedInUser.getUserId());
+            if (lastViewedPage == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(lastViewedPage, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

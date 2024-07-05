@@ -1,6 +1,7 @@
 package com.example.project_jjol.controller;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,6 +104,11 @@ public class LectureController {
         boolean hasApplied = lectureApplicationService.hasUserAppliedForLecture(user.getUserId(), id);
         List<LectureReview> reviews = lectureReviewService.getReviewsByLectureId(id);
         double averageRating = lectureService.getAverageRating(id);
+
+        // 소수점 1자리로 포맷팅
+        DecimalFormat df = new DecimalFormat("#.#");
+        String formattedAverageRating = df.format(averageRating);
+
         long numberOfStudents = lectureService.getNumberOfStudents(id);
         List<LectureQuestion> questions = lectureQuestionService.getQuestionsByLectureId(id);
 
@@ -115,11 +121,12 @@ public class LectureController {
         model.addAttribute("hasApplied", hasApplied);
         model.addAttribute("loggedInUser", user);
         model.addAttribute("reviews", reviews);
-        model.addAttribute("averageRating", averageRating);
+        model.addAttribute("averageRating", formattedAverageRating); // 포맷된 평점 추가
         model.addAttribute("numberOfStudents", numberOfStudents);
         model.addAttribute("questions", questions);
         return "lectureDetail";
     }
+
 
     @PostMapping("/lectures/apply")
     public String applyForLecture(@RequestParam("lectureId") int lectureId, HttpSession session) {
