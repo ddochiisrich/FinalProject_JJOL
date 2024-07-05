@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<title>자료실</title>
+	<style>
+		body {
+			background-color: #FFFFFF;
+			color: #2C3E50;
+			margin: 0;
+			font-family: 'Arial', sans-serif;
+			padding-top: 80px;
+		}
+
+		.navbar {
+			background-color: #FFFFFF;
+			border-bottom: 1px solid #E0E0E0;
+			padding: 10px 0;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding-left: 20px;
+			padding-right: 20px;
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 1000;
+			height: 80px;
+		}
+
+		.navbar-left {
+			display: flex;
+			align-items: center;
+		}
+
+		.navbar-brand img {
+			height: 40px;
+		}
+
+		.navbar-nav {
+			display: flex;
+			align-items: center;
+			margin-left: 20px;
+		}
+
+		.navbar-nav .nav-item .nav-link {
+			color: #2C3E50 !important;
+			font-weight: 500;
+			margin-right: 20px;
+		}
+
+		.navbar-nav .nav-item .nav-link:hover {
+			color: #1E90FF !important;
+		}
+
+		.search-form {
+			display: flex;
+			align-items: center;
+			position: relative;
+			justify-content: center;
+			width: 30%;
+		}
+
+		.search-form input {
+			width: 100%;
+			max-width: 600px;
+			border: 1px solid #E0E0E0;
+			border-radius: 20px;
+			padding: 5px 15px;
+			padding-right: 40px;
+		}
+
+		.search-form button {
+			background: none;
+			border: none;
+			color: #2C3E50;
+			position: absolute;
+			right: 15px;
+			top: 50%;
+			transform: translateY(-50%);
+			padding: 0;
+			cursor: pointer;
+			margin: 0;
+		}
+
+		.icon-links {
+			display: flex;
+			justify-content: flex-end;
+			margin-left: 200px;
+		}
+
+		.icon-links a {
+			color: #2C3E50;
+			margin-right: 15px;
+			font-size: 1.2rem;
+		}
+
+		.icon-links a:hover {
+			color: #1E90FF;
+		}
+
+		.hero-section {
+			background-color: #34495E;
+			color: white;
+			padding: 60px 0;
+			text-align: center;
+		}
+
+		.hero-section h1 {
+			font-size: 3rem;
+			margin-bottom: 20px;
+			font-weight: 700;
+		}
+
+		.hero-section p {
+			font-size: 1.2rem;
+			margin-bottom: 30px;
+		}
+
+		.hero-section .btn-primary {
+			background-color: #E74C3C;
+			border: none;
+			padding: 10px 20px;
+			font-size: 1rem;
+		}
+
+		.hero-section .btn-primary:hover {
+			background-color: #C0392B;
+		}
+
+		.container {
+			margin-top: 40px;
+		}
+
+		.content {
+			text-align: center;
+		}
+
+		.content h2 {
+			font-size: 2rem;
+			margin-bottom: 30px;
+			font-weight: 700;
+			color: #2C3E50;
+		}
+
+		.card {
+			border: none;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			border-radius: 10px;
+		}
+
+		.card img {
+			border-radius: 10px 10px 0 0;
+		}
+
+		.card-body {
+			padding: 20px;
+		}
+
+		.card-title {
+			font-size: 1.5rem;
+			color: #2C3E50;
+		}
+
+		.card-text {
+			font-size: 1rem;
+			color: #7F8C8D;
+			margin-bottom: 20px;
+		}
+
+		.btn-info {
+			background-color: #3498DB;
+			border: none;
+		}
+
+		.btn-info:hover {
+			background-color: #2980B9;
+		}
+
+		.footer {
+			background-color: #2C3E50;
+			color: white;
+			padding: 40px 0;
+			margin-top: 40px;
+		}
+
+		.footer .container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+
+		.footer .container .column {
+			flex: 1;
+			min-width: 200px;
+			margin: 20px;
+		}
+
+		.footer .container .column h5 {
+			font-size: 1.1rem;
+			margin-bottom: 15px;
+			font-weight: 700;
+		}
+
+		.footer .container .column ul {
+			list-style: none;
+			padding: 0;
+		}
+
+		.footer .container .column ul li {
+			margin-bottom: 10px;
+		}
+
+		.footer .container .column ul li a {
+			color: #bdc3c7;
+			text-decoration: none;
+		}
+
+		.footer .container .column ul li a:hover {
+			color: #ffffff;
+		}
+
+		.footer .social-icons {
+			display: flex;
+			justify-content: center;
+			margin-top: 20px;
+		}
+
+		.footer .social-icons a {
+			color: white;
+			margin: 0 10px;
+			font-size: 1.5rem;
+		}
+
+		.footer .social-icons a:hover {
+			color: #3498DB;
+		}
+
+		.footer .bottom-text {
+			text-align: center;
+			margin-top: 20px;
+			font-size: 0.9rem;
+		}
+
+		/* ******************************data style****************************************** */
+
+		.container {
+			margin-left: 300px;
+			margin-right: 300px;
+		}
+
+		.all_data_content {
+			margin-top: 65px;
+		}
+
+		.main_menu {
+			list-style: none;
+			cursor: pointer;
+			padding: 0;
+		}
+
+		.main_menu_selector {
+			margin: 10px 0;
+		}
+
+		.sub_menu {
+			display: none;
+			margin-top: 10px;
+			list-style: none;
+			padding-left: 20px;
+			transform: 2s;
+		}
+
+		.sub_menu.active {
+			display: block;
+		}
+
+		.tab_menu_title {
+			font-size: 20px;
+			font-weight: bold;
+		}
+
+		.tab_menu_side {
+			border: 1px solid;
+			width: 250px;
+			height: 700px;
+			text-align: center;
+		}
+
+		.sub_menu_link:link,
+		.sub_menu_link:visited,
+		.sub_menu_link:hover,
+		.sub_menu_link:active {
+			color: black;
+			text-decoration: none;
+		}
+
+		.sub_menu_link.active {
+			font-weight: bold;
+			color: blue;
+		}
+
+		.data_all_box {
+			display: flex;
+		}
+
+		.data_main_search {
+			margin-left: 200px
+		}
+
+		.main_title {
+			display: flex;
+		}
+
+		.sub_title {
+			margin-top: 27px;
+			margin-left: 10px;
+		}
+
+		.search_categories {
+			display: flex;
+		}
+
+		.search_categories select {
+			width: 150px;
+			height: 30px;
+		}
+
+		.data_search_textbox {
+			width: 300px;
+			height: 25px;
+			margin-left: 10px;
+		}
+
+		.data_search_button {
+			height: 27px;
+			border: 1px solid silver;
+			background-color: white;
+		}
+
+		.thead_start {
+			margin-top: 30px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<!--header-->
+		<nav class="navbar navbar-expand-lg navbar-light">
+			<div class="navbar-left">
+				<a class="navbar-brand ms-5" href="/"><img th:src="@{/images/mainlogo.png}" alt="Logo"></a>
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="#">강의</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">로드맵</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">멘토링</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">커뮤니티</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/DataSharing_Student">자료</a>
+					</li>
+				</ul>
+			</div>
+			<form class="search-form">
+				<input type="text" class="form-control" placeholder="나의 진짜 성장을 도와줄 실무 강의를 찾아보세요">
+				<button type="submit"><i class="fas fa-search"></i></button>
+			</form>
+			<div class="icon-links">
+				<!-- 로그인 상태가 아닐 때 로그인 링크를 표시 -->
+				<div th:if="${session.loggedInUser == null}">
+					<a href="/login" class="ms-3"><i class="fas fa-user"></i></a>
+					<a href="register" class="ms-3"><i class="fas fa-user-plus"></i></a> <!-- 회원가입 아이콘 추가 -->
+				</div>
+				<!-- 로그인 상태일 때 로그아웃 링크를 표시 -->
+				<div th:if="${session.loggedInUser != null}">
+					<span th:text="'안녕하세요!  ' + ${session.loggedInUser.name} + '  님'"></span>
+					<a href="/logout" class="ms-3"><i class="fas fa-sign-out-alt"></i></a>
+				</div>
+			</div>
+		</nav>
+		<!--content-->
+		<div class="row my-5" id="data-content">
+			<div class="col-10 offset-1">
+				<div class="all_data_content">
+					<div class="data_all_box">
+						<!--side bar-->
+						<div class="tab_menu">
+							<div class="tab_menu_side">
+								<ul class="main_menu">
+									<div class="tab_menu_title">자료실</div>
+									<li class="main_menu_selector">
+										<span class="main_menu_selector_wrapper" data-target="programming">프로그래밍</span>
+										<ul class="sub_menu" id="programming">
+											<li><a class="sub_menu_link" href="#">프로그래밍 전체보기></a></li>
+											<li><a class="sub_menu_link" href="#">프론트엔드 개발</a></li>
+											<li><a class="sub_menu_link" href="#">백엔드 개발</a></li>
+											<li><a class="sub_menu_link" href="#">모바일 앱 개발</a></li>
+											<li><a class="sub_menu_link" href="#">DevOps/infra</a></li>
+											<li><a class="sub_menu_link" href="#">블록체인 개발</a></li>
+											<li><a class="sub_menu_link" href="#">게임 개발</a></li>
+											<li><a class="sub_menu_link" href="#">컴퓨터 공학/SW엔지니어링</a></li>
+											<li><a class="sub_menu_link" href="#">풀스택 개발</a></li>
+										</ul>
+									</li>
+									<li class="main_menu_selector">
+										<span class="main_menu_selector_wrapper"
+											data-target="datascience">데이터사이언스</span>
+										<ul class="sub_menu" id="datascience">
+											<li><a class="sub_menu_link" href="#">데이터사이언스 전체보기></a></li>
+											<li><a class="sub_menu_link" href="#">데이터분석</a></li>
+											<li><a class="sub_menu_link" href="#">머신러닝</a></li>
+											<li><a class="sub_menu_link" href="#">데이터엔지니어링</a></li>
+											<li><a class="sub_menu_link" href="#">Upstage:AI Lab</a></li>
+										</ul>
+									</li>
+									<li class="main_menu_selector">
+										<span class="main_menu_selector_wrapper" data-target="AI">인공지능</span>
+										<ul class="sub_menu" id="AI">
+											<li><a class="sub_menu_link" href="#">인공지능 전체보기></a></li>
+											<li><a class="sub_menu_link" href="#">딥러닝</a></li>
+											<li><a class="sub_menu_link" href="#">컴퓨터비전</a></li>
+											<li><a class="sub_menu_link" href="#">자연어처리</a></li>
+											<li><a class="sub_menu_link" href="#">ChatGPT</a></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<!--main search-->
+						<div class="data_main_search">
+							<!--main header-->
+							<div class="main_header_icon">
+								<a href="#">(홈)아이콘 > </a>
+								<a href="#">자료실 > </a>
+								<a href="#" ></a>
+							</div>
+							<div class="main_title">
+								<h2 class="main_title_name">자료실</h2>
+								<p class="sub_title">학습에 필요한 학습자료를 다운 받아서 활용하세요.</p>
+							</div>
+							<!-- data 카테고리 검색기능 -->
+							<div class="search_categories">
+								<form action="#" id="programming_search">
+									<select name="programming_search_select" id="programming_search_select">
+										<option value="programming_all">전체</option>
+										<option value="frontend">프론트엔드 개발</option>
+										<option value="backend">백엔드 개발</option>
+										<option value="mobile">모바일 앱 개발</option>
+										<option value="DevPos">DevOps/infra</option>
+										<option value="blockchain">블록체인 개발</option>
+										<option value="game">게임 개발</option>
+										<option value="computer_sw">컴퓨터 공학/SW엔지니어링</option>
+										<option value="fullstack">풀스택</option>
+									</select>
+								</form>
+								<form action="#" id="datascience_search" style="display:none;">
+									<select name="datascience_search_select" id="datascience_search_select">
+										<option value="datascience_all">전체</option>
+										<option value="dataanalysis">데이터 분석</option>
+										<option value="machinelearning">머신러닝</option>
+										<option value="dataengineering">데이터엔지니어링</option>
+										<option value="upstageailab">Upstage:AI Lab</option>
+									</select>
+								</form>
+								<form action="#" id="ai_search" style="display:none;">
+									<select name="ai_search_select" id="ai_search_select">
+										<option value="ai_all">전체</option>
+										<option value="machinelearning">딥러닝</option>
+										<option value="computer_vision">컴퓨터비전</option>
+										<option value="language_processing">자연어처리</option>
+										<option value="chat_gpt">ChatGPT</option>
+									</select>
+								</form>
+
+								<form action="#" id="data_search_form">
+									<div class="data_search_box">
+										<input type="text" name="search_query" placeholder="검색어를 입력해주세요."
+											class="data_search_textbox">
+										<button type="submit" class="data_search_button">검색</button>
+									</div>
+								</form>
+							</div>
+							<!-- data search box, 검색 end-->
+							<!--thead start-->
+							<div class="thead_start">
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col" class="table_title">제목</th>
+											<th scope="col" class="table_date">등록일</th>
+											<th scope="col" class="table_download">다운로드</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="datasharing : ${datasharingList}">
+											<td th:text="${datasharing.dataTitle}">제목 없음</td>
+											<td th:text="${#dates.format(datasharing.dataDate, 'yyyy-MM-dd')}">날짜 없음
+											</td>
+											<td th:text="${datasharing.dataFile}">파일 없음</td>
+										</tr>
+										<!-- 데이터가 없는 경우 -->
+										<tr th:if="${#lists.isEmpty(datasharingList)}">
+											<td colspan="3">글이 존재하지 않음</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!--thead end-->
+					</div>
+					</form>
+					</ul>
+					<!-- data 카테고리 검색기능 end -->
+				</div>
+			</div>
+			<!--main end-->
+		</div>
+	</div>
+	</div>
+	</div>
+	<!--footer-->
+	<footer class="footer">
+		<div class="container">
+			<div class="column">
+				<h5>JJol</h5>
+				<ul>
+					<li><a href="#">JJol 소개</a></li>
+					<li><a href="#">JJol 피드</a></li>
+					<li><a href="#">수강평 모아보기</a></li>
+					<li><a href="#">블로그</a></li>
+				</ul>
+			</div>
+			<div class="column">
+				<h5>신청하기</h5>
+				<ul>
+					<li><a href="#">지식공유참여</a></li>
+					<li><a href="#">멘토링 소개</a></li>
+					<li><a href="#">JJol 비즈니스</a></li>
+					<li><a href="#">JJol 제휴</a></li>
+				</ul>
+			</div>
+			<div class="column">
+				<h5>코드 등록</h5>
+				<ul>
+					<li><a href="#">수강코드 등록</a></li>
+					<li><a href="#">포인트코드 등록</a></li>
+				</ul>
+			</div>
+			<div class="column">
+				<h5>고객센터</h5>
+				<ul>
+					<li><a href="#">공지사항</a></li>
+					<li><a href="#">자주 묻는 질문</a></li>
+					<li><a href="#">저작권 신고센터</a></li>
+					<li><a href="#">수료증 확인</a></li>
+					<li><a href="#">강의 · 기능요청</a></li>
+				</ul>
+			</div>
+			<div class="column">
+				<h5>JJol Lab</h5>
+				<ul>
+					<li><a href="#">JJol</a></li>
+					<li><a href="#">With us</a></li>
+					<li><a href="#">JJol 스토리</a></li>
+					<li><a href="#">JJol 테크</a></li>
+					<li><a href="#">IT 인재 채용 서비스</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="social-icons">
+			<a href="#"><i class="fab fa-facebook-f"></i></a>
+			<a href="#"><i class="fab fa-twitter"></i></a>
+			<a href="#"><i class="fab fa-instagram"></i></a>
+			<a href="#"><i class="fab fa-linkedin-in"></i></a>
+		</div>
+		<div class="bottom-text">
+			<p>&copy; 2024 JJol. All rights reserved.</p>
+		</div>
+	</footer>
+	</div>
+
+	<!-- -------------------------------------------script-------------------------------------------- -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const mainMenuSelectors = document.querySelectorAll('.main_menu_selector_wrapper');
+			const categoryLink = document.querySelectorAll('.categoryLink');
+			const subMenus = document.querySelectorAll('.sub_menu');
+			const subMenuLinks = document.querySelectorAll('.sub_menu_link');
+			const programmingSearchForms = document.querySelectorAll('.data_main_search form');
+			const dataSearchForm = document.getElementById('data_search_form');
+			
+
+			// 메인 메뉴 선택 시 처리
+			mainMenuSelectors.forEach(selector => {
+				selector.addEventListener('click', function () {
+					const targetMenuId = this.getAttribute('data-target');
+					const targetMenu = document.getElementById(targetMenuId);
+					const isActive = targetMenu.classList.contains('active');
+
+					// 모든 sub_menu를 숨김
+					subMenus.forEach(menu => {
+						menu.classList.remove('active');
+					});
+
+					// 모든 메인 메뉴 선택자에서 active 클래스 제거
+					mainMenuSelectors.forEach(selector => {
+						selector.classList.remove('active');
+					});
+
+					// 클릭된 메인 메뉴를 토글
+					if (!isActive) {
+						targetMenu.classList.add('active');
+						this.classList.add('active'); // 메인 메뉴 선택자에 active 클래스 추가
+					}
+				});
+			});
+
+			// 서브 메뉴 링크 선택 시 처리
+			subMenuLinks.forEach(link => {
+				link.addEventListener('click', function (event) {
+					event.preventDefault(); // 링크의 기본 동작 방지
+
+					// 클릭된 링크에만 active 클래스 추가
+					subMenuLinks.forEach(link => {
+						link.classList.remove('active');
+					});
+					this.classList.add('active');
+
+					// 클릭된 메뉴의 부모 요소인 서브 메뉴를 활성화 상태로 유지
+					const parentSubMenu = this.closest('.sub_menu');
+					parentSubMenu.classList.add('active');
+
+					// 클릭된 메인 메뉴 선택자에 active 클래스 추가
+					const mainMenuSelector = document.querySelector(`[data-target="${parentSubMenu.id}"]`);
+					if (mainMenuSelector) {
+						mainMenuSelector.classList.add('active');
+					}
+
+					// 선택한 카테고리에 맞게 select 박스 보이기/감추기
+					showSelectBox(parentSubMenu.id);
+				});
+
+				// 메인 메뉴 선택 시 처리
+				mainMenuSelectors.forEach(selector => {
+					selector.addEventListener('click', function () {
+						const targetId = this.getAttribute('data-target'); // 클릭된 메뉴의 data-target 값 가져오기
+
+						// 모든 programming_search_select 숨기기
+						programmingSearchForms.forEach(form => {
+							form.style.display = 'none';
+						});
+
+						// 모든 data_search_form 숨기기
+						dataSearchForm.style.display = 'none';
+
+						// 클릭된 메뉴의 programming_search_select 표시
+						const programmingSearchForm = document.getElementById(`${targetId}_search`);
+						if (programmingSearchForm) {
+							programmingSearchForm.style.display = 'block';
+						}
+
+						// data_search_form 표시
+						dataSearchForm.style.display = 'block';
+					});
+				});
+
+				// AI 카테고리 선택 시 처리
+				const aiSelector = document.querySelector('.main_menu_selector_wrapper[data-target="AI"]');
+				const aiSubMenu = document.getElementById('AI');
+				const aiSearchForm = document.getElementById('ai_search');
+
+				aiSelector.addEventListener('click', function () {
+					// 모든 sub_menu를 숨김
+					subMenus.forEach(menu => {
+						menu.classList.remove('active');
+					});
+
+					// AI 카테고리의 sub_menu를 활성화
+					aiSubMenu.classList.add('active');
+
+					// AI 카테고리에 해당하는 select 폼 표시
+					aiSearchForm.style.display = 'block';
+
+					// 다른 메뉴의 select 폼 숨기기
+					programmingSearchForms.forEach(form => {
+						if (form !== aiSearchForm) {
+							form.style.display = 'none';
+						}
+					});
+
+					// data_search_form 표시
+					dataSearchForm.style.display = 'block';
+				});
+			});
+		});
+	</script>
+
+
+</body>
+
+</html>
