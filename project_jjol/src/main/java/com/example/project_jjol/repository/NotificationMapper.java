@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.*;
 
 import com.example.project_jjol.model.Notification;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
@@ -24,5 +25,8 @@ public interface NotificationMapper {
 
     @Delete("DELETE FROM notification WHERE id = #{id}")
     void delete(Long id);
-}
 
+    // 다가오는 시험 확인 쿼리 (수정된 부분)
+    @Select("SELECT * FROM notification WHERE exam_date BETWEEN #{startDate} AND #{endDate}")
+    List<Notification> findByExamDateBetween(LocalDate startDate, LocalDate endDate);
+}
