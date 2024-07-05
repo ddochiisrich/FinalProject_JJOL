@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Page</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar-brand {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #007bff !important;
+        }
+        .navbar-nav .nav-link {
+            font-size: 1.1rem;
+            margin-right: 1rem;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            font-weight: bold;
+            color: #333;
+        }
+        h3 {
+            color: #555;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .card-img-top {
+            border-radius: 15px 15px 0 0;
+            height: 200px;
+            object-fit: cover;
+        }
+        .card-body {
+            background-color: #f8f9fa;
+            border-radius: 0 0 15px 15px;
+        }
+        .card-title {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .card-text {
+            color: #666;
+        }
+        .btn-block {
+            border-radius: 30px;
+        }
+        .alert {
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <a class="navbar-brand" href="/">JJol</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/lectures">강의</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/mypage">마이페이지</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>마이페이지</h2>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col">
+            <h3 th:text="'안녕하세요, ' + ${user.name} + '님!'"></h3>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col">
+            <h4>내가 수강한 강의</h4>
+        </div>
+    </div>
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="lecture, iterStat : ${lectures}">
+            <div class="card shadow-sm">
+                <img class="card-img-top" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${lecture.lectureTitle}">강의 제목</h5>
+                    <p class="card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
+                    <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-info btn-block">강의 상세정보</a>
+                    
+                    <!-- 수료증 발급 버튼 -->
+                    <div th:if="${allChaptersCompleted[iterStat.index] && !certificatesIssued[iterStat.index]}">
+                        <a th:href="@{/mypage/issueCertificate/{lectureId}(lectureId=${lecture.lectureId})}" class="btn btn-success btn-block mt-2">수료증 발급</a>
+                    </div>
+                    
+                    <!-- 수료증 보기 버튼 -->
+                    <div th:if="${certificatesIssued[iterStat.index]}">
+                        <a th:href="@{/mypage/certificate/{lectureId}(lectureId=${lecture.lectureId})}" class="btn btn-primary btn-block mt-2">수료증 보기</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

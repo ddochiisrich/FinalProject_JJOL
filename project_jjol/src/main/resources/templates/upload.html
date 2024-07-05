@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Lecture</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            color: #2C3E50;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .container {
+            background: #ECF0F1;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #2C3E50;
+        }
+        .form-group {
+            text-align: left;
+        }
+        .btn-primary {
+            background-color: #3498DB;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #2980B9;
+        }
+        .btn-secondary {
+            background-color: #E74C3C;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #C0392B;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container my-5">
+    <h1 class="mb-4">강의 업로드</h1>
+    <form action="/lectures/upload" method="post" enctype="multipart/form-data" class="mb-5">
+        <div class="form-group">
+            <label for="title">강의 제목 :</label>
+            <input type="text" id="title" name="title" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="shortDescription">간략 설명 :</label>
+            <input type="text" id="shortDescription" name="shortDescription" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="longDescription">상세 설명 :</label>
+            <textarea id="longDescription" name="longDescription" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="thumbnailVideo">썸네일 비디오 :</label>
+            <input type="file" id="thumbnailVideo" name="thumbnailVideo" class="form-control-file">
+        </div>
+        <div class="form-group">
+            <label for="thumbnailImage">썸네일 이미지 :</label>
+            <input type="file" id="thumbnailImage" name="thumbnailImage" class="form-control-file">
+        </div>
+        <div class="form-group">
+            <label for="level">레벨 :</label>
+            <select id="level" name="level" class="form-control">
+                <option value="최하">최하</option>
+                <option value="하">하</option>
+                <option value="중하">중하</option>
+                <option value="중">중</option>
+                <option value="중상">중상</option>
+                <option value="상">상</option>
+                <option value="최상">최상</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="price">가격 :</label>
+            <input type="text" id="price" name="price" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="discount">할인율 :</label>
+            <input type="text" id="discount" name="discount" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="instructorId">강사 ID :</label>
+            <input type="text" id="instructorId" name="instructorId" class="form-control" th:value="${loggedInUser.userId}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="instructorName">강사 이름 :</label>
+            <input type="text" id="instructorName" name="instructorName" class="form-control" th:value="${loggedInUser.name}" readonly>
+        </div>
+        <hr>
+        <div id="chapter-container">
+            <div class="chapter">
+                <h3>챕터 1</h3>
+                <div class="form-group">
+                    <label for="chapterTitle1">챕터 제목 :</label>
+                    <input type="text" id="chapterTitle1" name="chapterTitles" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="chapterDescription1">챕터 설명 :</label>
+                    <input type="text" id="chapterDescription1" name="chapterDescriptions" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="chapterFile1">챕터 비디오 :</label>
+                    <input type="file" id="chapterFile1" name="chapterFiles" class="form-control-file">
+                </div>
+                <div class="form-group">
+                    <label for="chapterOrder1">챕터 순서 :</label>
+                    <input type="number" id="chapterOrder1" name="chapterOrders" class="form-control">
+                </div>
+                <hr>
+            </div>
+        </div>
+        <div class="button-group">
+            <button type="button" id="addChapter" class="btn btn-secondary mb-4">챕터 추가</button>
+            <button type="submit" class="btn btn-primary mb-4">업로드</button>
+            <a href="/lectures" class="btn btn-secondary mb-4">강의리스트</a>
+        </div>
+    </form>
+</div>
+
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script>
+    $(document).ready(function() {
+        let chapterIndex = 1;
+        $('#addChapter').click(function() {
+            chapterIndex++;
+            const chapterTemplate = `
+                <div class="chapter">
+                    <h3>챕터 ${chapterIndex}</h3>
+                    <div class="form-group">
+                        <label for="chapterTitle${chapterIndex}">챕터 제목 :</label>
+                        <input type="text" id="chapterTitle${chapterIndex}" name="chapterTitles" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="chapterDescription${chapterIndex}">챕터 설명 :</label>
+                        <input type="text" id="chapterDescription${chapterIndex}" name="chapterDescriptions" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="chapterFile${chapterIndex}">챕터 비디오 :</label>
+                        <input type="file" id="chapterFile${chapterIndex}" name="chapterFiles" class="form-control-file">
+                    </div>
+                    <div class="form-group">
+                        <label for="chapterOrder${chapterIndex}">챕터 순서 :</label>
+                        <input type="number" id="chapterOrder${chapterIndex}" name="chapterOrders" class="form-control">
+                    </div>
+                    <hr>
+                </div>
+            `;
+            $('#chapter-container').append(chapterTemplate);
+        });
+    });
+</script>
+</body>
+</html>
