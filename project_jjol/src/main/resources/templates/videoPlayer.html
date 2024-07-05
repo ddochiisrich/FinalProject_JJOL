@@ -448,21 +448,24 @@ video {
     </div>
 
 <script>
+//노트의 내용을 토글하는 함수
 function toggleNoteContent(element) {
     $(element).closest('.note-item').find('.note-content').toggle();
 }
 
+// 커뮤니티 게시물의 내용을 토글하는 함수
 function toggleCommunityContent(element) {
     $(element).closest('.community-item').find('.community-content').toggle();
 }
 
-
+// DOM이 완전히 로드된 후 실행되는 함수
 document.addEventListener("DOMContentLoaded", function() {
-    const lectureId = document.body.getAttribute("data-lecture-id");
-    let currentChapterOrder = 1; // 초기 챕터 순서를 설정합니다.
-    let player;
+    const lectureId = document.body.getAttribute("data-lecture-id"); // 현재 강의 ID
+    let currentChapterOrder = 1; // 초기 챕터 순서
+    let player; // 비디오 플레이어 객체
     const totalChapters = document.querySelectorAll('.lecture').length; // 전체 챕터 수
 
+    // 특정 강의와 챕터의 마지막 시청 시간과 전체 길이를 가져오는 함수
     async function fetchLastViewedTimeAndDuration(lectureId, chapterId) {
         try {
             const response = await fetch(`/lecturePage/${lectureId}/${chapterId}`);
@@ -480,9 +483,27 @@ document.addEventListener("DOMContentLoaded", function() {
             return { startTime: 0, duration: 0 };
         }
     }
+    
+ 	// 특정 강의의 마지막 시청한 챕터와 시청 시간을 가져오는 함수
+    async function fetchLastViewedTimeAndChapter(lectureId) {
+        try {
+            const response = await fetch(`/lecturePage/${lectureId}/lastViewed`);
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            console.log("데이터 정상");
+            return { lastChapterOrder: data.chapterOrder ?? 1, startTime: data.startTime ?? 0 };
+        } catch (error) {
+            console.error("fetch 작업에 문제가 발생했습니다:", error);
+            return { lastChapterOrder: 1, startTime: 0 };
+        }
+    }
 
 
-    async function saveCurrentTime(lectureId, chapterId, currentTime, duration) {
+
+ // 현재 시청 시간을 서버에 저장하는 함수
+    async function saveCurrentTime(lectureId, chapterId, currentTime, currentChapterOrder) {
         try {
             const response = await fetch('/lecturePage/save', {
                 method: 'POST',
@@ -493,7 +514,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     lectureId: lectureId,
                     chapterId: chapterId,
                     startTime: currentTime,
-                    duration: duration
+                    lastChapterOrder: currentChapterOrder // 추가된 파라미터
                 })
             });
             if (!response.ok) {
@@ -504,6 +525,24 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // 강의의 시청 진행 상황을 초기화하는 함수
+    async function resetLectureProgress(lectureId) {
+        try {
+            const response = await fetch(`/lecturePage/reset/${lectureId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+        } catch (error) {
+            console.error("There was a problem with the reset operation:", error);
+        }
+    }
+
+    // 진행 바를 업데이트하는 함수
     function updateProgressBar() {
         let progressPercentage = ((currentChapterOrder) / totalChapters) * 100;
         if (currentChapterOrder === totalChapters) {
@@ -513,6 +552,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('progress-info').innerText = `진도율 : ${Math.round(progressPercentage)}%`;
     }
 
+    // 시간을 포맷팅하는 함수 (초를 시:분:초 형태로 변환)
     function formatTime(seconds) {
         const h = Math.floor(seconds / 3600);
         const m = Math.floor((seconds % 3600) / 60);
@@ -520,6 +560,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return `${h}:${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
     }
 
+    // 강의의 총 길이를 계산하는 함수
     async function calculateTotalDuration() {
         let totalDuration = 0;
         for (let chapter of document.querySelectorAll('.lecture')) {
@@ -530,11 +571,13 @@ document.addEventListener("DOMContentLoaded", function() {
         return totalDuration;
     }
 
+    // 현재 시청 시간을 업데이트하는 함수
     function updateCurrentTimeDisplay(currentTime, totalDuration) {
         const currentChapterDisplay = `강의 : ${currentChapterOrder} / ${totalChapters}`;
         document.getElementById('current-time-display').innerText = `${currentChapterDisplay}`;
     }
 
+    // 모든 챕터의 시청 기록을 초기화하는 함수
     async function resetAllChapters(lectureId) {
         try {
             const response = await fetch(`/lecturePage/reset/${lectureId}`, {
@@ -555,6 +598,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+ // 비디오 플레이어를 초기화하는 함수
     async function initializePlayer() {
         if (!player) {
             player = videojs('my-video', {
@@ -563,70 +607,57 @@ document.addEventListener("DOMContentLoaded", function() {
                 preload: 'auto'
             });
 
-            const totalDuration = await calculateTotalDuration();
-            const { startTime } = await fetchLastViewedTimeAndDuration(lectureId, currentChapterOrder);
+            const { lastChapterOrder, startTime } = await fetchLastViewedTimeAndChapter(lectureId);
 
-            console.log("Start time:", startTime);  // 디버그 메시지 추가
+            console.log(lastChapterOrder);
 
             if (startTime > 0) {
                 const resumeFromLastTime = confirm("마지막 시청 지점부터 재생하시겠습니까?");
                 if (resumeFromLastTime) {
-                    player.ready(function() {
-                        player.currentTime(startTime);
-                        player.play();
-                        updateProgressBar();
-                        updateCurrentTimeDisplay(startTime, totalDuration);
-                    });
+                    currentChapterOrder = lastChapterOrder;
+                    loadChapter(currentChapterOrder, startTime);
                 } else {
-                    // 모든 챕터의 재생 기록 초기화
-                    await resetAllChapters(lectureId);
-                    currentChapterOrder = 1;
-                    loadChapter(currentChapterOrder);
+                    await resetLectureProgress(lectureId);
+                    loadChapter(1, 0);
                 }
             } else {
-                loadChapter(currentChapterOrder);
+                loadChapter(1, 0);
             }
 
             player.on('timeupdate', function() {
                 const currentTime = player.currentTime();
                 const chapterElement = document.querySelector(`.lecture[data-chapter-order="${currentChapterOrder}"]`);
                 const chapterId = chapterElement.getAttribute('data-chapter-id');
-                saveCurrentTime(lectureId, chapterId, currentTime, player.duration());
-                updateProgressBar();
-                updateCurrentTimeDisplay(currentTime, totalDuration);
+                saveCurrentTime(lectureId, chapterId, currentTime, currentChapterOrder);
             });
 
             player.on('ended', function() {
                 currentChapterOrder++;
                 if (currentChapterOrder > totalChapters) {
                     currentChapterOrder = totalChapters;
-                    updateProgressBar();
                 } else {
-                    loadChapter(currentChapterOrder);
+                    loadChapter(currentChapterOrder, 0);
                 }
             });
-
-            await updateProgressBar();
         }
     }
 
-    async function loadChapter(chapterOrder) {
+ // 특정 챕터를 로드하고 시작 시간을 설정하는 함수
+    async function loadChapter(chapterOrder, startTime) {
         const chapterElement = document.querySelector(`.lecture[data-chapter-order="${chapterOrder}"]`);
         if (!chapterElement) {
             console.error(`Chapter element with order ${chapterOrder} not found`);
             return;
         }
         const videoUrl = chapterElement.getAttribute('data-url');
-        const chapterId = chapterElement.getAttribute('data-chapter-id');
-        const { startTime } = await fetchLastViewedTimeAndDuration(lectureId, chapterId);
         player.src({ type: 'video/mp4', src: videoUrl });
         player.ready(function() {
             player.currentTime(startTime);
             player.play();
-            updateProgressBar();
         });
     }
 
+    // 각 챕터 요소에 클릭 이벤트를 추가하는 함수
     document.querySelectorAll('.lecture').forEach(function(lectureElement) {
         lectureElement.addEventListener('click', function() {
             currentChapterOrder = parseInt(this.getAttribute('data-chapter-order'));
@@ -634,7 +665,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Note와 Community 관련 버튼 이벤트
+    // 섹션 토글 함수
     function toggleSection(sectionId) {
         const mainContent = $('#mainContent');
         const rightColumn = $('#rightColumn');
@@ -653,21 +684,24 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // 커리큘럼 버튼 클릭 이벤트
     $('#curriculumButton').click(function() {
         toggleSection('curriculum');
     });
 
+    // 노트 버튼 클릭 이벤트
     $('#noteButton').click(function() {
         toggleSection('note');
         loadNotes();
     });
 
+    // 커뮤니티 버튼 클릭 이벤트
     $('#communityButton').click(function() {
         toggleSection('community');
         loadLectureCommunities();
     });
 
-    // 노트 로드 함수
+    // 노트를 로드하는 함수
     function loadNotes() {
         $.get(`/notes/${lectureId}`, function(notes) {
             if (!Array.isArray(notes)) {
@@ -691,7 +725,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // 커뮤니티 로드 함수
+    // 커뮤니티 게시물을 로드하는 함수
     function loadLectureCommunities() {
         $.get(`/community/${lectureId}`, function(posts) {
             if (!Array.isArray(posts)) {
@@ -719,6 +753,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // 노트 저장 버튼 클릭 이벤트
     $('#saveNoteButton').click(function() {
         const noteTitle = $('#noteTitle').val();
         const noteContent = $('#noteContent').val();
@@ -738,6 +773,7 @@ document.addEventListener("DOMContentLoaded", function() {
             });
     });
 
+    // 커뮤니티 게시물 저장 버튼 클릭 이벤트
     $('#savePostButton').click(function() {
         const postTitle = $('#postTitle').val();
         const postContent = $('#postContent').val();
@@ -757,6 +793,7 @@ document.addEventListener("DOMContentLoaded", function() {
             });
     });
 
+    // 노트 삭제 버튼 클릭 이벤트
     $(document).on('click', '.delete-note-button', function() {
         const noteId = $(this).data('note-id');
         $.post('/notes/delete', { noteId, lectureId }, function(response) {
@@ -766,6 +803,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+    // 커뮤니티 게시물 삭제 버튼 클릭 이벤트
     $(document).on('click', '.delete-community-button', function() {
         const postId = $(this).data('post-id');
         $.post('/community/delete', { postId }, function(response) {
@@ -775,10 +813,10 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+    // 비디오 플레이어 초기화 함수 호출
     initializePlayer();
 });
-
-
 </script>
+
 </body>
 </html>

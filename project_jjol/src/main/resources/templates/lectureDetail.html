@@ -213,29 +213,30 @@
                         <div class="content-section">
                             <h3>수강평</h3>
                             <div th:if="${hasApplied}">
-                                <form th:action="@{/lectures/review}" method="post">
-                                    <input type="hidden" name="lectureId" th:value="${lecture.lectureId}">
-                                    <div class="form-group">
-                                        <label for="rating">별점 (0.5~5.0)</label>
-                                        <select class="form-control" id="rating" name="rating" required>
-                                            <option value="0.5">0.5</option>
-                                            <option value="1">1.0</option>
-                                            <option value="1.5">1.5</option>
-                                            <option value="2">2.0</option>
-                                            <option value="2.5">2.5</option>
-                                            <option value="3">3.0</option>
-                                            <option value="3.5">3.5</option>
-                                            <option value="4">4.0</option>
-                                            <option value="4.5">4.5</option>
-                                            <option value="5">5.0</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="reviewContent">리뷰 내용</label>
-                                        <textarea class="form-control" id="reviewContent" name="reviewContent" rows="3" required></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">리뷰 작성</button>
-                                </form>
+                                <form th:action="@{/lectures/review}" method="post" onsubmit="localStorage.setItem('activeTab', '#reviews');">
+								    <input type="hidden" name="lectureId" th:value="${lecture.lectureId}">
+								    <div class="form-group">
+								        <label for="rating">별점 (0.5~5.0)</label>
+								        <select class="form-control" id="rating" name="rating" required>
+								            <option value="0.5">0.5</option>
+								            <option value="1">1.0</option>
+								            <option value="1.5">1.5</option>
+								            <option value="2">2.0</option>
+								            <option value="2.5">2.5</option>
+								            <option value="3">3.0</option>
+								            <option value="3.5">3.5</option>
+								            <option value="4">4.0</option>
+								            <option value="4.5">4.5</option>
+								            <option value="5">5.0</option>
+								        </select>
+								    </div>
+								    <div class="form-group">
+								        <label for="reviewContent">리뷰 내용</label>
+								        <textarea class="form-control" id="reviewContent" name="reviewContent" rows="3" required></textarea>
+								    </div>
+								    <button type="submit" class="btn btn-primary">리뷰 작성</button>
+								</form>
+
                             </div>
                             <div th:each="review : ${reviews}">
                                 <div class="review">
@@ -292,14 +293,15 @@
                                 </div>
                             </div>
                             <div th:if="${hasApplied}">
-                                <form th:action="@{/lectures/questions}" method="post">
-                                    <input type="hidden" name="lectureId" th:value="${lecture.lectureId}">
-                                    <div class="form-group">
-                                        <label for="questionContent">질문</label>
-                                        <textarea class="form-control" id="questionContent" name="content" rows="3" required></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">질문달기</button>
-                                </form>
+                                <form th:action="@{/lectures/questions}" method="post" onsubmit="localStorage.setItem('activeTab', '#questions');">
+								    <input type="hidden" name="lectureId" th:value="${lecture.lectureId}">
+								    <div class="form-group">
+								        <label for="questionContent">질문</label>
+								        <textarea class="form-control" id="questionContent" name="content" rows="3" required></textarea>
+								    </div>
+								    <button type="submit" class="btn btn-primary">질문달기</button>
+								</form>
+
                             </div>
                         </div>
                     </div>
@@ -333,5 +335,23 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        // 로컬 스토리지에서 활성 탭 상태를 가져옴
+        var activeTab = localStorage.getItem('activeTab');
+        if (activeTab) {
+            $('#myTab a[href="' + activeTab + '"]').tab('show');
+        }
+
+        // 탭 클릭 시 활성 탭 상태를 로컬 스토리지에 저장
+        $('#myTab a').on('click', function (e) {
+            e.preventDefault();
+            var tabId = $(this).attr('href');
+            localStorage.setItem('activeTab', tabId);
+            $(this).tab('show');
+        });
+    });
+</script>
+    
 </body>
 </html>
