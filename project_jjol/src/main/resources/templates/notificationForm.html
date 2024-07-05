@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Notification Management</title>
+</head>
+<body>
+	<div layout:fragment="content" class="row" id="global-content">
+		<h2>Add New Notification</h2>
+		<form action="#" th:action="@{/notifications}"
+			th:object="${notification}" method="post">
+			<label for="subject">Subject:</label> <input type="text" id="subject"
+				name="subject" required> <br> 
+				<label for="examDate">Exam Date:</label> <input type="date" id="examDate"
+				name="examDate" required> <br>
+			<button type="submit">Add Notification</button>
+		</form>
+
+		<hr>
+
+		<h2>Notify Exam</h2>
+		<form th:action="@{/notifications/notify}" method="post">
+			<label for="to">Recipient Email:</label> <input type="email" id="to"
+				name="to" required> <br> <label for="notificationId">Notification
+				ID:</label> <input type="number" id="notificationId" name="notificationId"
+				required> <br>
+			<button type="submit">Send Notification</button>
+		</form>
+	</div>
+</body>
+</html>

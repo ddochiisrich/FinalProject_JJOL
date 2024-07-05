@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS Video (
     FOREIGN KEY (lecture_id) REFERENCES Lecture(lecture_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 결제이력 테이블
+-- 결제 테이블
 DROP TABLE IF EXISTS payment;
 CREATE TABLE IF NOT EXISTS payment(
     pay_code VARCHAR(100) PRIMARY KEY,                   -- 결제 코드
@@ -83,7 +83,6 @@ CREATE TABLE IF NOT EXISTS payment(
     FOREIGN KEY(user_id) REFERENCES user(user_id),
     FOREIGN KEY(lecture_id) REFERENCES Lecture(lecture_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-select * from payment;
 
 -- 강의신청 테이블
 DROP TABLE IF EXISTS LectureApplication;
@@ -95,19 +94,6 @@ CREATE TABLE IF NOT EXISTS LectureApplication (
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (lecture_id) REFERENCES Lecture(lecture_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-select * from LectureApplication;
-delete from LectureApplication where user_id='test';
-
--- 강의자료 테이블
--- DROP TABLE IF EXISTS LectureMaterial;
--- CREATE TABLE IF NOT EXISTS LectureMaterial (
---     material_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,    -- 자료 ID
---     file_path VARCHAR(255) NOT NULL,                        -- 파일 경로
---     upload_date TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,   -- 업로드 날짜
---     lecture_id INT NOT NULL,                                -- 강의 ID
---     FOREIGN KEY (lecture_id) REFERENCES Lecture(lecture_id)
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 강의페이지 테이블
 DROP TABLE IF EXISTS LecturePage;
@@ -123,8 +109,6 @@ CREATE TABLE IF NOT EXISTS LecturePage (
     FOREIGN KEY (chapter_id) REFERENCES Chapter(chapter_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
-
 -- 강의평가 테이블
 DROP TABLE IF EXISTS LectureReview;
 CREATE TABLE IF NOT EXISTS LectureReview (
@@ -137,8 +121,6 @@ CREATE TABLE IF NOT EXISTS LectureReview (
     FOREIGN KEY (lecture_id) REFERENCES Lecture(lecture_id),
     FOREIGN KEY (user_id) REFERENCES user(user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-select * from lectureReview;
 
 -- 강의노트 테이블
 DROP TABLE IF EXISTS LectureNote;
@@ -187,10 +169,10 @@ CREATE TABLE IF NOT EXISTS quiz_submission(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 자료공유 테이블
-DROP TABLE IF EXISTS data_sharing;
-CREATE TABLE IF NOT EXISTS data_sharing(    
+DROP TABLE IF EXISTS datasharing;
+CREATE TABLE IF NOT EXISTS datasharing(    
     data_name VARCHAR(100) NOT NULL,                      -- 자료 이름
-    date_title VARCHAR(1000) NOT NULL,                    -- 자료 제목
+    data_title VARCHAR(1000) NOT NULL,                    -- 자료 제목
     data_content LONG NOT NULL,                           -- 자료 내용
     data_date TIMESTAMP NOT NULL,                         -- 자료 날짜
     data_pw VARCHAR(1000) NOT NULL,                       -- 자료 비밀번호
@@ -252,26 +234,34 @@ CREATE TABLE IF NOT EXISTS chatbot_counselor(
     reg_date TIMESTAMP NOT NULL                           -- 등록 날짜
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
-//////////////////
-
-#강의 질문 테이블
+-- 강의 질문 테이블
 CREATE TABLE IF NOT EXISTS lectureQuestions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    lecture_id INT NOT NULL,
-    user_id VARCHAR(100) NOT NULL,
-    content TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id INT AUTO_INCREMENT PRIMARY KEY,                    -- 질문 ID
+    lecture_id INT NOT NULL,                              -- 강의 ID
+    user_id VARCHAR(100) NOT NULL,                        -- 유저 ID
+    content TEXT NOT NULL,                                -- 질문 내용
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,       -- 생성 날짜
     FOREIGN KEY (lecture_id) REFERENCES Lecture(lecture_id),
     FOREIGN KEY (user_id) REFERENCES user(user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-# 강의 대답 테이블
+
+-- 강의 대답 테이블
 CREATE TABLE IF NOT EXISTS lectureAnswers (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    question_id INT NOT NULL,
-    instructor_id VARCHAR(100) NOT NULL,
-    content TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id INT AUTO_INCREMENT PRIMARY KEY,                    -- 대답 ID
+    question_id INT NOT NULL,                             -- 질문 ID
+    instructor_id VARCHAR(100) NOT NULL,                  -- 강사 ID
+    content TEXT NOT NULL,                                -- 대답 내용
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,       -- 생성 날짜
     FOREIGN KEY (question_id) REFERENCES lectureQuestions(id),
     FOREIGN KEY (instructor_id) REFERENCES user(user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 수료증 테이블
+CREATE TABLE IF NOT EXISTS Certificate (
+    certificate_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- 수료증 ID
+    user_id VARCHAR(100) NOT NULL,                           -- 사용자 ID
+    lecture_id INT NOT NULL,                                 -- 강의 ID
+    issue_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,          -- 발급 날짜
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (lecture_id) REFERENCES Lecture(lecture_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
