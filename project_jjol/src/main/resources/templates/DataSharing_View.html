@@ -365,7 +365,7 @@
 						<a class="nav-link" href="#">커뮤니티</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/DataSharing_Instructor">자료</a>
+						<a class="nav-link" href="/DataSharing_View">자료</a>
 					</li>
 				</ul>
 			</div>
@@ -440,7 +440,7 @@
 							<div class="main_header_icon">
 								<a href="#">(홈)아이콘 > </a>
 								<a href="#">자료실 > </a>
-								<a href="#">카테고리 누를 시 변경되는 자리</a>
+								<a href="#" ></a>
 							</div>
 							<div class="main_title">
 								<h2 class="main_title_name">자료실</h2>
@@ -461,7 +461,7 @@
 										<option value="fullstack">풀스택</option>
 									</select>
 								</form>
-								<form action="#" id="datascience_search">
+								<form action="#" id="datascience_search" style="display:none;">
 									<select name="datascience_search_select" id="datascience_search_select">
 										<option value="datascience_all">전체</option>
 										<option value="dataanalysis">데이터 분석</option>
@@ -470,36 +470,28 @@
 										<option value="upstageailab">Upstage:AI Lab</option>
 									</select>
 								</form>
-								<form action="#" id="ai_search">
+								<form action="#" id="ai_search" style="display:none;">
 									<select name="ai_search_select" id="ai_search_select">
 										<option value="ai_all">전체</option>
 										<option value="machinelearning">딥러닝</option>
 										<option value="computer_vision">컴퓨터비전</option>
 										<option value="language_processing">자연어처리</option>
-										<option value="chat_gpt">chatGPT</option>
+										<option value="chat_gpt">ChatGPT</option>
 									</select>
 								</form>
 
-								<!-- data search box, 검색 -->
-								<form action="#">
+								<form action="#" id="data_search_form">
 									<div class="data_search_box">
-										<input type="text" name="" value="" placeholder="검색어를 입력해주세요."
+										<input type="text" name="search_query" placeholder="검색어를 입력해주세요."
 											class="data_search_textbox">
 										<button type="submit" class="data_search_button">검색</button>
 									</div>
+									<div class="write_instructor" th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}">
+									    <a href="/InstructorWrite">글쓰기</a>
+									</div>
 								</form>
-								<!-- data search box, 검색 end-->
-
-
-								</ul>
-								<!-- data 카테고리 검색기능 end -->
 							</div>
-							<div class="data_write">
-								<div class="data_write_text">
-									<a th:href="@{InstructorWrite}" class="btn">글쓰기</a>
-								</div>
-							</div>
-
+							<!-- data search box, 검색 end-->
 							<!--thead start-->
 							<div class="thead_start">
 								<table class="table">
@@ -511,29 +503,31 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="data : ${datasharingList}">
-											<td th:text="${data.dataTitle}">제목 없음</td>
-											<td th:text="${#dates.format(data.dataDate, 'yyyy-MM-dd')}">날짜 없음</td>
-											<td th:text="${data.dataFile}">파일 없음</td>
+										<tr th:each="datasharing : ${datasharingList}">
+											<td th:text="${datasharing.dataTitle}">제목 없음</td>
+											<td th:text="${#dates.format(datasharing.dataDate, 'yyyy-MM-dd')}">날짜 없음
+											</td>
+											<td th:text="${datasharing.dataFile}">파일 없음</td>
 										</tr>
 										<!-- 데이터가 없는 경우 -->
 										<tr th:if="${#lists.isEmpty(datasharingList)}">
 											<td colspan="3">글이 존재하지 않음</td>
 										</tr>
-										</th:block>
 									</tbody>
 								</table>
 							</div>
-
-
 						</div>
 						<!--thead end-->
-
 					</div>
-					<!--main end-->
+					</form>
+					</ul>
+					<!-- data 카테고리 검색기능 end -->
 				</div>
 			</div>
+			<!--main end-->
 		</div>
+	</div>
+	</div>
 	</div>
 	<!--footer-->
 	<footer class="footer">
@@ -600,8 +594,12 @@
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
 			const mainMenuSelectors = document.querySelectorAll('.main_menu_selector_wrapper');
+			const categoryLink = document.querySelectorAll('.categoryLink');
 			const subMenus = document.querySelectorAll('.sub_menu');
 			const subMenuLinks = document.querySelectorAll('.sub_menu_link');
+			const programmingSearchForms = document.querySelectorAll('.data_main_search form');
+			const dataSearchForm = document.getElementById('data_search_form');
+			
 
 			// 메인 메뉴 선택 시 처리
 			mainMenuSelectors.forEach(selector => {
@@ -648,6 +646,61 @@
 					if (mainMenuSelector) {
 						mainMenuSelector.classList.add('active');
 					}
+
+					// 선택한 카테고리에 맞게 select 박스 보이기/감추기
+					showSelectBox(parentSubMenu.id);
+				});
+
+				// 메인 메뉴 선택 시 처리
+				mainMenuSelectors.forEach(selector => {
+					selector.addEventListener('click', function () {
+						const targetId = this.getAttribute('data-target'); // 클릭된 메뉴의 data-target 값 가져오기
+
+						// 모든 programming_search_select 숨기기
+						programmingSearchForms.forEach(form => {
+							form.style.display = 'none';
+						});
+
+						// 모든 data_search_form 숨기기
+						dataSearchForm.style.display = 'none';
+
+						// 클릭된 메뉴의 programming_search_select 표시
+						const programmingSearchForm = document.getElementById(`${targetId}_search`);
+						if (programmingSearchForm) {
+							programmingSearchForm.style.display = 'block';
+						}
+
+						// data_search_form 표시
+						dataSearchForm.style.display = 'block';
+					});
+				});
+
+				// AI 카테고리 선택 시 처리
+				const aiSelector = document.querySelector('.main_menu_selector_wrapper[data-target="AI"]');
+				const aiSubMenu = document.getElementById('AI');
+				const aiSearchForm = document.getElementById('ai_search');
+
+				aiSelector.addEventListener('click', function () {
+					// 모든 sub_menu를 숨김
+					subMenus.forEach(menu => {
+						menu.classList.remove('active');
+					});
+
+					// AI 카테고리의 sub_menu를 활성화
+					aiSubMenu.classList.add('active');
+
+					// AI 카테고리에 해당하는 select 폼 표시
+					aiSearchForm.style.display = 'block';
+
+					// 다른 메뉴의 select 폼 숨기기
+					programmingSearchForms.forEach(form => {
+						if (form !== aiSearchForm) {
+							form.style.display = 'none';
+						}
+					});
+
+					// data_search_form 표시
+					dataSearchForm.style.display = 'block';
 				});
 			});
 		});
