@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="video-streaming:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b885f0e3-5439-4be8-85ec-d9d8be535808" name="Changes" comment="플레이어">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/videostreaming/VideoStreamingApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/videostreaming/config/S3Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/videostreaming/config/WebMvcConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/videostreaming/controller/MainController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/videostreaming/controller/VideoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/videostreaming/model/Video.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/videostreaming/repository/VideoRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/videostreaming/service/S3Service.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/videostreaming/service/VideoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap/js/bootstrap.bundle.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/video-thumbnail.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/jquery-3.7.1.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718858135113_openning.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718858149693_openning.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718858472817_openning.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718863043221_introduce.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718863524154_openning.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718864129775_introduce.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718864187591_openning.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718864538656_introduce.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718871925070_videoplayback.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718871949527_KakaoTalk_20240619_104536338 (1).mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718872032703_KakaoTalk_20240620_172647220.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718872400042_IMG_3080.mov" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718872515733_cat2.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718872955513_스크린샷 2024-06-17 173823.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718873218952_KakaoTalk_20240620_174633028.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718873351646_openning.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718873708979_KakaoTalk_20240620_175444512.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/1718873824582_KakaoTalk_20240620_175617890.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/2024-06-20/55ad9dc4-d9ff-4b01-9f4c-083bad6dfdf0_openning.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/2024-06-20/d300d359-d1a7-497a-aee9-6934f50497c7_openning.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/2024-06-21/61e8a446-db23-446f-ac58-8825030aeaa5_BTOBBB.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload/2024-06-21/eb9ab2cd-0b15-44f0-9651-99f905a5b09d_비투비(BTOB)의 킬링보이스.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/lectures.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/upload.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/videoPlayer.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/videostreaming/VideoStreamingApplicationTests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="video-streaming" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2i7x9hMqOM4y1jTEmwtW5rTHIF4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Gradle.Build Video Streaming.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;Spring Boot.VideoStreamingApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hyeongcheol/Individual_SpringBoot/Video Streaming/src/main/resources/static/images&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/static/images" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static" />
+      <recent name="$PROJECT_DIR$/src/main/resources/templates" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="VideoStreamingApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="video-streaming.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.videostreaming.VideoStreamingApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17890.1" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17890.1" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b885f0e3-5439-4be8-85ec-d9d8be535808" name="Changes" comment="" />
+      <created>1718855269354</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1718855269354</updated>
+      <workItem from="1718855270799" duration="2357000" />
+      <workItem from="1718862618224" duration="6926000" />
+      <workItem from="1718885886330" duration="2746000" />
+      <workItem from="1718942905023" duration="1208000" />
+      <workItem from="1719150712931" duration="459000" />
+      <workItem from="1719204977839" duration="1661000" />
+      <workItem from="1719207948246" duration="3466000" />
+      <workItem from="1719212032936" duration="6340000" />
+      <workItem from="1719228468911" duration="11208000" />
+      <workItem from="1719274447720" duration="2058000" />
+      <workItem from="1719276820634" duration="1233000" />
+      <workItem from="1719278134962" duration="1219000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="플레이어" />
+    <option name="LAST_COMMIT_MESSAGE" value="플레이어" />
+  </component>
+</project>

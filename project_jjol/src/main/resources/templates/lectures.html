@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lecture List</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+    body {
+        background-color: #FFFFFF;
+        color: #2C3E50;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        padding-top: 80px;
+    }
+    .navbar {
+        background-color: #FFFFFF;
+        border-bottom: 1px solid #E0E0E0;
+        padding: 10px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        height: 80px;
+    }
+    .navbar-left {
+        display: flex;
+        align-items: center;
+    }
+    .navbar-brand img {
+        height: 40px;
+    }
+    .navbar-nav {
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+    }
+    .navbar-nav .nav-item .nav-link {
+        color: #2C3E50 !important;
+        font-weight: 500;
+        margin-right: 20px;
+    }
+    .navbar-nav .nav-item .nav-link:hover {
+        color: #1E90FF !important;
+    }
+    .search-form {
+        display: flex;
+        align-items: center;
+        position: relative;
+        justify-content: center;
+        width: 30%;
+    }
+    .search-form input {
+        width: 100%;
+        max-width: 600px;
+        border: 1px solid #E0E0E0;
+        border-radius: 20px;
+        padding: 5px 15px;
+        padding-right: 40px;
+    }
+    .search-form button {
+        background: none;
+        border: none;
+        color: #2C3E50;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 0;
+        cursor: pointer;
+        margin: 0;
+    }
+    .icon-links {
+        display: flex;
+        justify-content: flex-end;
+        margin-left: 200px;
+    }
+    .icon-links a {
+        color: #2C3E50;
+        margin-right: 15px;
+        font-size: 1.2rem;
+    }
+    .icon-links a:hover {
+        color: #1E90FF;
+    }
+    
+    /* Hero Section Styles */
+    .hero-section {
+        background: linear-gradient(135deg, #3498db 0%, #9b59b6 100%);
+        color: white;
+        padding: 100px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .hero-section .container {
+        position: relative;
+        z-index: 2;
+    }
+    .hero-title {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+        animation: fadeInDown 1s ease-in-out;
+    }
+    .hero-subtitle {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+        animation: fadeInUp 1s ease-in-out;
+    }
+    .btn-hero {
+        background-color: #E74C3C;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        animation: fadeIn 1.5s ease-in-out;
+    }
+    .btn-hero:hover {
+        background-color: #C0392B;
+    }
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: -100px;
+        left: -100px;
+        width: 300%;
+        height: 300%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
+        z-index: 1;
+        animation: rotate 20s linear infinite;
+    }
+    
+    /* Lecture List Section Styles */
+    .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        font-weight: 700;
+        color: #2C3E50;
+        text-align: center;
+        animation: fadeIn 1s ease-in-out;
+    }
+    .col-lg-custom {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+    .lecture-card {
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    .lecture-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .lecture-card img {
+        border-radius: 10px 10px 0 0;
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    .lecture-card .card-body {
+        padding: 20px;
+    }
+    .lecture-card .card-title {
+        font-size: 1.8rem;
+        color: #2C3E50;
+        margin-bottom: 15px;
+    }
+    .lecture-card .card-text {
+        font-size: 1rem;
+        color: #7F8C8D;
+        margin-bottom: 20px;
+    }
+    .btn-info {
+        background-color: #3498DB;
+        border: none;
+    }
+    .btn-info:hover {
+        background-color: #2980B9;
+    }
+    
+    /* Footer Styles */
+    .footer {
+        background-color: #2C3E50;
+        color: white;
+        padding: 40px 0;
+        margin-top: 40px;
+    }
+    .footer .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .footer .container .column {
+        flex: 1;
+        min-width: 200px;
+        margin: 20px;
+    }
+    .footer .container .column h5 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+    }
+    .footer .container .column ul {
+        list-style: none;
+        padding: 0;
+    }
+    .footer .container .column ul li {
+        margin-bottom: 10px;
+    }
+    .footer .container .column ul li a {
+        color: #bdc3c7;
+        text-decoration: none;
+    }
+    .footer .container .column ul li a:hover {
+        color: #ffffff;
+    }
+    .footer .social-icons {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .footer .social-icons a {
+        color: white;
+        margin: 0 10px;
+        font-size: 1.5rem;
+    }
+    .footer .social-icons a:hover {
+        color: #3498DB;
+    }
+    .footer .bottom-text {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.9rem;
+    }
+    
+    /* Animation Keyframes */
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="navbar-left">
+        <a class="navbar-brand ms-5" href="/"><img th:src="@{/images/mainlogo.png}" alt="Logo"></a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/lectures">강의</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">로드맵</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/chat">채팅</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">커뮤니티</a>
+            </li>
+        </ul>
+    </div>
+    <form class="search-form" action="/lectures/search" method="get">
+        <input type="text" class="form-control" name="keyword" placeholder="나의 진짜 성장을 도와줄 실무 강의를 찾아보세요">
+        <button type="submit"><i class="fas fa-search"></i></button>
+    </form>
+    <div class="icon-links">
+	    <!-- 로그인 상태가 아닐 때 로그인 링크를 표시 -->
+	    <div th:if="${session.loggedInUser == null}">
+	        <a href="/login" class="ms-3"><i class="fas fa-user"></i></a>
+	        <a href="register" class="ms-3"><i class="fas fa-user-plus"></i></a> <!-- 회원가입 아이콘 추가 -->
+	    </div>
+	    <!-- 로그인 상태일 때 로그아웃 링크를 표시 -->
+	    <div th:if="${session.loggedInUser != null}">
+	    	<span th:text="'안녕하세요!  ' + ${session.loggedInUser.name} + '  님'"></span>
+	        <a href="/logout" class="ms-3"><i class="fas fa-sign-out-alt"></i></a>
+	        <a href="/mypage" class="ms-3"><i class="fas fa-user-circle"></i></a> <!-- 마이페이지 아이콘 추가 -->
+	    </div>
+	</div>
+</nav>
+
+<section class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">JJol 온라인 학습 혁신</h1>
+        <p class="hero-subtitle">최고의 강의로 여러분의 미래를 설계하세요. 지금 바로 시작하세요!</p>
+        <a href="/lectures/upload" class="btn btn-primary btn-hero">강의 업로드</a>
+    </div>
+</section>
+
+
+<div class="container mt-5">
+    <div class="content">
+        <h2 class="section-title">강의 목록</h2>
+        <div class="row">
+            <div class="col-lg-custom mb-4" th:each="lecture : ${lectures}">
+                <div class="card lecture-card">
+                    <img class="card-img-top" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${lecture.lectureTitle}">강의 제목</h5>
+                        <p class="card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
+                        <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-info btn-block">강의 상세정보</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="column">
+            <h5>JJol</h5>
+            <ul>
+                <li><a href="#">JJol 소개</a></li>
+                <li><a href="#">JJol 피드</a></li>
+                <li><a href="#">수강평 모아보기</a></li>
+                <li><a href="#">블로그</a></li>
+            </ul>
+        </div>
+        <div class="column">
+            <h5>신청하기</h5>
+            <ul>
+                <li><a href="#">지식공유참여</a></li>
+                <li><a href="#">멘토링 소개</a></li>
+                <li><a href="#">JJol 비즈니스</a></li>
+                <li><a href="#">JJol 제휴</a></li>
+            </ul>
+        </div>
+        <div class="column">
+            <h5>코드 등록</h5>
+            <ul>
+                <li><a href="#">수강코드 등록</a></li>
+                <li><a href="#">포인트코드 등록</a></li>
+            </ul>
+        </div>
+        <div class="column">
+            <h5>고객센터</h5>
+            <ul>
+                <li><a href="#">공지사항</a></li>
+                <li><a href="#">자주 묻는 질문</a></li>
+                <li><a href="#">저작권 신고센터</a></li>
+                <li><a href="#">수료증 확인</a></li>
+                <li><a href="#">강의 · 기능요청</a></li>
+            </ul>
+        </div>
+        <div class="column">
+            <h5>JJol Lab</h5>
+            <ul>
+                <li><a href="#">JJol</a></li>
+                <li><a href="#">With us</a></li>
+                <li><a href="#">JJol 스토리</a></li>
+                <li><a href="#">JJol 테크</a></li>
+                <li><a href="#">IT 인재 채용 서비스</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <div class="bottom-text">
+        <p>&copy; 2024 JJol. All rights reserved.</p>
+    </div>
+</footer>
+
+<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
