@@ -6,19 +6,19 @@
 </head>
 <body>
 	<div layout:fragment="content" class="row" id="global-content">
-		<h2>Add New Notification</h2>
+		<h2>새로운 알림 생성</h2>
 		<form action="#" th:action="@{/notifications}"
 			th:object="${notification}" method="post">
 			<label for="subject">Subject:</label> <input type="text" id="subject"
 				name="subject" required> <br> 
-				<label for="examDate">Exam Date:</label> <input type="date" id="examDate"
+				<label for="examDate">시험 날짜:</label> <input type="date" id="examDate"
 				name="examDate" required> <br>
-			<button type="submit">Add Notification</button>
+			<button type="submit">알림 생성하기</button>
 		</form>
 
 		<hr>
 
-		<h2>Notify Exam</h2>
+		<h2>시험 알림 받기</h2>
 		<form th:action="@{/notifications/notify}" method="post">
 			<label for="to">Recipient Email:</label> <input type="email" id="to"
 				name="to" required> <br> <label for="notificationId">Notification

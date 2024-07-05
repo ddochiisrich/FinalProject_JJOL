@@ -278,7 +278,21 @@
         }
     }
 </style>
-
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 다가오는 시험이 있는지 확인하고 팝업창을 띄우는 로직 (수정된 부분)
+            /*<![CDATA[*/
+            var upcomingNotifications = /*[[${upcomingNotifications}]]*/ [];
+            if (upcomingNotifications.length > 0) {
+                var message = "다가오는 시험이 있습니다:\n";
+                upcomingNotifications.forEach(function(notification) {
+                    message += notification.subject + " - " + notification.examDate + "\n";
+                });
+                alert(message);
+            }
+            /*]]>*/
+        });
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light">
@@ -296,6 +310,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">커뮤니티</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="/notifications/form">알림</a>
             </li>
             <li class="nav-item">
 					<!-- 로그인 여부에 따라 자료실 링크 변경 -->

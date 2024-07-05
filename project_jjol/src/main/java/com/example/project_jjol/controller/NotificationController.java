@@ -17,6 +17,13 @@ public class NotificationController {
 
     @Autowired
     private NotificationService notificationService;
+    
+    // 메인 페이지로 이동할 때 다가오는 시험 확인 (수정된 부분)
+    @GetMapping("/")
+    public String lectures(Model model) {
+        model.addAttribute("upcomingNotifications", notificationService.getUpcomingNotifications());
+        return "lectures";  // "templates/lectures.html" 원래 메인페이지로 반환
+    }
 
     @GetMapping("/form")
     public String showNotificationForm(Model model) {
