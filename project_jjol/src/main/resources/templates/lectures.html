@@ -359,7 +359,7 @@
 					<a class="nav-link" href="#">커뮤니티</a>
 				</li>
 				<li class="nav-item">
-					<!-- 로그인되어 있을 경우 -->
+					<!-- 로그x인되어 있을 경우 -->
 					<a th:if="${session.loggedInUser != null}" th:href="@{/DataSharing}" class="nav-link">자료실</a>
 					<!-- 로그인되어 있지 않을 경우 -->
 					<a th:if="${session.loggedInUser == null}" th:href="@{/login}" class="nav-link">자료실</a>
@@ -383,6 +383,18 @@
 			<input type="text" class="form-control" name="keyword" placeholder="나의 진짜 성장을 도와줄 실무 강의를 찾아보세요">
 			<button type="submit"><i class="fas fa-search"></i></button>
 		</form>
+		<!--/* 시험 알림 서비스 */-->
+		 <div>
+        <h2>다가오는 시험</h2>
+        <ul>
+            <!-- 다가오는 시험 리스트를 표시하는 부분 (수정된 부분) -->
+            <li th:each="notification : ${upcomingNotifications}">
+                <span th:text="${notification.subject}"></span> - 
+                <span th:text="${notification.examDate}"></span>
+                <span th:text="${#dates.createNow().until(notification.examDate, java.time.temporal.ChronoUnit.DAYS)} + '일 남음'"></span>
+            </li>
+        </ul>
+    </div>
 		<div class="icon-links">
 			<!-- 로그인 상태가 아닐 때 로그인 링크를 표시 -->
 			<div th:if="${session.loggedInUser == null}">
