@@ -3,40 +3,51 @@ $(function() {
 	const lectureName = $("#lecture0").text();
 	const price = parseInt($("#price0").text(), 10);
 	const lectureId = parseInt($("#lectureId0").val(), 10);
+	const userId = $("#userId").val();
 	
 	// 결제
 	$("#payBt").on("click", async function() {
 		
-		// 검증 요청
-		const response = await fetch('/api/payment/validate', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			body: new URLSearchParams({
-				lectureIds: lectureId,
-				totalAmout: price
-			})
+		const merchantUid = `merchant_${crypto.randomUUID()}`; 
+		
+		IMP.init("imp62227326");
+		IMP.request_pay({
+			pg: "kakaopay",
+			pay_method: "kakaopay",
+			merchant_uid: merchantUid,
+			name: lectureName,
+			amount: price,
+			buyer_name: userId,
+			lecture_id: lectureId
+		}, function (rsp) {
+			if (rsp.success) {
+				console.log(rsp);
+				console.log(userId);
+				var data = "price=" + price + "&userId=" + userId + "&lectureId="+lectureId;
+				// db 저장 위해 서버(controller)로 데이터 전송
+				$.ajax({
+					url: '/addPayment',
+					type: 'POST',
+					dataType: 'json',
+					contentType: 'application/json',
+					data: data,
+					success: function() {
+						alert('ajax 작동');
+					},
+					error: function() {
+						alert('ajax 에러');
+					}
+				}).done(function(data) {
+					if(rsp.paid_amount === data.response.amount) { // paid_amount를 수정해야 함.
+						alert("결제 성공");
+					} else {
+						alert("결제 실패");
+					}
+				})
+				
+			} else if (rsp.success == false) {
+				alert("결제 실패: " + rsp.error_msg);
+			}
 		})
-		
-		const isValid = await response.json();
-		
-		if (isValid) {
-			// 결제 요청
-			const paymentResponse = await PortOne.requestPayment({
-				storeId: "store-a122dc6d-cdc8-4bd1-aa02-53489e0d886d",
-				channelKey: "channel-key-e373e32c-673e-47a0-acb3-e2d0b096bc6e",
-				paymentId: `payment-${crypto.randomUUID()}`,
-				orderName: lectureName,
-				totalAmount: price,
-				lectureIds: lectureId,
-				currency: "CURRENCY_KRW",
-				payMethod: "EASY_PAY"
-			})
-			
-			// 결제 완료 처리
-		} else {
-			alert('결제 정보가 유효하지 않습니다.');
-		}
-	})
+	});
 })
