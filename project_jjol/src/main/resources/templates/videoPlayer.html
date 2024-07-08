@@ -542,12 +542,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // 진행 바를 업데이트하는 함수
+ 	// 진행 바를 업데이트하는 함수
     function updateProgressBar() {
         let progressPercentage = ((currentChapterOrder) / totalChapters) * 100;
         if (currentChapterOrder === totalChapters) {
             progressPercentage = 100; // 마지막 챕터가 끝나면 100%로 설정
         }
+        console.log("Updating progress bar:", progressPercentage); // 콘솔 로그 추가
         document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
         document.getElementById('progress-info').innerText = `진도율 : ${Math.round(progressPercentage)}%`;
     }
@@ -571,9 +572,10 @@ document.addEventListener("DOMContentLoaded", function() {
         return totalDuration;
     }
 
-    // 현재 시청 시간을 업데이트하는 함수
+ 	// 현재 시청 시간을 업데이트하는 함수
     function updateCurrentTimeDisplay(currentTime, totalDuration) {
         const currentChapterDisplay = `강의 : ${currentChapterOrder} / ${totalChapters}`;
+        console.log("Updating current time display:", currentChapterDisplay); // 콘솔 로그 추가
         document.getElementById('current-time-display').innerText = `${currentChapterDisplay}`;
     }
 
@@ -629,6 +631,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 const chapterElement = document.querySelector(`.lecture[data-chapter-order="${currentChapterOrder}"]`);
                 const chapterId = chapterElement.getAttribute('data-chapter-id');
                 saveCurrentTime(lectureId, chapterId, currentTime, currentChapterOrder);
+                updateCurrentTimeDisplay(currentTime, player.duration());
+                updateProgressBar();
             });
 
             player.on('ended', function() {
@@ -638,7 +642,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 } else {
                     loadChapter(currentChapterOrder, 0);
                 }
+                updateProgressBar();
             });
+            updateProgressBar();
+            const { startTime: totalDuration } = await calculateTotalDuration();
+            updateCurrentTimeDisplay(player.currentTime(), totalDuration); 
         }
     }
 
