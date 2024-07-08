@@ -1,25 +1,25 @@
 package com.example.project_jjol.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.project_jjol.model.Payment;
 import com.example.project_jjol.service.PaymentService;
 
-// hi ㅎㅇㅋㅋ yu
-
 @RestController
-@RequestMapping("/api/payment")
 public class PaymentController {
-
+    
     @Autowired
     private PaymentService paymentService;
 
-    @PostMapping("/validate")
-    public boolean validatePayment(@RequestParam Integer lectureId, @RequestParam Integer totalAmount) {
-        return paymentService.validatePayment(lectureId, totalAmount);
+    @GetMapping("/addPayment")
+    @ResponseBody
+    public void addPayment(Integer price, String userId, Integer lectureId) {
+    	
     }
 }

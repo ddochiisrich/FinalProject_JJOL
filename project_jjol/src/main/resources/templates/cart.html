@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-	<script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script src="js/payment.js"></script>
 </head>
     <style>
@@ -275,6 +275,9 @@
 			<div class="col-3 border">
 				<div class="row border">
 					<div class="col">
+						<form name="checkForm" id="checkForm">
+							<input type="hidden" name="userId" id="userId" th:value="${session.loggedInUser.userId}" />
+						</form>
 						<h5>구매자 정보</h5><hr>
 						<div class="row">
 							<div class="col test-secondary">

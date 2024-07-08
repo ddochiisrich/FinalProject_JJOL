@@ -1,11 +1,13 @@
 package com.example.project_jjol.repository;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+
+import com.example.project_jjol.model.Payment;
 
 @Mapper
 public interface PaymentMapper {
-    @Select("SELECT price FROM payment WHERE lecture_id = #{lectureId}")
-    Integer getPriceByLectureId(Integer lectureId);
+	@Insert("INSERT INTO payment (pay_date, pay_way, price, user_id, lecture_id) "
+			+ "VALUES(NOW(), 'kakaopay', #{price}, #{userId}, #{lectureId})")
+	public void addPayment(Integer price, String userId, Integer lectureId);
 }
