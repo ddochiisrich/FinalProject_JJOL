@@ -324,21 +324,6 @@
 			}
 		}
 	</style>
-	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-			// 다가오는 시험이 있는지 확인하고 팝업창을 띄우는 로직 (수정된 부분)
-			/*<![CDATA[*/
-			var upcomingNotifications = /*[[${upcomingNotifications}]]*/[];
-			if (upcomingNotifications.length > 0) {
-				var message = "다가오는 시험이 있습니다:\n";
-				upcomingNotifications.forEach(function (notification) {
-					message += notification.subject + " - " + notification.examDate + "\n";
-				});
-				alert(message);
-			}
-			/*]]>*/
-		});
-	</script>
 </head>
 
 <body>
@@ -359,7 +344,7 @@
 					<a class="nav-link" href="#">커뮤니티</a>
 				</li>
 				<li class="nav-item">
-					<!-- 로그x인되어 있을 경우 -->
+					<!-- 로그인되어 있을 경우 -->
 					<a th:if="${session.loggedInUser != null}" th:href="@{/DataSharing}" class="nav-link">자료실</a>
 					<!-- 로그인되어 있지 않을 경우 -->
 					<a th:if="${session.loggedInUser == null}" th:href="@{/login}" class="nav-link">자료실</a>
@@ -383,18 +368,16 @@
 			<input type="text" class="form-control" name="keyword" placeholder="나의 진짜 성장을 도와줄 실무 강의를 찾아보세요">
 			<button type="submit"><i class="fas fa-search"></i></button>
 		</form>
-		<!--/* 시험 알림 서비스 */-->
-		 <div>
-        <h2>다가오는 시험</h2>
-        <ul>
-            <!-- 다가오는 시험 리스트를 표시하는 부분 (수정된 부분) -->
-            <li th:each="notification : ${upcomingNotifications}">
-                <span th:text="${notification.subject}"></span> - 
-                <span th:text="${notification.examDate}"></span>
-                <span th:text="${#dates.createNow().until(notification.examDate, java.time.temporal.ChronoUnit.DAYS)} + '일 남음'"></span>
-            </li>
-        </ul>
-    </div>
+<!-- <!—/* 시험 알림 서비스 */—> -->
+<div>
+  <div th:each="notification : ${mostUrgentNotification}">
+    <!-- <span th:text="${notification.userName}"></span> - -->
+    시험 임박! [ D - 
+    <span th:text="${notification.daysUntilExam}"></span> : 
+    <span th:text="${notification.subject}"></span> ]
+  </div>
+</div>
+
 		<div class="icon-links">
 			<!-- 로그인 상태가 아닐 때 로그인 링크를 표시 -->
 			<div th:if="${session.loggedInUser == null}">
@@ -499,6 +482,38 @@
 	</footer>
 
 	<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	  <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 다가오는 시험 알림 데이터 (수정된 부분)
+            const upcomingNotifications = /*[[${upcomingNotifications}]]*/ '[]';
+            const notifications = JSON.parse(upcomingNotifications);
+
+            // 시험 알림 팝업 띄우기 함수
+            function openNotificationPopup(notification) {
+                const popupContent = `
+                    <div>
+                        <h3>${notification.subject}</h3>
+                        <p><strong>시험 일자:</strong> ${notification.examDate}</p>
+                        <p><strong>남은 일 수:</strong> ${notification.daysLeft}일</p>
+                    </div>
+                `;
+                window.open('', 'NotificationPopup', 'width=400,height=300,scrollbars=yes,resizable=yes');
+                const popupWindow = window.open('', 'NotificationPopup');
+                popupWindow.document.body.innerHTML = popupContent;
+            }
+
+            // 알림 리스트 출력 및 팝업 이벤트 추가
+            const notificationList = document.querySelector('nav > div > ul');
+            notifications.forEach(notification => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${notification.subject} - ${notification.examDate} (${notification.daysLeft}일 남음)`;
+                listItem.addEventListener('click', () => {
+                    openNotificationPopup(notification);
+                });
+                notificationList.appendChild(listItem);
+            });
+        });
+    </script>
 </body>
 
 </html>
