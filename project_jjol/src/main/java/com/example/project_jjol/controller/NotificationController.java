@@ -1,13 +1,17 @@
 package com.example.project_jjol.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.project_jjol.model.Notification;
+import com.example.project_jjol.model.User;
 import com.example.project_jjol.service.NotificationService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -15,31 +19,37 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/notifications")
 public class NotificationController {
 
-    @Autowired
-    private NotificationService notificationService;
+    private final NotificationService notificationService;
     
-    // 메인 페이지로 이동할 때 다가오는 시험 확인 (수정된 부분)
-    @GetMapping("/")
-    public String lectures(Model model) {
-        model.addAttribute("upcomingNotifications", notificationService.getUpcomingNotifications());
-        return "lectures";  // "templates/lectures.html" 원래 메인페이지로 반환
+    @GetMapping("/notificationList")
+    public String showNotifications(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser != null) {
+            String userId = loggedInUser.getUserId();
+            List<Notification> notifications = notificationService.getNotificationsByUserId(userId);
+            model.addAttribute("notifications", notifications);
+        }
+       return "notificationList";
     }
-
+    
     @GetMapping("/form")
-    public String showNotificationForm(Model model) {
+    public String NotificationForm(Model model) {
         model.addAttribute("notification", new Notification());
         return "notificationForm";  // "templates/notificationForm.html"를 반환
     }
-
-    @PostMapping
-    public String createNotification(@ModelAttribute("notification") Notification notification) {
-        notificationService.createNotification(notification);
-        return "redirect:/notifications/form";
-    }
-
+    
+   
     @PostMapping("/notify")
-    public String notifyNotification(@RequestParam String to, @RequestParam Long notificationId) {
-        notificationService.notifyNotification(notificationId, to);
-        return "redirect:/notifications/form";
+    public String notifyNotification(Notification notification, HttpSession session) {
+    	
+    	System.out.println("NotificationController : " + notification.getSubject() + " / " + notification.getUserName());
+    	
+    	User user = (User)session.getAttribute("loggedInUser");
+    	notification.setUserName(user.getUserId());
+    	
+    	System.out.println(user.getUserId());
+    	
+        notificationService.createNotification(notification);
+        return "redirect:/notifications/form"; // 알림 추가 후 원래 form 페이지로 리다이렉트
     }
 }

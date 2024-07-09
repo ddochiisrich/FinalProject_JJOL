@@ -22,12 +22,14 @@ import com.example.project_jjol.model.Lecture;
 import com.example.project_jjol.model.LectureAnswer;
 import com.example.project_jjol.model.LectureQuestion;
 import com.example.project_jjol.model.LectureReview;
+import com.example.project_jjol.model.Notification;
 import com.example.project_jjol.model.User;
 import com.example.project_jjol.service.LectureAnswerService;
 import com.example.project_jjol.service.LectureApplicationService;
 import com.example.project_jjol.service.LectureQuestionService;
 import com.example.project_jjol.service.LectureReviewService;
 import com.example.project_jjol.service.LectureService;
+import com.example.project_jjol.service.NotificationService;
 import com.example.project_jjol.service.S3Service;
 
 import jakarta.servlet.http.HttpSession;
@@ -54,6 +56,29 @@ public class LectureController {
 
     @Autowired
     private LectureAnswerService lectureAnswerService;
+    
+    @Autowired
+    private final NotificationService notificationService;
+
+    @GetMapping("/lectures")
+    public String lectureList(Model model, HttpSession session) {
+        // 세션에서 로그인된 사용자 정보 가져오기
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+        // 로그인된 사용자가 있는 경우에만 처리
+        if (loggedInUser != null) {
+            // 사용자 이름 가져오기
+            String userId = loggedInUser.getUserId(); // 혹은 다른 사용자 식별자 필드
+
+            // 가장 임박한 알림 추가
+            model.addAttribute("mostUrgentNotification", notificationService.getMostUrgentNotification(userId));
+        }
+
+        // 강의 리스트 추가
+        model.addAttribute("lectures", lectureService.getAllLectures());
+
+        return "lectures";  // "templates/lectures.html" 반환
+    }
 
     @GetMapping("/lectures/search")
     public String searchLectures(@RequestParam("keyword") String keyword, Model model) {
@@ -82,14 +107,6 @@ public class LectureController {
         lectureReviewService.addReview(review);
 
         return "redirect:/lectures/detail/" + lectureId;
-    }
-
-
-
-    @GetMapping("/lectures")
-    public String lectureList(Model model) {
-        model.addAttribute("lectures", lectureService.getAllLectures());
-        return "lectures";
     }
 
     @GetMapping("/lectures/detail/{id}")
