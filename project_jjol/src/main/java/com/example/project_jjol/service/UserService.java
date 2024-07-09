@@ -29,6 +29,10 @@ public class UserService {
 
     @Autowired
     private CertificateMapper certificateMapper;
+    
+    public User findByEmailAndProvider(String email, String provider) {
+        return userMapper.findByEmailAndProvider(email, provider);
+    }
 
     public void saveUser(User user) {
         userMapper.saveUser(user);
@@ -37,7 +41,7 @@ public class UserService {
     public User findById(String userId) {
         return userMapper.findById(userId);
     }
-
+    
     public List<Lecture> getLecturesByUserId(String userId) {
         return lectureApplicationMapper.findLecturesByUserId(userId);
     }

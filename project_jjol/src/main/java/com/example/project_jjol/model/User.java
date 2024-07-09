@@ -18,4 +18,5 @@ public class User {
     private String role; // "student" 또는 "instructor" 역할 구분
     private int point;
     private Timestamp regDate;
+    private String provider;
 }
