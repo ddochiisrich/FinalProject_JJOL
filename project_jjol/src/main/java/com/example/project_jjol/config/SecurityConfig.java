@@ -37,7 +37,15 @@ public class SecurityConfig {
                     )
                     .defaultSuccessUrl("/lectures", true)
                     .failureHandler(customAuthenticationFailureHandler());
-            });
+            })
+        
+	        .logout(logout -> {
+	            logout
+	                .logoutUrl("/logout")
+	                .logoutSuccessUrl("/lectures")
+	                .invalidateHttpSession(true)
+	                .deleteCookies("JSESSIONID");
+	        });
 
         return http.build();
     }
