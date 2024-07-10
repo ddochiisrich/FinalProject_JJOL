@@ -218,7 +218,7 @@
                             <h3>수강평</h3>
                             <div th:if="${hasApplied}">
                                 <form th:action="@{/lectures/review}" method="post" onsubmit="localStorage.setItem('activeTab', '#reviews');">
-								    <input type="hidden" name="lectureId" th:value="${lecture.lectureId}" id="lectureId">
+								    <input type="hidden" name="lectureId" th:value="${lecture.lectureId}">
 								    <div class="form-group">
 								        <label for="rating">별점 (0.5~5.0)</label>
 								        <select class="form-control" id="rating" name="rating" required>
@@ -364,6 +364,7 @@
 				</div>
                 <h5 class="mt-5">구매자 정보</h5>
                 <input type="hidden" name="userId" th:value="${loggedInUser.userId}" id="userId"/>
+                <input type="hidden" th:value="${lecture.lectureId}" id="lectureId"/>
                 <div class="row">
                 	<div class="col test-secondary">
 						<span>이름</span><br>

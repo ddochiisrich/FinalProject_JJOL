@@ -45,11 +45,12 @@ $(function() {
 	// 결제
 	const userId = $("#userId").val();
 	const lectureTitle = $("#lectureTitle").text();
-	const lectureId = parseInt($("#lectureId").val());
+	const lectureId = $("#lectureId").val();
 	
 	$("#payBt").on("click", function() {
-		const lecturePirceAfterPoint = parseInt($('#priceAfterPoint').text());
-		const merchantUid = `merchant_${crypto.randomUUID()}`; 
+		var havePoint = parseInt($("#havePoint").text());
+		const lecturePriceAfterPoint = parseInt($('#priceAfterPoint').text());
+		const merchantUid = `merchant_${crypto.randomUUID()}`;
 		
 		IMP.init("imp62227326");
 		IMP.request_pay({
@@ -57,19 +58,20 @@ $(function() {
 			pay_method: "kakaopay",
 			merchant_uid: merchantUid,
 			name: lectureTitle,
-			amount: lecturePirceAfterPoint,
+			amount: lecturePriceAfterPoint,
 			buyer_name: userId,
 			lecture_id: lectureId
 		}, function (rsp) {
 			if(rsp.success) {
-				alert('결제성공!');
 				const dataToSend = {
 			        userId: userId,
 			        lectureTitle: lectureTitle,
 			        lectureId: lectureId,
-			        lecturePrice: lecturePirceAfterPoint
+			        lecturePrice: lecturePriceAfterPoint,
+					point: havePoint
 			    };
 				
+				// 서버(controller)에 정보 전달
 				$.ajax({
 			        type: "POST",
 			        url: "/addPayment",

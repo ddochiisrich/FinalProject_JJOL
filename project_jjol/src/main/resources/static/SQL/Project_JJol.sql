@@ -20,14 +20,20 @@ CREATE TABLE IF NOT EXISTS admin(
 DROP TABLE IF EXISTS user;
 CREATE TABLE IF NOT EXISTS user(
     user_id VARCHAR(100) PRIMARY KEY,   -- 유저 ID
-    pass VARCHAR(100) NOT NULL,         -- 비밀번호
+    pass VARCHAR(100),                  -- 비밀번호 (소셜 로그인 사용자는 null일 수 있음)
     name VARCHAR(100) NOT NULL,         -- 이름
-    email VARCHAR(100) NOT NULL,        -- 이메일
+    email VARCHAR(100) NOT NULL UNIQUE, -- 이메일 (고유하게 설정)
     phone VARCHAR(100) NOT NULL,        -- 전화번호
     role VARCHAR(50) NOT NULL,          -- 역할 ("student" 또는 "instructor")
     point INTEGER NOT NULL,             -- 포인트
-    reg_date TIMESTAMP DEFAULT NOW()    -- 등록 일자
+    reg_date TIMESTAMP DEFAULT NOW(),   -- 등록 일자
+    provider VARCHAR(50)                -- 소셜 로그인 제공자 (google 등)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+select * from user;
+delete from user where user_id = '123';
+SELECT * FROM user WHERE email = 'laddochisub@gmail.com' AND provider = 'google';
+commit;
 
 -- 강의 테이블
 DROP TABLE IF EXISTS Lecture;
@@ -58,6 +64,8 @@ CREATE TABLE IF NOT EXISTS Chapter (
     FOREIGN KEY (lecture_id) REFERENCES Lecture(lecture_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+select * from chapter;
+
 -- 비디오 테이블
 DROP TABLE IF EXISTS Video;
 CREATE TABLE IF NOT EXISTS Video (
@@ -72,17 +80,20 @@ CREATE TABLE IF NOT EXISTS Video (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 결제 테이블
-DROP TABLE IF EXISTS payment;
-CREATE TABLE IF NOT EXISTS payment(
-    pay_code VARCHAR(100) PRIMARY KEY,                   -- 결제 코드
+DROP TABLE IF EXISTS Payment;
+CREATE TABLE IF NOT EXISTS Payment(
+    pay_code INT AUTO_INCREMENT PRIMARY KEY,                   -- 결제 코드
     pay_date TIMESTAMP DEFAULT NOW(),                    -- 결제 날짜
     pay_way VARCHAR(100) NULL,                           -- 결제 방법
     price INTEGER NOT NULL,                              -- 가격
+    lecture_title VARCHAR(255),                          -- 강의 제목
     user_id VARCHAR(100),                                -- 유저 ID
     lecture_id INT,                                      -- 강의 ID
     FOREIGN KEY(user_id) REFERENCES user(user_id),
     FOREIGN KEY(lecture_id) REFERENCES Lecture(lecture_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+select * from Payment;
 
 -- 강의신청 테이블
 DROP TABLE IF EXISTS LectureApplication;
@@ -108,6 +119,11 @@ CREATE TABLE IF NOT EXISTS LecturePage (
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (chapter_id) REFERENCES Chapter(chapter_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE LecturePage ADD COLUMN last_chapter_order INT DEFAULT 1;
+
+
+select * from lecturepage;
 
 -- 강의평가 테이블
 DROP TABLE IF EXISTS LectureReview;
@@ -265,3 +281,11 @@ CREATE TABLE IF NOT EXISTS Certificate (
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (lecture_id) REFERENCES Lecture(lecture_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS Notification;
+CREATE TABLE Notification (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    subject VARCHAR(255) NOT NULL,
+    user_name VARCHAR(20) NOT NULL,
+    exam_date DATE NOT NULL
+);

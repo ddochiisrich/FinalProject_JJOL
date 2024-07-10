@@ -9,7 +9,14 @@ public class Payment {
     private Integer price;
     private String userId;
     private Integer lectureId;
+    private String lectureTitle;
     
+    public String getLectureTitle() {
+    	return lectureTitle;
+    }
+    public void setLectureTitle(String lectureTitle) {
+    	this.lectureTitle = lectureTitle;
+    }
 	public String getPayCode() {
 		return payCode;
 	}
