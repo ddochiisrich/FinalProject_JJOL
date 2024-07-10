@@ -32,9 +32,6 @@ public class MyLecturesController {
 	@Autowired
 	private MyLecturesService myLecturesService;
 	
-	@Autowired
-    private S3Service s3Service; // S3Service 주입
-			
 	@GetMapping("/myLectures")
 	public String myLectureList(HttpSession session, Model model, HttpServletResponse response) throws IOException {
 		User loggedInUser = (User) session.getAttribute("loggedInUser");

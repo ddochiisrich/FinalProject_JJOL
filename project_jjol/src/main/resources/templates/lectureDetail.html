@@ -6,7 +6,7 @@
     <title>강의 소개 페이지</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <style>
+    <style>    
         body {
             background-color: #FFFFFF;
             font-family: Arial, sans-serif;
@@ -149,6 +149,7 @@
             color: #ffcc00;
         }
     </style>
+
 </head>
 <body>
     <div class="container main-container">
@@ -159,7 +160,7 @@
                 </video>
             </div>
             <div class="course-info">
-                <div class="course-title" th:text="${lecture.lectureTitle}"></div>
+                <div class="course-title" th:text="${lecture.lectureTitle}" id="lectureTitle"></div>
                 <div class="course-details">
                     <div>
                         <i class="fas fa-user"></i> <span th:text="'강사: ' + ${lecture.instructorName}"></span>
@@ -169,6 +170,9 @@
                     </div>
                     <div>
                         <i class="fas fa-users"></i> <span th:text="${numberOfStudents} + '명의 수강생'"></span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-wallet"></i> <span th:text="${lecture.lecturePrice} + '원'"></span>
                     </div>
                     <div>
                         <i class="fas fa-tags"></i> <span>태그: </span><span class="badge badge-primary">Java</span> <span class="badge badge-secondary">Spring</span> <span class="badge badge-success">MVC</span> <span class="badge badge-info">Spring Boot</span>
@@ -214,7 +218,7 @@
                             <h3>수강평</h3>
                             <div th:if="${hasApplied}">
                                 <form th:action="@{/lectures/review}" method="post" onsubmit="localStorage.setItem('activeTab', '#reviews');">
-								    <input type="hidden" name="lectureId" th:value="${lecture.lectureId}">
+								    <input type="hidden" name="lectureId" th:value="${lecture.lectureId}" id="lectureId">
 								    <div class="form-group">
 								        <label for="rating">별점 (0.5~5.0)</label>
 								        <select class="form-control" id="rating" name="rating" required>
@@ -283,7 +287,7 @@
                                 </div>
                                 <div th:if="${loggedInUser.role == 'instructor' and lecture.instructorId == loggedInUser.userId}">
                                     <form th:action="@{/lectures/answers}" method="post">
-                                        <input type="hidden" name="questionId" th:value="${question.id}">
+                                        <input type="hidden" name="questionId" th:value="${question.id}" />
                                         <div class="form-group">
                                             <label for="answerContent">답변</label>
                                             <textarea class="form-control" id="answerContent" name="content" rows="3" required></textarea>
@@ -314,6 +318,9 @@
                         <h5 class="card-title" th:if="${!hasApplied}">수강 신청</h5>
                         <a th:if="${hasApplied}" th:href="@{'/videos/player?lectureId=' + ${lecture.lectureId}}"><button class="btn btn-success btn-block mb-3">학습하기</button></a>
                         <a th:if="${!hasApplied}" th:href="@{'/lectures/apply/' + ${lecture.lectureId}}"><button class="btn btn-primary btn-block mb-3">수강 신청하기</button></a>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">
+                          강의 구매하기
+                        </button>
                         <div class="card-text">
                             <p><strong>지식공유자:</strong> <span th:text="${lecture.instructorName}"></span></p>
                             <p><strong>총 28개 수업:</strong> 5시간 21분</p>
@@ -330,11 +337,82 @@
                 </div>
             </div>
         </div>
+        <!-- 강의 결제 모달 -->
+		<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">강의 구매하기</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              	<h5>강의 정보</h5>
+              	<div class="row">
+              		<div class="col test-secondary">
+						<span>강의명</span><br>
+						<span>강사</span><br>
+						<span>가격</span><br>
+						
+					</div>
+					<div class="col">
+						<span id="lectureTitle">[[ ${lecture.lectureTitle} ]]</span><br>
+						<span>[[ ${lecture.instructorName} ]]</span><br>
+						<span id="lecturePrice" th:text="${lecture.lecturePrice}"></span>원<br>
+					</div>
+				</div>
+                <h5 class="mt-5">구매자 정보</h5>
+                <input type="hidden" name="userId" th:value="${loggedInUser.userId}" id="userId"/>
+                <div class="row">
+                	<div class="col test-secondary">
+						<span>이름</span><br>
+						<span>이메일</span><br>
+						<span>휴대폰 번호</span>
+					</div>
+					<div class="col">
+						<span>[[ ${session.loggedInUser.name} ]]</span><br>
+						<span>[[ ${session.loggedInUser.email} ]]</span><br>
+						<span>[[ ${session.loggedInUser.phone} ]]</span>
+					</div>
+                </div>
+                <div class="row mt-3">
+					<div class="col">
+						<span class="fw-bold">포인트</span>
+						
+					</div>
+					<div class="col text-end">
+						보유(결제 후) <span id="havePoint">[[ ${session.loggedInUser.point} ]]</span>p
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<input type="number" min="0" id="pointInput" />
+						<button class="fw-bold" id="useAllPoint">전액 사용</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<span>포인트 적용 후</span>
+					</div>
+					<div class="col">
+						<span id="priceAfterPoint" th:text="${lecture.lecturePrice}"></span>원
+					</div>
+				</div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-primary" id="payBt">카카오페이 결제</button>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+   	<script src="../../js/payment.js"></script>
     <script>
     $(document).ready(function () {
         // 로컬 스토리지에서 활성 탭 상태를 가져옴
