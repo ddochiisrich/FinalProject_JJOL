@@ -381,12 +381,14 @@
 	</nav>
 
 	<section class="hero-section">
-		<div class="container">
-			<h1 class="hero-title">JJol 온라인 학습 혁신</h1>
-			<p class="hero-subtitle">최고의 강의로 여러분의 미래를 설계하세요. 지금 바로 시작하세요!</p>
-			<a href="/lectures/upload" class="btn btn-primary btn-hero">강의 업로드</a>
-		</div>
-	</section>
+    <div class="container">
+        <h1 class="hero-title">JJol 온라인 학습 혁신</h1>
+        <p class="hero-subtitle">최고의 강의로 여러분의 미래를 설계하세요. 지금 바로 시작하세요!</p>
+        <!-- 강의 업로드 버튼을 조건부로 표시 -->
+        <a th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}" 
+           href="/lectures/upload" class="btn btn-primary btn-hero">강의 업로드</a>
+    </div>
+</section>
 
 
 	<div class="container mt-5">
