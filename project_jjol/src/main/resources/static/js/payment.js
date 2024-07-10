@@ -1,13 +1,54 @@
 $(function() {
-	// 결제 정보 추출(프로토타입용)
-	const lectureName = $("#lecture0").text();
-	const price = parseInt($("#price0").text(), 10);
-	const lectureId = parseInt($("#lectureId0").val(), 10);
-	const userId = $("#userId").val();
+	
+	// 포인트 사용
+	var lecturePrice = parseInt($("#lecturePrice").text());
+	var havePoint = parseInt($("#havePoint").text());
+	var priceAfterPoint = parseInt($("#priceAfterPoint").text());
+	
+	$("#pointInput").on("keyup change", function() {
+		if (lecturePrice > havePoint) {
+	    	$("#pointInput").attr("max", havePoint);
+		} else {
+			$("#pointInput").attr("max", lecturePrice);
+		}
+		
+		var usingPoint = parseInt($("#pointInput").val());
+		
+		if (usingPoint > havePoint) {
+			$("#pointInput").val(havePoint);
+		}
+		if (usingPoint > lecturePrice) {
+			$("#pointInput").val(lecturePrice);
+		}
+		
+		$("#havePoint").text(havePoint - usingPoint);
+		
+		$("#priceAfterPoint").text(priceAfterPoint - usingPoint);
+	})
+	
+	// 전액 사용 버튼
+	$("#useAllPoint").on("click", function() {
+		if (lecturePrice > havePoint) {
+	    	$("#pointInput").attr("max", havePoint);
+			$("#pointInput").val(havePoint);
+		} else {
+			$("#pointInput").attr("max", lecturePrice);
+			$("#pointInput").val(lecturePrice);
+		}
+		var usingPoint = parseInt($("#pointInput").val());
+		$("#havePoint").text(havePoint - usingPoint);
+		
+		$("#priceAfterPoint").text(priceAfterPoint - usingPoint);
+	});
+	
 	
 	// 결제
-	$("#payBt").on("click", async function() {
-		
+	const userId = $("#userId").val();
+	const lectureTitle = $("#lectureTitle").text();
+	const lectureId = parseInt($("#lectureId").val());
+	
+	$("#payBt").on("click", function() {
+		const lecturePirceAfterPoint = parseInt($('#priceAfterPoint').text());
 		const merchantUid = `merchant_${crypto.randomUUID()}`; 
 		
 		IMP.init("imp62227326");
@@ -15,38 +56,35 @@ $(function() {
 			pg: "kakaopay",
 			pay_method: "kakaopay",
 			merchant_uid: merchantUid,
-			name: lectureName,
-			amount: price,
+			name: lectureTitle,
+			amount: lecturePirceAfterPoint,
 			buyer_name: userId,
 			lecture_id: lectureId
 		}, function (rsp) {
-			if (rsp.success) {
-				console.log(rsp);
-				console.log(userId);
-				var data = "price=" + price + "&userId=" + userId + "&lectureId="+lectureId;
-				// db 저장 위해 서버(controller)로 데이터 전송
-				$.ajax({
-					url: '/addPayment',
-					type: 'POST',
-					dataType: 'json',
-					contentType: 'application/json',
-					data: data,
-					success: function() {
-						alert('ajax 작동');
-					},
-					error: function() {
-						alert('ajax 에러');
-					}
-				}).done(function(data) {
-					if(rsp.paid_amount === data.response.amount) { // paid_amount를 수정해야 함.
-						alert("결제 성공");
-					} else {
-						alert("결제 실패");
-					}
-				})
+			if(rsp.success) {
+				alert('결제성공!');
+				const dataToSend = {
+			        userId: userId,
+			        lectureTitle: lectureTitle,
+			        lectureId: lectureId,
+			        lecturePrice: lecturePirceAfterPoint
+			    };
 				
-			} else if (rsp.success == false) {
-				alert("결제 실패: " + rsp.error_msg);
+				$.ajax({
+			        type: "POST",
+			        url: "/addPayment",
+					contentType: "application/json",
+			        data: JSON.stringify(dataToSend),
+			        dataType: "json",
+			        success: function(response) {
+			            alert('Controller에 데이터 전송 성공');
+			            console.log(response);
+			        },
+			        error: function(xhr, status, error) {
+						alert('controller에 전송 실패');
+			            console.error("Controller에 데이터 전송 실패", xhr.responseText, status, error);
+			        }
+			    });
 			}
 		})
 	});
