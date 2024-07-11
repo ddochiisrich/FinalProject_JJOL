@@ -1,10 +1,12 @@
 package com.example.project_jjol.repository;
 
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.example.project_jjol.model.Notification;
 
@@ -31,4 +33,20 @@ public interface NotificationMapper {
     // 가장 임박한 알림 가져오는 메서드 추가
 	@Select("SELECT *, DATEDIFF(exam_date, CURDATE()) AS daysUntilExam FROM notification WHERE user_name = #{userId} AND exam_date >= CURDATE() ORDER BY exam_date ASC LIMIT 1")
     Notification findMostUrgentNotification(@Param("userId") String userId);
+	
+	// 알림 삭제 기능 구현
+	@Delete("DELETE FROM notification WHERE id = #{id}")
+	void deleteById(@Param("id") Long id);
+
+	// 특정 사용자의 알림 목록 조회
+	@Select("SELECT * FROM notification WHERE user_name = #{userId}") 
+	List<Notification> findByUserName(@Param("userId")String userId);
+	
+	// 특정 알림 목록 조회
+	@Select("SELECT * FROM notification WHERE id = #{notificationId}") 
+	List<Notification> findByNotification(@Param("notificationId")String notificationId);
+
+	 // 기존에 존재하는 알림 업데이트
+    @Update("UPDATE notification SET subject = #{subject}, exam_date = #{examDate} WHERE id = #{id}")
+    void updateNotification(Notification notification);
 }

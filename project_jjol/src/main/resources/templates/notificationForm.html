@@ -3,19 +3,138 @@
 <head>
 <meta charset="UTF-8">
 <title>Notification Management</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function confirmDeletion() {
+        return confirm("정말 이 알림을 삭제하시겠습니까?");
+    }
+    function openUpdateModal(button) {
+        const id = button.getAttribute('data-id');
+        const subject = button.getAttribute('data-subject');
+        const examDate = button.getAttribute('data-examdate');
+
+        document.getElementById('updateNotificationId').value = id;
+        document.getElementById('updateSubject').value = subject;
+        document.getElementById('updateExamDate').value = examDate;
+        
+        // 숨은 필드의 값을 설정
+        document.getElementById('notificationId').value = id;
+
+        $('#updateModal').modal('show');
+    }
+        
+    function changeSorting() {
+        var sortOption = document.getElementById('sortSelect').value;
+        var url = '/notifications/form';
+        if (sortOption !== 'default') {
+            url += '?sort=' + sortOption;
+        }
+        window.location.href = url;
+    }
+</script>
 </head>
 <body>
+<!-- 알림 추가 및 생성 -->
 <div layout:fragment="content" class="row" id="global-content">
-    <h2>새로운 알림 만들기</h2>
-    <form th:action="@{notify}" th:object="${notification}" method="post">
-        <label for="subject">과 목 : </label>
-        <input type="text" id="subject" name="subject" th:field="*{subject}" required> <br> 
-        <label for="examDate">시험 날짜 : </label>
+    <h2>새로운 알림 만들기</h2> <br> <br>
+    <form th:action="@{/notifications/notify}" th:object="${notification}" method="post">
+        <label for="subject">과목: </label>
+        <input type="text" id="subject" name="subject" th:field="*{subject}" required> <br>
+        <label for="examDate">시험 날짜: </label>
         <input type="date" id="examDate" name="examDate" th:field="*{examDate}" required> <br>
-        <button type="submit">알림 생성</button>
-        <button onclick="window.location.href='/lectures'" class="btn btn-primary mt-3">메인 페이지로 돌아가기</button>
+        <button type="submit" class="btn btn-primary">알림 생성</button>
     </form>
 </div>
 
+<hr>
+
+<!-- 알림 목록 -->
+<div class="col-md-6">
+    <h2>알림 목록</h2>
+    
+     <!-- 정렬 옵션 -->
+    <form action="#" class="form-inline mb-2">
+        <label for="sortSelect" class="mr-2">정렬:</label>
+        <select id="sortSelect" class="form-control mr-2" onchange="changeSorting()">
+            <option value="default" th:selected="${sort eq 'default'}">기본 정렬</option>
+            <option value="subject" th:selected="${sort eq 'subject'}">과목 순</option>
+            <option value="examDate" th:selected="${sort eq 'examDate'}">시험 날짜 순</option>
+            <option value="id" th:selected="${sort eq 'id'}">번호 순</option>
+        </select>
+    </form>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>과목</th>
+                <th>시험 날짜</th>
+                <th>수정 및 삭제</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="notification : ${notifications}">
+                <td th:text="${notification.id}"></td>
+                <td th:text="${notification.subject}"></td>
+                <td th:text="${notification.examDate}"></td>
+                <td>
+                    <button type="button" class="btn btn-warning updateButton"
+                            th:data-id="${notification.id}"
+                            th:data-subject="${notification.subject}"
+                            th:data-examdate="${notification.examDate}"
+                            onclick="openUpdateModal(this)">
+                        수정
+                    </button>
+                    <form th:action="@{/notifications/delete}" method="post" onsubmit="return confirmDeletion()">
+                        <input type="hidden" name="id" th:value="${notification.id}">
+                        <button type="submit" class="btn btn-danger">삭제</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<button onclick="goToMainPage()" class="btn btn-primary mt-3">메인 페이지로 돌아가기</button>
+
+<!-- 수정 모달창 -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">알림 수정</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:action="@{/notifications/update}" method="post">
+                <!-- id를 숨은 필드로 추가 -->
+                <input type="hidden" id="updateNotificationId" name="id">
+                <!-- 숨은 필드로 설정된 notificationId -->
+                <input type="hidden" name="notificationId" id="notificationId" th:value="${notification.id}">
+                <div class="form-group">
+                    <label for="updateSubject">과목: </label>
+                    <input type="text" id="updateSubject" name="subject" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="updateExamDate">시험 날짜: </label>
+                    <input type="date" id="updateExamDate" name="examDate" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">저장</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function goToMainPage() {
+        window.location.href = '/lectures'; // 메인 페이지 URL로 리다이렉션
+    }
+    /*]]>*/
+</script>
 </body>
 </html>
