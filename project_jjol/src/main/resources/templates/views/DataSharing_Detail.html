@@ -1,38 +1,89 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main_layout}">
+
 <body>
-    <th:block layout:fragment="content">
-        <div class="data-sharing-view-main">
-            <div class="data-sharing-view">
-                <div class="data-sharing-view-title-wrap">
-                    <!-- 자료 메인 뷰 -->
-                    <div class="data-sharing-main-view">
-                        <!-- 여기에 필요한 링크 또는 버튼 추가 -->
-                        <a href="#" onclick="javascript:history.back();">뒤로 가기</a>
+<th:block layout:fragment="content">
+    <div class="container data-sharing-detail-main">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card mt-4 data-sharing-detail-card">
+                    <div class="card-header data-sharing-detail-header">
+                        <form name="checkForm" id="checkForm" method="post">
+                            <h3 th:text="${datasharing.dataTitle}">제목 없음</h3>
+                            <input type="hidden" name="dataNo" th:value="${datasharing.dataNo}">
+                        </form>
                     </div>
-                    <!-- 자료 제목과 정보 -->
-                    <div class="data-sharing-view-title">
-                        <h2 class="data-sharing-data-title" th:text="${datasharing.datasharingTitle}">제목 없음</h2>
-                        <dl>
-                            <dt>작성자:</dt>
-                            <dd>JJol</dd>
-                            <dt>작성일:</dt>
-                            <dd th:text="${#dates.format(datasharing.datasharingDate, 'yyyy-MM-dd')}">날짜 없음</dd>
-                        </dl>
+                    <div class="card-body data-sharing-detail-body">
+                        <p class="card-text" th:text="${datasharing.dataContent}">내용 없음</p>
+                        <hr>
+                        <ul class="list-unstyled data-sharing-detail-info">
+                            <li>작성자: <span th:text="${datasharing.dataName}">작성자 없음</span></li>
+                            <li>비밀번호: <span th:text="${datasharing.dataPw}">비밀번호 없음</span></li>
+                            <li>작성일: <span th:text="${#dates.format(datasharing.dataDate, 'yyyy-MM-dd')}">날짜 없음</span></li>
+                            <li>파일 다운로드: 
+                                <a th:href="@{/downloadFile/{fileId}(fileId=${datasharing.dataFile})}"
+                                   th:text="${datasharing.dataFile}">없음</a>
+                            </li>
+                        </ul>
                     </div>
-                    <!-- 자료 다운로드 링크 -->
-                    <div class="data-sharing-file-download">
-                        <a th:href="@{/downloadFile/{fileId}(fileId=${datasharing.datasharingFileId})}"
-                            th:text="${datasharing.datasharingFile}">파일 다운로드</a>
+                    <div class="card-footer data-sharing-detail-footer">
+                        <a href="#" onclick="javascript:history.back();" class="btn btn-secondary">뒤로 가기</a>
+                        <div th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}">
+                            <input class="btn btn-danger" type="button" id="datasharingDelete" value="삭제">
+                            <input class="btn btn-primary" type="button" id="datasharingUpdateForm" value="수정하기 폼으로 이동">
+                        </div>
                     </div>
-                    <!-- 자료 내용 -->
-                    <div class="data-sharing-view-main-content">
-                        <p th:text="${datasharing.datasharingContent}">내용 없음</p>
+                </div>
+            </div>
+
+            <!-- 댓글 작성 폼 -->
+            <div class="row mt-4">
+                <div class="col-lg-12">
+                    <div class="card data-sharing-detail-comment-card">
+                        <div class="card-header">
+                            <h5>댓글</h5>
+                        </div>
+                        <div class="card-body">
+                            <form th:action="@{/comments/datacommentadd}" method="post" id="commentForm">
+                                <input type="hidden" name="dataNo" th:value="${datasharing.dataNo}">
+                                <div class="form-group">
+                                    <label for="commentContent">댓글 내용</label>
+                                    <textarea class="form-control" id="commentContent" name="commentContent" rows="3"
+                                              required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">댓글 등록</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 댓글 목록 -->
+            <div class="row mt-4">
+                <div class="col-lg-12">
+                    <div class="card data-sharing-detail-comment-list-card">
+                        <div class="card-header">
+                            <h5>댓글 목록</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group data-sharing-detail-comment-list">
+                                <!-- 댓글이 존재할 경우 Thymeleaf 반복문으로 출력 -->
+                                <li class="list-group-item" th:each="comment : ${comments}">
+                                    <p th:text="${comment.commentContent}">댓글 내용 없음</p>
+                                    <small>작성자: <span th:text="${comment.commentWriter}">작성자 없음</span></small>
+                                </li>
+                                <!-- 댓글이 없을 경우 -->
+                                <li class="list-group-item" th:if="${#lists.isEmpty(comments)}">
+                                    <p>등록된 댓글이 없습니다.</p>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </th:block>
 </body>
 
