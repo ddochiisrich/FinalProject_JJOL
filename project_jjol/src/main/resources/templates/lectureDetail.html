@@ -172,7 +172,7 @@
                         <i class="fas fa-users"></i> <span th:text="${numberOfStudents} + '명의 수강생'"></span>
                     </div>
                     <div>
-                        <i class="fa-solid fa-wallet"></i> <span th:text="${lecture.lecturePrice} + '원'"></span>
+                        <i class="fa-solid fa-wallet"></i> <span class="lecturePrice" th:text="'가격: ' + ${lecture.lecturePrice} + '원'"></span> <span id="lectureDiscount">(할인 [[ ${lecture.lectureDiscount} ]]% 적용)</span>
                     </div>
                     <div>
                         <i class="fas fa-tags"></i> <span>태그: </span><span class="badge badge-primary">Java</span> <span class="badge badge-secondary">Spring</span> <span class="badge badge-success">MVC</span> <span class="badge badge-info">Spring Boot</span>
@@ -317,10 +317,7 @@
                         <h5 class="card-title" th:if="${hasApplied}">학습중</h5>
                         <h5 class="card-title" th:if="${!hasApplied}">수강 신청</h5>
                         <a th:if="${hasApplied}" th:href="@{'/videos/player?lectureId=' + ${lecture.lectureId}}"><button class="btn btn-success btn-block mb-3">학습하기</button></a>
-                        <a th:if="${!hasApplied}" th:href="@{'/lectures/apply/' + ${lecture.lectureId}}"><button class="btn btn-primary btn-block mb-3">수강 신청하기</button></a>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">
-                          강의 구매하기
-                        </button>
+                        <button th:if="${!hasApplied}" data-toggle="modal" data-target="#paymentModal" class="btn btn-primary btn-block mb-3">수강 신청하기</button>
                         <div class="card-text">
                             <p><strong>지식공유자:</strong> <span th:text="${lecture.instructorName}"></span></p>
                             <p><strong>총 28개 수업:</strong> 5시간 21분</p>
@@ -359,7 +356,8 @@
 					<div class="col">
 						<span id="lectureTitle">[[ ${lecture.lectureTitle} ]]</span><br>
 						<span>[[ ${lecture.instructorName} ]]</span><br>
-						<span id="lecturePrice" th:text="${lecture.lecturePrice}"></span>원<br>
+						<span id="lecturePrice" th:text="${lecture.lecturePrice}"></span>원 <span>(할인 [[ ${lecture.lectureDiscount} ]]% 적용)</span>
+						<br>
 					</div>
 				</div>
                 <h5 class="mt-5">구매자 정보</h5>
@@ -380,7 +378,6 @@
                 <div class="row mt-3">
 					<div class="col">
 						<span class="fw-bold">포인트</span>
-						
 					</div>
 					<div class="col text-end">
 						보유(결제 후) <span id="havePoint">[[ ${session.loggedInUser.point} ]]</span>p
