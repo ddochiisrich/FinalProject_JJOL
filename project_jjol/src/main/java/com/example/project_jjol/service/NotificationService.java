@@ -3,6 +3,7 @@ package com.example.project_jjol.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,8 +53,30 @@ public class NotificationService {
 		
 	}
 
-	public List<Notification> getNotificationsByUserId(String userId) { // 알림 내역 보기 설정
-		
-		return null;
+	public List<Notification> getNotificationsByUserId(String userId) { // 특정 사용자의 알림 목록 조회
+	    return notificationMapper.findByUserName(userId);
+	}
+
+	public void deleteNotificationById(Long id) { // 알림 삭제 기능 구현
+	    notificationMapper.deleteById(id);
+	}
+
+	
+	@Transactional
+	public void updateNotification(Long id, String subject, LocalDate examDate) {
+	    // 1. id를 사용하여 기존의 알림을 찾습니다.
+	    Notification existingNotification = notificationMapper.findById(id);
+	    
+	    // 2. 기존 알림이 존재하는지 확인합니다.
+	    if (existingNotification == null) {
+	        throw new IllegalArgumentException("Notification with id " + id + " not found");
+	    }
+	    
+	    // 3. 알림을 업데이트합니다.
+	    existingNotification.setSubject(subject);
+	    existingNotification.setExamDate(examDate);
+	    
+	    // 4. 매퍼를 사용하여 데이터베이스에 업데이트를 수행합니다.
+	    notificationMapper.updateNotification(existingNotification);
 	}
 }
