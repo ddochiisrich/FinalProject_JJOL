@@ -21,4 +21,12 @@ public class PaymentService {
 	public void updatePoint(User user) {
 		paymentMapper.updatePoint(user);
 	}
+	
+	public int getDiscountedPrice(int lectureId) {
+		return paymentMapper.discountedPrice(lectureId);
+	}
+	
+	public int getUserPoint(int userId) {
+		return paymentMapper.userPoint(userId);
+	}
 }

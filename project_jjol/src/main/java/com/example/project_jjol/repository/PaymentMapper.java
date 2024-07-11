@@ -3,8 +3,10 @@ package com.example.project_jjol.repository;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.example.project_jjol.model.Lecture;
 import com.example.project_jjol.model.Payment;
 import com.example.project_jjol.model.User;
 
@@ -19,4 +21,10 @@ public interface PaymentMapper {
 	@Update("UPDATE User SET point = #{point} WHERE user_id = #{userId}")
 	void updatePoint(User user);
 	
+	@Select("SELECT lecture_price - (lecture_price * lecture_discount / 100) "
+			+ "FROM Lecture WHERE lecture_id = #{lectureId}")
+	int discountedPrice(int lectureId);
+	
+	@Select("SELECT point FROM User WHERE user_id = #{userId}")
+	int userPoint(int userId);
 }

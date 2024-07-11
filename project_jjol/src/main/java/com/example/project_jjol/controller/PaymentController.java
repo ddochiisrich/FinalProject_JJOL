@@ -22,35 +22,45 @@ public class PaymentController {
 	@PostMapping("addPayment")
 	public ResponseEntity<Map<String, Object>> addPayment(@RequestBody Map<String, Object> requestData) {
 		
-		// DB 기록
-		String userId = (String) requestData.get("userId");
-		// Payment table
-		String lectureTitle = (String) requestData.get("lectureTitle");
-        int price = Integer.parseInt(requestData.get("lecturePrice").toString());
+		// ajax 데이터 추출
         int lectureId = Integer.parseInt(requestData.get("lectureId").toString());
+        String userId = (String) requestData.get("userId");
+        String lectureTitle = (String) requestData.get("lectureTitle");
+        int finalPriceFromView = Integer.parseInt(requestData.get("lecturePrice").toString());
+        int point = Integer.parseInt(requestData.get("point").toString());
+        int usedPoint = Integer.parseInt(requestData.get("usingPoint").toString());
         
+        // DB 기록(Payment table)
         Payment payment = new Payment();
         payment.setLectureId(lectureId);
-        payment.setPrice(price);
+        payment.setPrice(finalPriceFromView);
         payment.setUserId(userId);
         payment.setLectureTitle(lectureTitle);
         
         paymentService.savePayment(payment);
         
-        // User table(포인트 반영)
-        int point = Integer.parseInt(requestData.get("point").toString());
         
+        // DB 기록(User table에 포인트 반영)
         User user = new User();
         user.setUserId(userId);
         user.setPoint(point);
         
+        int pointBeforePayment = paymentService.getUserPoint(usedPoint); // 결제검증 위함
         paymentService.updatePoint(user);
+        int currentPoint = paymentService.getUserPoint(usedPoint); // 결제검증 위함
         
-        // 응답 데이터 구성
+        // 결제 검증
+        int discountedPriceFromDB = paymentService.getDiscountedPrice(lectureId);
+        
+        if((finalPriceFromView != (discountedPriceFromDB - usedPoint))
+        		&& ((pointBeforePayment - usedPoint) != currentPoint)) {
+        	// 결제 취소
+        }
+        
+        // 응답 데이터
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Data received successfully");
         response.put("status", "success");
-
         return ResponseEntity.ok(response);
 	}
 }
