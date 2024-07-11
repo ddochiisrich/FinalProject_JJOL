@@ -30,11 +30,6 @@ CREATE TABLE IF NOT EXISTS user(
     provider VARCHAR(50)                -- 소셜 로그인 제공자 (google 등)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-select * from user;
-delete from user where user_id = '123';
-SELECT * FROM user WHERE email = 'laddochisub@gmail.com' AND provider = 'google';
-commit;
-
 -- 강의 테이블
 DROP TABLE IF EXISTS Lecture;
 CREATE TABLE Lecture (
@@ -64,8 +59,6 @@ CREATE TABLE IF NOT EXISTS Chapter (
     FOREIGN KEY (lecture_id) REFERENCES Lecture(lecture_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-select * from chapter;
-
 -- 비디오 테이블
 DROP TABLE IF EXISTS Video;
 CREATE TABLE IF NOT EXISTS Video (
@@ -82,7 +75,7 @@ CREATE TABLE IF NOT EXISTS Video (
 -- 결제 테이블
 DROP TABLE IF EXISTS Payment;
 CREATE TABLE IF NOT EXISTS Payment(
-    pay_code INT AUTO_INCREMENT PRIMARY KEY,                   -- 결제 코드
+    pay_code INT AUTO_INCREMENT PRIMARY KEY,             -- 결제 코드
     pay_date TIMESTAMP DEFAULT NOW(),                    -- 결제 날짜
     pay_way VARCHAR(100) NULL,                           -- 결제 방법
     price INTEGER NOT NULL,                              -- 가격
@@ -92,8 +85,6 @@ CREATE TABLE IF NOT EXISTS Payment(
     FOREIGN KEY(user_id) REFERENCES user(user_id),
     FOREIGN KEY(lecture_id) REFERENCES Lecture(lecture_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-select * from Payment;
 
 -- 강의신청 테이블
 DROP TABLE IF EXISTS LectureApplication;
@@ -122,9 +113,6 @@ CREATE TABLE IF NOT EXISTS LecturePage (
 
 ALTER TABLE LecturePage ADD COLUMN last_chapter_order INT DEFAULT 1;
 
-
-select * from lecturepage;
-
 -- 강의평가 테이블
 DROP TABLE IF EXISTS LectureReview;
 CREATE TABLE IF NOT EXISTS LectureReview (
@@ -132,7 +120,7 @@ CREATE TABLE IF NOT EXISTS LectureReview (
     review_content VARCHAR(1000) NULL,                    -- 리뷰 내용
     lecture_id INT NOT NULL,                              -- 강의 ID
     user_id VARCHAR(100) NOT NULL,                        -- 유저 ID
-    rating double NOT NULL,                                  -- 평점
+    rating DOUBLE NOT NULL,                               -- 평점
     review_date TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, -- 리뷰 날짜
     FOREIGN KEY (lecture_id) REFERENCES Lecture(lecture_id),
     FOREIGN KEY (user_id) REFERENCES user(user_id)
@@ -187,12 +175,36 @@ CREATE TABLE IF NOT EXISTS quiz_submission(
 -- 자료공유 테이블
 DROP TABLE IF EXISTS datasharing;
 CREATE TABLE IF NOT EXISTS datasharing(    
+	data_no INT PRIMARY KEY AUTO_INCREMENT,
     data_name VARCHAR(100) NOT NULL,                      -- 자료 이름
     data_title VARCHAR(1000) NOT NULL,                    -- 자료 제목
     data_content LONG NOT NULL,                           -- 자료 내용
     data_date TIMESTAMP NOT NULL,                         -- 자료 날짜
     data_pw VARCHAR(1000) NOT NULL,                       -- 자료 비밀번호
-    data_file VARCHAR(1000) NOT NULL                      -- 자료 파일
+    data_file VARCHAR(1000)                               -- 자료 파일
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 자료공유 댓글 테이블
+DROP TABLE IF EXISTS datasharingcomment;
+CREATE TABLE datasharingcomment (
+  dsc_no INT AUTO_INCREMENT PRIMARY KEY,                  -- 댓글 ID
+  ddno INT NOT NULL,                                      -- 자료 번호
+  dsc_content TEXT NOT NULL,                              -- 댓글 내용
+  dsc_writer VARCHAR(100) NOT NULL,                       -- 작성자
+  dsc_time TIMESTAMP NOT NULL,                            -- 작성 시간
+  CONSTRAINT reply_fk FOREIGN KEY (ddno) REFERENCES datasharing (data_no)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 커뮤니티 테이블
+DROP TABLE IF EXISTS allcommunity;
+CREATE TABLE IF NOT EXISTS allcommunity(    
+   allc_no INT PRIMARY KEY AUTO_INCREMENT,                -- 커뮤니티 ID
+    allc_name VARCHAR(100) NOT NULL,                      -- 커뮤니티 이름
+    allc_title VARCHAR(1000) NOT NULL,                    -- 커뮤니티 제목
+    allc_content LONG NOT NULL,                           -- 커뮤니티 내용
+    allc_date TIMESTAMP,                                  -- 커뮤니티 날짜
+    allc_pass VARCHAR(1000) NOT NULL,                     -- 커뮤니티 비밀번호
+    allc_file VARCHAR(1000)                               -- 커뮤니티 파일
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 개인채팅 테이블
@@ -282,10 +294,11 @@ CREATE TABLE IF NOT EXISTS Certificate (
     FOREIGN KEY (lecture_id) REFERENCES Lecture(lecture_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- 알림 테이블
 DROP TABLE IF EXISTS Notification;
 CREATE TABLE Notification (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    subject VARCHAR(255) NOT NULL,
-    user_name VARCHAR(20) NOT NULL,
-    exam_date DATE NOT NULL
-);
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,                  -- 알림 ID
+    subject VARCHAR(255) NOT NULL,                         -- 주제
+    user_name VARCHAR(20) NOT NULL,                        -- 사용자 이름
+    exam_date DATE NOT NULL                                -- 시험 날짜
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

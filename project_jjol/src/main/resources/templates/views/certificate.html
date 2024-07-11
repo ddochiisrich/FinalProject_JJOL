@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_layout}">
+<body>
+    <th:block layout:fragment="content">
+        <div class="certificate-container">
+            <img th:src="@{/images/mainlogo.png}" alt="Logo" class="certificate-logo">
+            <div class="certificate-header">
+                Certificate of Completion
+            </div>
+            <div class="certificate-body">
+                <p>This is to certify that</p>
+                <h2 th:text="${user.name}">[Student Name]</h2>
+                <p>has successfully completed the course</p>
+                <h3 th:text="${lecture.lectureTitle}">[Course Title]</h3>
+                <p>on</p>
+                <p th:text="${certificate.issueDate}">[Issue Date]</p>
+            </div>
+            <div class="certificate-signature">
+                <div>
+                    <div class="certificate-signature-line"></div>
+                    <p>Instructor</p>
+                </div>
+                <div>
+                    <div class="certificate-signature-line"></div>
+                    <p>Director</p>
+                </div>
+            </div>
+            <div class="certificate-footer">
+                <p>JJol Online Learning Platform</p>
+            </div>
+            <div class="certificate-watermark">JJol</div>
+        </div>
+    </th:block>
+</body>
+</html>

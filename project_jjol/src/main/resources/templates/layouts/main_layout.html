@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lecture List</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/lectureDetail.css}">
+    <link rel="stylesheet" th:href="@{/css/lecture_list.css}">
+    <link rel="stylesheet" th:href="@{/css/upload.css}">
+    <link rel="stylesheet" th:href="@{/css/certificate.css}">
+    <link rel="stylesheet" th:href="@{/css/chat.css}">
+    <link rel="stylesheet" th:href="@{/css/data_sharing_detail.css}">
+    <link rel="stylesheet" th:href="@{/css/data_sharing_instructor_write.css}">
+    <link rel="stylesheet" th:href="@{/css/lecture_apply.css}">
+    <link rel="stylesheet" th:href="@{/css/lecture_update.css}">
+    <link rel="stylesheet" th:href="@{/css/my_lectures.css}">
+    <link rel="stylesheet" th:href="@{/css/mypage.css}">
+    <link rel="stylesheet" th:href="@{/css/notification_form.css}">
+    <link rel="stylesheet" th:href="@{/css/all_community_detail.css}">
+    <link rel="stylesheet" th:href="@{/css/all_community_update.css}">
+    <link rel="stylesheet" th:href="@{/css/all_community_view.css}">
+    <link rel="stylesheet" th:href="@{/css/all_community_write.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <!-- 헤더 포함 -->
+    <div th:replace="~{fragments/header}"></div>
+
+	<!-- 메인 컨텐츠 -->
+	<div class="container">
+    <div layout:fragment="content"></div>
+	</div>
+    <!-- 푸터 포함 -->
+    <div th:replace="~{fragments/footer}"></div>
+    
+    <!-- jQuery 먼저 로드 -->
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script th:src="@{/js/registerformcheck.js}"></script>
+    <script th:src="@{/js/loginformcheck.js}"></script>
+    <script th:src="@{/js/payment.js}"></script>
+    <script th:src="@{/js/lectureDetail.js}"></script>
+    <script th:src="@{/js/upload.js}"></script>
+    <script src="/js/chat/chat.js"></script>
+    <script th:src="@{/js/data_sharing_view.js}"></script>
+    <script th:src="@{/js/data_sharing_detail.js}"></script>
+    <script th:src="@{/js/lecture_update.js}"></script>
+    <script th:src="@{/js/my_lectures.js}"></script>
+    <script th:src="@{/js/header.js}"></script>
+    <script th:src="@{/js/payment.js}"></script>
+    <script th:src="@{/js/notification_form.js}"></script>
+    <script src="/js/all_community_detail.js"></script>
+</body>
+
+</html>

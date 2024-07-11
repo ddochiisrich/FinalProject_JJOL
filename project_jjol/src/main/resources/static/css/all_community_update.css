@@ -1,0 +1,71 @@
+.all-community-update-main {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.all-community-update-view {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.all-community-update-wrap {
+    margin-bottom: 20px;
+}
+
+.all-community-update-content-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.all-community-update-write label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.all-community-update-write input,
+.all-community-update-write textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.all-community-update-content label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.all-community-update-content input,
+.all-community-update-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.all-community-update-content-box button,
+.all-community-update-content-box a {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4A90E2;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.all-community-update-content-box a {
+    background-color: #e74c3c;
+}
+
+.all-community-update-content-box button:hover,
+.all-community-update-content-box a:hover {
+    opacity: 0.8;
+}

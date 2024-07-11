@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_layout}">
+
+<body>
+<th:block layout:fragment="content">
+<div class="container my-5 all-community-view-main" id="community-content">
+    <div class="row">
+        <div class="col-10 offset-1">
+            <div class="all-community-content">
+                <div class="community-all-box">
+                    <form action="#" id="community_search_form" th:action="@{/AllCommunityView}" method="get">
+                        <div class="community-search-box">
+                            <input type="text" name="keyword" th:value="${keyword}" placeholder="검색어를 입력해주세요." class="data-search-textbox">
+                            <select name="type" id="categories_search_select" class="form-control">
+                                <option th:selected="${type == 'all'}" value="all">전체</option>
+                                <option th:selected="${type == 'username'}" value="username">작성자</option>
+                                <option th:selected="${type == 'title'}" value="title">제목</option>
+                                <option th:selected="${type == 'content'}" value="content">내용</option>
+                            </select>
+                            <button type="submit" class="data-search-button">검색</button>
+                        </div>
+                    </form>
+                    <a href="/AllCommunityWrite" class="btn btn-primary mt-2">글쓰기</a>
+                </div>
+                <div class="table-responsive mt-4">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">제목</th>
+                            <th scope="col">작성자</th>
+                            <th scope="col">등록일</th>
+                            <th scope="col">다운로드</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="community : ${communityList}">
+                            <td><a th:href="@{/AllCommunityViewDetail(no=${community.allcNo})}"
+                                   th:text="${community.allcTitle}">제목 없음</a></td>
+                            <td th:text="${community.allcName}">작성자 없음</td>
+                            <td th:text="${#dates.format(community.allcDate, 'yyyy-MM-dd')}">날짜 없음</td>
+                            <td th:text="${community.allcFile}">파일 없음</td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(communityList)}">
+                            <td colspan="4">글이 존재하지 않음</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        <li th:classappend="${currentPage == 1} ? 'disabled'">
+                            <a th:href="@{/AllCommunityView(pageNum=${currentPage - 1}, type=${type}, keyword=${keyword})}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:each="pageNum : ${#numbers.sequence(startPage, endPage)}"
+                            th:classappend="${currentPage == pageNum} ? 'active'">
+                            <a th:href="@{/AllCommunityView(pageNum=${pageNum}, type=${type}, keyword=${keyword})}"
+                               th:text="${pageNum}">1</a>
+                        </li>
+                        <li th:classappend="${currentPage == pageCount} ? 'disabled'">
+                            <a th:href="@{/AllCommunityView(pageNum=${currentPage + 1}, type=${type}, keyword=${keyword})}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+</th:block>
+</body>
+</html>

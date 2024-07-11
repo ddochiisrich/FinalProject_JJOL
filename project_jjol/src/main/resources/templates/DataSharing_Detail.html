@@ -1,43 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layouts/main_layout}">
-
-<head>
-    <meta charset="utf-8">
-    <title>자료실 상세보기</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
+      layout:decorate="~{layouts/main_layout}">
 
 <body>
-    <div class="container">
+    <div class="container data-sharing-detail-main">
         <div class="row">
             <div class="col-lg-12">
-                <div class="card mt-4">
-                    <div class="card-header">
+                <div class="card mt-4 data-sharing-detail-card">
+                    <div class="card-header data-sharing-detail-header">
                         <form name="checkForm" id="checkForm" method="post">
                             <h3 th:text="${datasharing.dataTitle}">제목 없음</h3>
                             <input type="hidden" name="dataNo" th:value="${datasharing.dataNo}">
                         </form>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body data-sharing-detail-body">
                         <p class="card-text" th:text="${datasharing.dataContent}">내용 없음</p>
                         <hr>
-                        <ul class="list-unstyled">
+                        <ul class="list-unstyled data-sharing-detail-info">
                             <li>작성자: <span th:text="${datasharing.dataName}">작성자 없음</span></li>
                             <li>비밀번호: <span th:text="${datasharing.dataPw}">비밀번호 없음</span></li>
-                            <li>작성일: <span th:text="${#dates.format(datasharing.dataDate, 'yyyy-MM-dd')}">날짜 없음</span>
-                            </li>
-                            <li>파일 다운로드:
+                            <li>작성일: <span th:text="${#dates.format(datasharing.dataDate, 'yyyy-MM-dd')}">날짜 없음</span></li>
+                            <li>파일 다운로드: 
                                 <a th:href="@{/downloadFile/{fileId}(fileId=${datasharing.dataFile})}"
-                                    th:text="${datasharing.dataFile}">없음</a>
+                                   th:text="${datasharing.dataFile}">없음</a>
                             </li>
                         </ul>
                     </div>
-                    <div class="card-footer">
-                        <a href="#" onclick="javascript:history.back();">뒤로 가기</a>
+                    <div class="card-footer data-sharing-detail-footer">
+                        <a href="#" onclick="javascript:history.back();" class="btn btn-secondary">뒤로 가기</a>
                         <div th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}">
-                            <input class="btn" type="button" id="datasharingDelete" value="삭제">
-                            <input class="btn" type="button" id="datasharingUpdateForm" value="수정하기 폼으로 이동">
+                            <input class="btn btn-danger" type="button" id="datasharingDelete" value="삭제">
+                            <input class="btn btn-primary" type="button" id="datasharingUpdateForm" value="수정하기 폼으로 이동">
                         </div>
                     </div>
                 </div>
@@ -46,7 +39,7 @@
             <!-- 댓글 작성 폼 -->
             <div class="row mt-4">
                 <div class="col-lg-12">
-                    <div class="card">
+                    <div class="card data-sharing-detail-comment-card">
                         <div class="card-header">
                             <h5>댓글</h5>
                         </div>
@@ -56,7 +49,7 @@
                                 <div class="form-group">
                                     <label for="commentContent">댓글 내용</label>
                                     <textarea class="form-control" id="commentContent" name="commentContent" rows="3"
-                                        required></textarea>
+                                              required></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">댓글 등록</button>
                             </form>
@@ -68,12 +61,12 @@
             <!-- 댓글 목록 -->
             <div class="row mt-4">
                 <div class="col-lg-12">
-                    <div class="card">
+                    <div class="card data-sharing-detail-comment-list-card">
                         <div class="card-header">
                             <h5>댓글 목록</h5>
                         </div>
                         <div class="card-body">
-                            <ul class="list-group">
+                            <ul class="list-group data-sharing-detail-comment-list">
                                 <!-- 댓글이 존재할 경우 Thymeleaf 반복문으로 출력 -->
                                 <li class="list-group-item" th:each="comment : ${comments}">
                                     <p th:text="${comment.commentContent}">댓글 내용 없음</p>
@@ -89,68 +82,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- 스크립트 -->
-        <script>
-            $(function () {
-                $("#datasharingDelete").on("click", function () {
-                    $("#checkForm").attr("action", "/deleteDataSharing");
-                    $("#checkForm").attr("method", "post");
-                    $("#checkForm").submit();
-                });
-
-                $("#datasharingUpdateForm").on("click", function () {
-                    var dataNo = $("input[name='dataNo']").val(); // 데이터 번호 가져오기
-                    // 수정하기 폼으로 이동
-                    window.location.href = '/updateDataSharingForm?no=' + dataNo; // 수정 폼의 URL
-                });
-
-                $("#commentForm").submit(function (event) {
-                    event.preventDefault(); // 기본 동작 방지
-
-                    var formData = $(this).serialize(); // 폼 데이터 직렬화
-
-                    $.ajax({
-                        type: "POST",
-                        url: "/comments/datacommentadd",
-                        data: formData,
-                        success: function (response) {
-                            // 성공적으로 댓글을 추가한 경우, 댓글 목록을 업데이트
-                            updateCommentList();
-                            // 폼 초기화
-                            $("#commentContent").val("");
-                        },
-                        error: function (e) {
-                            console.log("Error: ", e);
-                        }
-                    });
-                });
-
-                // 댓글 목록 업데이트 함수
-                function updateCommentList() {
-                    $.get("/comments/byDataNo/" + $("input[name='dataNo']").val(), function (data) {
-                        // 댓글 목록을 업데이트
-                        var listItems = "";
-                        if (data.length > 0) {
-                            $.each(data, function (index, comment) {
-                                listItems += '<li class="list-group-item">';
-                                listItems += '<p>' + comment.commentContent + '</p>';
-                                listItems += '<small>작성자: ' + comment.commentWriter + '</small>';
-                                listItems += '</li>';
-                            });
-                        } else {
-                            listItems += '<li class="list-group-item">';
-                            listItems += '<p>등록된 댓글이 없습니다.</p>';
-                            listItems += '</li>';
-                        }
-                        $(".list-group").html(listItems);
-                    });
-                }
-
-                // 페이지 로드 시 댓글 목록 초기화
-                updateCommentList();
-            });
-        </script>
     </div>
 </body>
 

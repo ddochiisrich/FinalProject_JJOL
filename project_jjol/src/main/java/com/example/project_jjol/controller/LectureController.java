@@ -60,7 +60,7 @@ public class LectureController {
     @Autowired
     private final NotificationService notificationService;
 
-    @GetMapping("/lectures")
+    @GetMapping({"/", "/lectures"})
     public String lectureList(Model model, HttpSession session) {
         // 세션에서 로그인된 사용자 정보 가져오기
         User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -77,14 +77,14 @@ public class LectureController {
         // 강의 리스트 추가
         model.addAttribute("lectures", lectureService.getAllLectures());
 
-        return "lectures";  // "templates/lectures.html" 반환
+        return "views/lecture_list";  // "templates/lectures.html" 반환
     }
 
     @GetMapping("/lectures/search")
     public String searchLectures(@RequestParam("keyword") String keyword, Model model) {
         List<Lecture> lectures = lectureService.searchLectures(keyword);
         model.addAttribute("lectures", lectures);
-        return "lectures";
+        return "views/lecture_list";
     }
     
     @PostMapping("/lectures/review")
@@ -141,7 +141,7 @@ public class LectureController {
         model.addAttribute("averageRating", formattedAverageRating); // 포맷된 평점 추가
         model.addAttribute("numberOfStudents", numberOfStudents);
         model.addAttribute("questions", questions);
-        return "lectureDetail";
+        return "views/lectureDetail";
     }
 
 
@@ -162,7 +162,7 @@ public class LectureController {
     public String showApplyPage(@PathVariable("id") int id, Model model) {
         Lecture lecture = lectureService.getLectureById(id);
         model.addAttribute("lecture", lecture);
-        return "lectureApply";
+        return "views/lectureApply";
     }
 
     @PostMapping("/lectures/questions")
@@ -239,7 +239,7 @@ public class LectureController {
 
         model.addAttribute("chapters", chapters);
         model.addAttribute("lecture", lecture);
-        return "videoPlayer"; // JSON 응답을 보내지 않고 HTML 템플릿을 렌더링
+        return "views/videoPlayer"; // JSON 응답을 보내지 않고 HTML 템플릿을 렌더링
     }
 
 
@@ -288,7 +288,7 @@ public class LectureController {
             return "redirect:/login";
         }
         model.addAttribute("loggedInUser", loggedInUser);
-        return "upload";
+        return "views/upload";
     }
     
     @PostMapping("/lecturePage/reset/{lectureId}")

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_layout}">
+<body>
+    <th:block layout:fragment="content">
+        <div class="data-sharing-view-main">
+            <div class="data-sharing-view">
+                <div class="data-sharing-view-title-wrap">
+                    <!-- 자료 메인 뷰 -->
+                    <div class="data-sharing-main-view">
+                        <!-- 여기에 필요한 링크 또는 버튼 추가 -->
+                        <a href="#" onclick="javascript:history.back();">뒤로 가기</a>
+                    </div>
+                    <!-- 자료 제목과 정보 -->
+                    <div class="data-sharing-view-title">
+                        <h2 class="data-sharing-data-title" th:text="${datasharing.datasharingTitle}">제목 없음</h2>
+                        <dl>
+                            <dt>작성자:</dt>
+                            <dd>JJol</dd>
+                            <dt>작성일:</dt>
+                            <dd th:text="${#dates.format(datasharing.datasharingDate, 'yyyy-MM-dd')}">날짜 없음</dd>
+                        </dl>
+                    </div>
+                    <!-- 자료 다운로드 링크 -->
+                    <div class="data-sharing-file-download">
+                        <a th:href="@{/downloadFile/{fileId}(fileId=${datasharing.datasharingFileId})}"
+                            th:text="${datasharing.datasharingFile}">파일 다운로드</a>
+                    </div>
+                    <!-- 자료 내용 -->
+                    <div class="data-sharing-view-main-content">
+                        <p th:text="${datasharing.datasharingContent}">내용 없음</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+
+</html>

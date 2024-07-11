@@ -1,0 +1,47 @@
+.notification-form-container {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin: 5rem auto;
+    max-width: 500px;
+    text-align: center;
+}
+
+.notification-form-container h2 {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.notification-list-container {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin: 2rem auto;
+    max-width: 800px;
+}
+
+.notification-list-container h2 {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    border-radius: 5px;
+    padding: 0.75rem;
+    font-size: 1rem;
+}
+
+.btn {
+    border-radius: 5px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Lecture</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    
+</head>
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="lecture-update-container my-5">
+            <h1 class="mb-4">강의 수정</h1>
+            <form action="updateProcess" method="post" enctype="multipart/form-data" class="mb-5">
+                <input type="hidden" name="lectureId" th:value="${lecture.lectureId}" />
+                <div class="form-group">
+                    <label for="title">강의 제목 :</label>
+                    <input type="text" id="title" name="lectureTitle" class="form-control" th:value="${lecture.lectureTitle}">
+                </div>
+                <div class="form-group">
+                    <label for="shortDescription">간략 설명 :</label>
+                    <input type="text" id="shortDescription" name="lectureShortDescription" class="form-control" th:value="${lecture.lectureShortDescription}">
+                </div>
+                <div class="form-group">
+                    <label for="longDescription">상세 설명 :</label>
+                    <textarea id="longDescription" name="lectureLongDescription" class="form-control" th:text="${lecture.lectureLongDescription}"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="thumbnailVideo">썸네일 비디오 :</label>
+                </div>
+                <div class="lecture-update-video-container">
+                    <h6>기존 파일</h6>
+                    <video controls autoplay th:src="${lecture.lectureThumbnailVideo}">
+                        <source th:src="${lecture.lectureThumbnailVideo}" type="video/mp4">
+                    </video>
+                </div>
+                <div class="form-group">
+                    <label for="thumbnailImage">썸네일 이미지 :</label>
+                </div>
+                <h6>기존 파일</h6>
+                <img class="card-img-top" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
+                <div class="form-group">
+                    <label for="level">레벨 :</label>
+                    <select id="level" name="lectureLevel" class="form-control">
+                        <option value="최하" th:selected="${lecture.lectureLevel == '최하'}">최하</option>
+                        <option value="하" th:selected="${lecture.lectureLevel == '하'}">하</option>
+                        <option value="중하" th:selected="${lecture.lectureLevel == '중하'}">중하</option>
+                        <option value="중" th:selected="${lecture.lectureLevel == '중'}">중</option>
+                        <option value="중상" th:selected="${lecture.lectureLevel == '중상'}">중상</option>
+                        <option value="상" th:selected="${lecture.lectureLevel == '상'}">상</option>
+                        <option value="최상" th:selected="${lecture.lectureLevel == '최상'}">최상</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="price">가격 :</label>
+                    <input type="text" id="price" name="lecturePrice" class="form-control" th:value="${lecture.lecturePrice}">
+                </div>
+                <div class="form-group">
+                    <label for="discount">할인율 :</label>
+                    <input type="text" id="discount" name="lectureDiscount" class="form-control" th:value="${lecture.lectureDiscount}">
+                </div>
+                <div class="form-group">
+                    <label for="instructorId">강사 ID :</label>
+                    <input type="text" id="instructorId" name="instructorId" class="form-control" th:value="${loggedInUser.userId}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="instructorName">강사 이름 :</label>
+                    <input type="text" id="instructorName" name="instructorName" class="form-control" th:value="${loggedInUser.name}" readonly>
+                </div>
+                <hr>
+                <div id="lecture-update-chapter-container">
+                    <div class="lecture-update-chapter" th:each="chapter, iterStat : ${chapters}">
+                        <h3>챕터 [[${iterStat.index + 1}]]</h3>
+                        <div class="form-group">
+                            <label for="chapterTitle[[${iterStat.index + 1}]]">챕터 제목 :</label>
+                            <input type="text" id="chapterTitle[[${iterStat.index + 1}]]" name="chapterTitles" class="form-control" th:value="${chapter.chapterTitle}">
+                        </div>
+                        <div class="form-group">
+                            <label for="chapterDescription[[${iterStat.index + 1}]]">챕터 설명 :</label>
+                            <input type="text" id="chapterDescription[[${iterStat.index + 1}]]" name="chapterDescriptions" class="form-control" th:value="${chapter.chapterDescription}">
+                        </div>
+                        <div class="form-group">
+                            <label for="chapterFile[[${iterStat.index + 1}]]">챕터 비디오 :</label>
+                            <input type="file" id="chapterFile[[${iterStat.index + 1}]]" name="chapterFiles" class="form-control-file">
+                            <div class="lecture-update-video-container">
+                                <h6>기존 파일</h6>
+                                <video controls autoplay th:src="${chapter.chapterUrl}">
+                                    <source th:src="${chapter.chapterUrl}" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="chapterOrder1">챕터 순서 :</label>
+                            <input type="number" id="chapterOrder1" name="chapterOrders" class="form-control" th:value="${chapter.chapterOrder}">
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+                <div class="lecture-update-button-group">
+                    <button type="button" id="addChapter" class="btn btn-secondary mb-4">챕터 추가</button>
+                    <button type="submit" class="btn btn-primary mb-4">수정 확인</button>
+                    <a href="/lectures" class="btn btn-secondary mb-4">취소</a>
+                </div>
+            </form>
+        </div>
+    </th:block>
+
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>
