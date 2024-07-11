@@ -27,7 +27,7 @@ public class RegisterController {
             model.addAttribute("name", session.getAttribute("socialName"));
             model.addAttribute("provider", session.getAttribute("socialProvider"));
         }
-        return "register";
+        return "views/register";
     }
 
     @PostMapping("/register")

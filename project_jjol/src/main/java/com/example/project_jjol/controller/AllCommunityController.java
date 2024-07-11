@@ -88,7 +88,7 @@ public class AllCommunityController {
 		model.addAttribute("type", type);
 		model.addAttribute("keyword", keyword);
 
-		return "AllCommunity_View";
+		return "views/AllCommunity_View";
 	}
 
 	// 글 상세보기
@@ -99,13 +99,13 @@ public class AllCommunityController {
 			return "redirect:/AllCommunityView";
 		}
 		model.addAttribute("allcommunity", allcommunity);
-		return "AllCommunity_Detail";
+		return "views/AllCommunity_Detail";
 	}
 
 	// 글쓰기 폼 요청
 	@GetMapping("AllCommunityWrite")
 	public String addAllcadd() {
-		return "AllCommunity_Write";
+		return "views/AllCommunity_Write";
 	}
 
 	// 글쓰기 요청 처리
@@ -130,7 +130,7 @@ public class AllCommunityController {
 	public String updateAllCommunityForm(@RequestParam("no") int no, Model model) {
 		AllCommunity allcommunity = allCommunityService.findByNo(no);
 		model.addAttribute("allcommunity", allcommunity);
-		return "AllCommunity_Update";
+		return "views/AllCommunity_Update";
 	}
 
 	// 글 수정하기

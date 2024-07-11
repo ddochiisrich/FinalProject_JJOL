@@ -65,7 +65,7 @@ public class NotificationController {
             model.addAttribute("notification", new Notification()); // 알림 생성 폼을 위한 객체
             model.addAttribute("sort", sort); // 현재 정렬 기준을 Thymeleaf에 전달
         }
-        return "notificationForm";  // "templates/notificationForm.html"를 반환
+        return "views/notificationForm"; 
     }
     
    

@@ -1,0 +1,47 @@
+.all-community-detail-container {
+    padding: 20px;
+}
+
+.all-community-detail-row {
+    margin-bottom: 20px;
+}
+
+.all-community-detail-col {
+    width: 100%;
+}
+
+.all-community-detail-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.all-community-detail-card-header h3 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.all-community-detail-card-body p {
+    margin-bottom: 20px;
+}
+
+.all-community-detail-card-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.all-community-detail-card-footer .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4A90E2;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.all-community-detail-card-footer .btn:hover {
+    opacity: 0.8;
+}

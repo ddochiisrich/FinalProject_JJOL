@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_layout}">
+
+<body data-username="[[${id}]]">
+    <th:block layout:fragment="content">
+        <div class="chat-container container" th:attr="data-username=${id}">
+            <h2 class="chat-title">채팅방</h2>
+            <div class="d-flex flex-column bd-highlight mb-3">
+                <div id="chat-msgArea" class="chat-msgArea flex-grow-1 overflow-auto"></div>
+                <div class="input-group mb-3">
+                    <input type="text" id="chat-msg" class="form-control chat-input" placeholder="메시지 입력..." aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary chat-send-button" type="button" id="chat-button-send">전송</button>
+                        <button class="btn btn-outline-secondary chat-exit-button" type="button" id="chat-chatout">나가기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+
+</html>

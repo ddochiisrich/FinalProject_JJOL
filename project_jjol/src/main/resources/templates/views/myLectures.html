@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_layout}">
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="my-lectures-container mt-5">
+            <div class="row mb-4">
+                <div class="col">
+                    <h2>마이페이지</h2>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <h3 th:text="'안녕하세요, ' + ${user.name} + '님!'"></h3>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <h4>나의 강의</h4>
+                </div>
+            </div>
+            <th:block th:if="${lectures}">
+                <div class="row">
+                    <div class="col-md-4 mb-4" th:each="lecture: ${lectures}">
+                        <div class="card shadow-sm">
+                            <img class="card-img-top" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${lecture.lectureTitle}">강의 제목</h5>
+                                <p class="card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
+                                <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-info btn-block">강의 상세정보</a>
+                                <a class="btn btn-danger btn-block" th:attr="id='deleteLecture' + ${lecture.lectureId}">삭제</a>
+                                <a class="btn btn-success btn-block" th:attr="id='updateLecture' + ${lecture.lectureId}">수정</a>
+                            </div>
+                            <form th:attr="name='checkForm' + ${lecture.lectureId}, id='checkForm' + ${lecture.lectureId}">
+                                <input type="hidden" th:attr="name='lectureId', value=${lecture.lectureId}" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+            <th:block th:unless="${lectures}">
+                <div class="row">
+                    <h5>업로드한 강의가 없습니다.</h5>
+                </div>
+            </th:block>
+        </div>
+    </th:block>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>강의 업로드</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/upload.css}">
+</head>
+<body>
+    <th:block layout:fragment="content">
+        <div class="upload-container my-5">
+            <h1 class="upload-title mb-4">강의 업로드</h1>
+            <form action="/lectures/upload" method="post" enctype="multipart/form-data" class="upload-form mb-5" id="uploadForm">
+                <div class="upload-form-group form-group">
+                    <label for="title">강의 제목 :</label>
+                    <input type="text" id="title" name="title" class="form-control">
+                    <div class="error-message" id="errorTitle"></div>
+                </div>
+                <div class="upload-form-group form-group">
+                    <label for="shortDescription">간략 설명 :</label>
+                    <input type="text" id="shortDescription" name="shortDescription" class="form-control">
+                    <div class="error-message" id="errorShortDescription"></div>
+                </div>
+                <div class="upload-form-group form-group">
+                    <label for="longDescription">상세 설명 :</label>
+                    <textarea id="longDescription" name="longDescription" class="form-control"></textarea>
+                    <div class="error-message" id="errorLongDescription"></div>
+                </div>
+                <div class="upload-form-group form-group">
+                    <label for="thumbnailVideo">썸네일 비디오 :</label>
+                    <input type="file" id="thumbnailVideo" name="thumbnailVideo" class="form-control-file">
+                    <div class="error-message" id="errorThumbnailVideo"></div>
+                </div>
+                <div class="upload-form-group form-group">
+                    <label for="thumbnailImage">썸네일 이미지 :</label>
+                    <input type="file" id="thumbnailImage" name="thumbnailImage" class="form-control-file">
+                    <div class="error-message" id="errorThumbnailImage"></div>
+                </div>
+                <div class="upload-form-group form-group">
+                    <label for="level">레벨 :</label>
+                    <select id="level" name="level" class="form-control">
+                        <option value="">레벨 선택</option>
+                        <option value="최하">최하</option>
+                        <option value="하">하</option>
+                        <option value="중하">중하</option>
+                        <option value="중">중</option>
+                        <option value="중상">중상</option>
+                        <option value="상">상</option>
+                        <option value="최상">최상</option>
+                    </select>
+                    <div class="error-message" id="errorLevel"></div>
+                </div>
+                <div class="upload-form-group form-group">
+                    <label for="price">가격 :</label>
+                    <input type="text" id="price" name="price" class="form-control">
+                    <div class="error-message" id="errorPrice"></div>
+                </div>
+                <div class="upload-form-group form-group">
+                    <label for="discount">할인율 :</label>
+                    <input type="text" id="discount" name="discount" class="form-control">
+                    <div class="error-message" id="errorDiscount"></div>
+                </div>
+                <div class="upload-form-group form-group">
+                    <label for="instructorId">강사 ID :</label>
+                    <input type="text" id="instructorId" name="instructorId" class="form-control" th:value="${loggedInUser.userId}" readonly>
+                </div>
+                <div class="upload-form-group form-group">
+                    <label for="instructorName">강사 이름 :</label>
+                    <input type="text" id="instructorName" name="instructorName" class="form-control" th:value="${loggedInUser.name}" readonly>
+                </div>
+                <hr>
+                <div id="chapter-container" class="upload-chapter-container">
+                    <div class="upload-chapter">
+                        <h3>챕터 1</h3>
+                        <div class="upload-form-group form-group">
+                            <label for="chapterTitle1">챕터 제목 :</label>
+                            <input type="text" id="chapterTitle1" name="chapterTitles" class="form-control">
+                            <div class="error-message" id="errorChapterTitle1"></div>
+                        </div>
+                        <div class="upload-form-group form-group">
+                            <label for="chapterDescription1">챕터 설명 :</label>
+                            <input type="text" id="chapterDescription1" name="chapterDescriptions" class="form-control">
+                            <div class="error-message" id="errorChapterDescription1"></div>
+                        </div>
+                        <div class="upload-form-group form-group">
+                            <label for="chapterFile1">챕터 비디오 :</label>
+                            <input type="file" id="chapterFile1" name="chapterFiles" class="form-control-file">
+                            <div class="error-message" id="errorChapterFile1"></div>
+                        </div>
+                        <div class="upload-form-group form-group">
+                            <label for="chapterOrder1">챕터 순서 :</label>
+                            <input type="number" id="chapterOrder1" name="chapterOrders" class="form-control">
+                            <div class="error-message" id="errorChapterOrder1"></div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+                <div class="upload-button-group button-group">
+                    <button type="button" id="addChapter" class="btn btn-secondary mb-4">챕터 추가</button>
+                    <button type="submit" class="btn btn-primary mb-4">업로드</button>
+                    <a href="/lectures" class="btn btn-secondary mb-4">강의리스트</a>
+                </div>
+            </form>
+        </div>
+    </th:block>
+</body>
+</html>

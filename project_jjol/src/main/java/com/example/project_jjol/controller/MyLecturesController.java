@@ -54,7 +54,7 @@ public class MyLecturesController {
 		model.addAttribute("lectures", lectures);
 		model.addAttribute("user", loggedInUser);
 		
-		return "myLectures";
+		return "views/myLectures";
 	}
 	
 	@PostMapping("/deleteLecture")

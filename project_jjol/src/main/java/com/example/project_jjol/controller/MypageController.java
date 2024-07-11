@@ -44,7 +44,7 @@ public class MypageController {
         model.addAttribute("certificatesIssued", certificatesIssued);
         model.addAttribute("allChaptersCompleted", allChaptersCompleted);
         model.addAttribute("user", loggedInUser);
-        return "mypage";
+        return "views/mypage";
     }
 
     @GetMapping("/mypage/issueCertificate/{lectureId}")
@@ -80,6 +80,6 @@ public class MypageController {
         model.addAttribute("certificate", certificate);
         model.addAttribute("lecture", lecture);
         model.addAttribute("user", loggedInUser);
-        return "certificate";
+        return "views/certificate";
     }
 }

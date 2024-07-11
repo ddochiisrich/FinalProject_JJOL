@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_layout}">
+<body>
+    <th:block layout:fragment="content">
+        <section class="lecture-hero-section">
+            <div class="lecture-container">
+                <h1 class="lecture-hero-title">JJol 온라인 학습 혁신</h1>
+                <p class="lecture-hero-subtitle">최고의 강의로 여러분의 미래를 설계하세요. 지금 바로 시작하세요!</p>
+                <!-- 강의 업로드 버튼을 조건부로 표시 -->
+                <a th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}" 
+                   href="/lectures/upload" class="btn btn-primary lecture-btn-hero">강의 업로드</a>
+            </div>
+        </section>
+
+        <div class="lecture-container mt-5">
+            <div class="lecture-content">
+                <h2 class="lecture-section-title">강의 목록</h2>
+                <div class="row">
+                    <div class="lecture-col-lg-custom mb-4" th:each="lecture : ${lectures}">
+                        <div class="card lecture-card">
+                            <img class="card-img-top" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${lecture.lectureTitle}">강의 제목</h5>
+                                <p class="card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
+                                <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}"
+                                    class="btn btn-info btn-block">강의 상세정보</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>

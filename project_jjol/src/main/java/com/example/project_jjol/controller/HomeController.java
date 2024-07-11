@@ -30,6 +30,6 @@ public class HomeController {
         model.addAttribute("id", id);
         System.out.println("Model ID: " + id);
 
-        return "chat"; // 채팅 페이지로 이동합니다.
+        return "views/chat"; // 채팅 페이지로 이동합니다.
     }
 }

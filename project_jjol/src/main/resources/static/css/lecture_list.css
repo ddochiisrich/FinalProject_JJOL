@@ -1,0 +1,153 @@
+.lecture-hero-section {
+    background: linear-gradient(135deg, #3498db 0%, #9b59b6 100%);
+    color: white;
+    margin-top: 80px;
+    padding: 100px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.lecture-hero-section .lecture-container {
+    position: relative;
+    z-index: 2;
+}
+
+.lecture-hero-title {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    animation: fadeInDown 1s ease-in-out;
+}
+
+.lecture-hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.lecture-btn-hero {
+    background-color: #E74C3C;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.lecture-btn-hero:hover {
+    background-color: #C0392B;
+}
+
+.lecture-hero-section::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%);
+    z-index: 1;
+    animation: rotate 20s linear infinite;
+}
+
+.lecture-section-title {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    font-weight: 700;
+    color: #2C3E50;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.lecture-col-lg-custom {
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+
+.lecture-card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.lecture-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.lecture-card img {
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.lecture-card .card-body {
+    padding: 20px;
+}
+
+.lecture-card .card-title {
+    font-size: 1.8rem;
+    color: #2C3E50;
+    margin-bottom: 15px;
+}
+
+.lecture-card .card-text {
+    font-size: 1rem;
+    color: #7F8C8D;
+    margin-bottom: 20px;
+}
+
+.btn-info {
+    background-color: #3498DB;
+    border: none;
+}
+
+.btn-info:hover {
+    background-color: #2980B9;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

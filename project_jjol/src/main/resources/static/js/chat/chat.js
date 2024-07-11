@@ -1,11 +1,6 @@
 $(document).ready(function() {
-    const username = $('div.container').attr('data-username');
+    const username = $('div.chat-container').attr('data-username');
     console.log("Username from data attribute: " + username);
-
-    if (!username) {
-        alert('닉네임을 입력해주세요!');
-        return;
-    }
 
     const websocket = new WebSocket("ws://localhost:8080/ws/chat");
 
@@ -50,20 +45,20 @@ $(document).ready(function() {
         console.log("message : " + message);
 
         if (type === "entrance") {
-            var str = "<div class='msg_box text-center fw-lighter'>";
+            var str = "<div class='chat-msg_box text-center fw-lighter'>";
             str += "<b>" + message + "</b>";
             str += "</div></div>";
-            $("#msgArea").append(str);
+            $("#chat-msgArea").append(str);
         } else if (type === "message") {
             if (sessionId === username) {
-                var str = "<div class='msg_box'>";
+                var str = "<div class='chat-msg_box'>";
                 var str1 = "<p class='text-end'>" + sessionId + "</p>";
                 str += "<div class='alert alert-light lh-base fw-light fs-6 text-end'>";
                 str += "<b>" + message + "</b>";
                 str += "</div></div>";
-                $("#msgArea").append(str1, str);
+                $("#chat-msgArea").append(str1, str);
             } else {
-                var str = "<div class='msg_box'>";
+                var str = "<div class='chat-msg_box'>";
                 var str1 = "<p>" + sessionId + "</p>";
 
                 if (message && message.includes("님이 나가셨습니다.")) {
@@ -79,33 +74,33 @@ $(document).ready(function() {
                 }
 
                 str += "</div>";
-                $("#msgArea").append(str1, str);
+                $("#chat-msgArea").append(str1, str);
             }
         }
 
-        var $msgArea = $("#msgArea");
+        var $msgArea = $("#chat-msgArea");
         $msgArea.scrollTop($msgArea[0].scrollHeight);
     }
 
-    $("#button-send").on("click", function() {
+    $("#chat-button-send").on("click", function() {
         send();
     });
 
-    $("#msg").on("keypress", function(e) {
+    $("#chat-msg").on("keypress", function(e) {
         if (e.which == 13) {
             send();
         }
     });
 
     function send() {
-        let msg = $("#msg").val();
+        let msg = $("#chat-msg").val();
         if (msg.trim() !== "") {
             websocket.send("message:" + username + ":" + msg);
-            $("#msg").val('');
+            $("#chat-msg").val('');
         }
     }
 
-    $("#chatout").on("click", function() {
+    $("#chat-chatout").on("click", function() {
         disconnect();
     });
 

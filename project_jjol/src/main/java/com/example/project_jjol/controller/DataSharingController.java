@@ -66,7 +66,7 @@ public class DataSharingController {
 	            model.addAttribute("lectures", lectures);
 	        }
 
-		return "DataSharing_Instructor_Write";
+		return "views/DataSharing_Instructor_Write";
 	}
 
 	// 글 쓰기 요청 처리 (강사)
@@ -102,7 +102,7 @@ public class DataSharingController {
 		if (loggedInUser != null) {
 			List<DataSharing> dataSharingList = datasharingService.getDataSharing();
 			model.addAttribute("datasharingList", dataSharingList);
-			return "DataSharing_View";
+			return "views/DataSharing_View";
 		} else {
 			return "redirect:/login";
 		}
@@ -113,7 +113,7 @@ public class DataSharingController {
 		List<DataSharing> datasharingList = datasharingService.getDataSharing();
 		// db에 데이터를 읽어와서
 		model.addAttribute("datasharingList", datasharingList);
-		return "DataSharing_View";
+		return "views/DataSharing_View";
 	}
 
 	// 글 상세보기
@@ -125,7 +125,7 @@ public class DataSharingController {
 			return "redirect:/DataSharingView";
 		}
 		model.addAttribute("datasharing", datasharing); // 모델에 데이터 공유
-		return "DataSharing_Detail"; // 글 상세보기 페이지로 이동
+		return "views/DataSharing_Detail"; // 글 상세보기 페이지로 이동
 	}
 
 	// 글 삭제하기
@@ -147,7 +147,7 @@ public class DataSharingController {
 	public String updateDataSharingForm(@RequestParam("no") int no, Model model) {
 		DataSharing datasharing = datasharingService.findByNo(no); // 데이터베이스에서 글 조회
 		model.addAttribute("datasharing", datasharing); // 모델에 데이터 전달
-		return "DataSharing_Update"; // 수정 폼 템플릿으로 이동
+		return "views/DataSharing_Update"; // 수정 폼 템플릿으로 이동
 	}
 
 }

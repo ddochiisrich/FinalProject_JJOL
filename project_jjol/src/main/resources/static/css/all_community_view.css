@@ -1,0 +1,55 @@
+.all-community-view-main {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.all-community-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.community-all-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.community-search-box {
+    display: flex;
+    align-items: center;
+}
+
+.data-search-textbox {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.data-search-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4A90E2;
+    color: white;
+    font-weight: bold;
+}
+
+.data-search-button:hover {
+    opacity: 0.8;
+}
+
+.pagination {
+    justify-content: center;
+}
+
+.pagination .active a {
+    background-color: #4A90E2;
+    border-color: #4A90E2;
+}
+
+.pagination .disabled a {
+    color: #ddd;
+}

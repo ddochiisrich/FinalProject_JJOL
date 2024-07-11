@@ -1,0 +1,72 @@
+.instructor-view-main {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.instructor-view {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.instructor-view-wrap {
+    margin-bottom: 20px;
+}
+
+.instructor-content-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.instructor-write label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.instructor-write input,
+.instructor-write textarea,
+.instructor-write select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.instructor-write-content label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.instructor-write-content input,
+.instructor-write-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.instructor-content-box button,
+.instructor-content-box a {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4A90E2;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.instructor-content-box a {
+    background-color: #e74c3c;
+}
+
+.instructor-content-box button:hover,
+.instructor-content-box a:hover {
+    opacity: 0.8;
+}

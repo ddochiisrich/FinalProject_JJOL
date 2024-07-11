@@ -1,0 +1,55 @@
+.upload-container {
+    width: 100%;
+}
+
+.upload-title{
+	margin-top: 100px;
+}
+
+.upload-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #2C3E50;
+}
+
+.upload-form-group {
+    text-align: left;
+}
+
+.btn-primary {
+    background-color: #3498DB;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #2980B9;
+}
+
+.btn-secondary {
+    background-color: #E74C3C;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #C0392B;
+}
+
+.upload-button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(-10px);
+}
+
+.error-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
