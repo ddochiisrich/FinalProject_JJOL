@@ -31,4 +31,9 @@ public interface LectureMapper {
 
     @Select("SELECT * FROM Lecture WHERE lecture_id = #{id}")
     Lecture findById(int id);
+    
+    @Select("SELECT lecture_title FROM Lecture WHERE instructor_id = #{id}")
+    List<String> selectTitlesByInstructorId(@Param("id") String id);
+    
+    
 }

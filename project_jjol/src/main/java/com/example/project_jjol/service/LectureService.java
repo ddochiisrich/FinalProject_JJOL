@@ -103,4 +103,9 @@ public class LectureService {
     public boolean hasUserViewedChapter(String userId, int chapterId) {
         return lecturePageMapper.hasUserViewedChapter(userId, chapterId);
     }
+    
+    public List<String> getLecturesByInstructorId(String instructorId) {
+        return lectureMapper.selectTitlesByInstructorId(instructorId);
+    }
+    
 }

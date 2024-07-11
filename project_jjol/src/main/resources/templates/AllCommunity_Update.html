@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/main_layout}">
+
+<head>
+    <meta charset="utf-8">
+    <title>자료실 강사 글 수정</title>
+</head>
+
+<body>
+    <div class="allcommunity_view_main">
+        <div class="allcommunity_view">
+            <div class="allcommunity_view_wrap">
+                <form th:action="@{/updateAllCommunity}" method="post" enctype="multipart/form-data">
+                    <div class="allcommunity_content_box">
+                        <button type="submit">수정 완료</button>
+                        <a href="/AllCommunityView">취소</a>
+                    </div>
+                    <div class="instructor_write">
+                        <!-- 수정할 데이터의 고유 번호(hidden 필드로 전달) -->
+                        <input type="hidden" name="allcNo" th:value="${allcommunity.allcNo}">
+
+                        <!-- 강의 제목 -->
+                        <label for="lecture_title">제목</label>
+                        <input type="text" id="allcommunity_title" name="allcTitle" th:value="${allcommunity.allcTitle}"
+                            required><br>
+
+                        <!-- 강사 이름 -->
+                        <label for="allcommunity_write_name">작성자</label>
+                        <input type="text" id="allcommunity_write_name" name="allcName" th:value="${allcommunity.allcName}"
+                            required><br>
+
+                        <!-- 비밀번호 -->
+                        <label for="allcommunity_write_pass">비밀번호</label>
+                        <input type="text" id="allcommunity_write_pass" name="allcPass" th:value="${allcommunity.allcPass}"
+                            required><br>
+
+                        <!-- 날짜 -->
+                        <label for="allcommunity_write_date">날짜</label>
+                        <input type="date" id="allcommunity_write_date" name="dateAllcommunity"
+                            th:value="${#dates.format(allcommunity.allcDate, 'yyyy-MM-dd')}" required>
+                    </div>
+                    <div class="allcommunity_write_content">
+                        <!-- 파일 업로드 -->
+                        <label for="fileSllcommunity">파일</label>
+                        <input type="file" id="fileAllcommunity" name="fileAlcommunity"><br>
+
+                        <!-- 내용 -->
+                        <label for="allcommunity_write_content">내용</label>
+						<textarea class="form-control" name="allcContent" id="allcommunity_write_content" required th:text="${allcommunity.allcContent}"></textarea>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

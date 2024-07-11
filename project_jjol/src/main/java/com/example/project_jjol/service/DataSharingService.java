@@ -42,6 +42,24 @@ public class DataSharingService {
 		return datasharingMapper.getDataSharing();
 	}
 
+	// 글 no를 통해 데이터 조회
+	public DataSharing findByNo(int no) {
+		return datasharingMapper.findByNo(no);
+	}
+
+	// 글 no를 통해 데이터 삭제
+	public void deleteDataSharing(int no) {
+		log.info("DataSharingService : deleteDataSharing(int no)");
+		datasharingMapper.deleteDataSharing(no);
+	}
+
+	// 글 수정하기
+	public void updateDataSharing(DataSharing datasharing) {
+		datasharingMapper.updateDataSharing(datasharing);
+	}
+
+	
+
 	// 파일 업로드
 	public DataSharingService() throws IOException {
 		Files.createDirectories(this.fileStorageLocation);
@@ -53,8 +71,8 @@ public class DataSharingService {
 		Files.copy(file.getInputStream(), targetLocation);
 		return fileName;
 	}
-	
-	//파일 경로 반환 메서드
+
+	// 파일 경로 반환 메서드
 	public Path getFilePath(String fileName) {
 		return this.fileStorageLocation.resolve(fileName).normalize();
 	}

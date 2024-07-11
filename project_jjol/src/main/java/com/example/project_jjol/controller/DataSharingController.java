@@ -1,11 +1,14 @@
 package com.example.project_jjol.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -17,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,88 +29,125 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.project_jjol.model.DataSharing;
 import com.example.project_jjol.model.User;
+import com.example.project_jjol.service.DataSharingCommentService;
 import com.example.project_jjol.service.DataSharingService;
 import com.example.project_jjol.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 import com.example.project_jjol.service.LectureService;
 
 @Controller
+@Slf4j
 public class DataSharingController {
 
 	@Autowired
 	private DataSharingService datasharingService;
+	
+	@Autowired
+	private DataSharingCommentService datasharingcommentSerivce;
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private LectureService lecturesService;
-
-//    @GetMapping("/dataSharing")
-//    public String dataSharing(Model model) {
-//        List<DataSharing> dataSharingList = datasharingService.findAll();
-//        model.addAttribute("datasharingList", dataSharingList);
-//        return "dataSharing";
-//    }
+	private LectureService lectureService;
 
 	// 글 쓰기 폼 요청(강사)
 	@GetMapping("/InstructorWrite")
-	public String addData() {
+	public String addData(Model model, HttpSession session) {
+
+		User user = (User) session.getAttribute("loggedInUser");
+
+	       if (user != null) {
+	            List<String> lectures = lectureService.getLecturesByInstructorId(user.getUserId());
+	            log.info("lectures : " + lectures);
+	            model.addAttribute("lectures", lectures);
+	        }
+
 		return "DataSharing_Instructor_Write";
 	}
 
 	// 글 쓰기 요청 처리 (강사)
 	@PostMapping("/InstructorWrite")
-	public String saveData(DataSharing datasharing, @RequestParam("data_file") MultipartFile file,
-			RedirectAttributes redirectAttributes) {
-		if (file.isEmpty()) {
-			redirectAttributes.addFlashAttribute("errorMessage", "파일을 선택해 주세요.");
-			return "redirect:/DataSharing_Instructor";
-		}
+	public String saveData(DataSharing datasharing, @RequestParam(value = "fileData") MultipartFile file,
+			@RequestParam(value = "dateData") Date dateData, RedirectAttributes redirectAttributes) throws Exception {
 
-		try {
-			// 파일 저장 서비스 호출
-			String fileName = datasharingService.storeFile(file);
-			datasharing.setDataFile(fileName); // 필드명 수정
-			DataSharing savedData = datasharingService.InstructorWrite(datasharing);
+		/*
+		 * 파일을 꼭 업로드 해야 하는가? if (file.isEmpty()) {
+		 * redirectAttributes.addFlashAttribute("errorMessage", "파일을 선택해 주세요."); return
+		 * "redirect:/DataSharingView"; }
+		 */
+		Timestamp myDate = new Timestamp(dateData.getTime());
+		log.info("time :  " + myDate.getTime());
 
-			if (savedData != null) {
-				redirectAttributes.addFlashAttribute("successMessage", "글이 성공적으로 등록되었습니다.");
-			} else {
-				redirectAttributes.addFlashAttribute("errorMessage", "글 등록에 실패하였습니다. 다시 시도해 주세요.");
-			}
-		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("errorMessage", "파일 업로드에 실패하였습니다. 다시 시도해 주세요.");
-		}
+		// 시간 설정
+		datasharing.setDataDate(myDate);
+		// 파일 저장 서비스 호출
+		// String fileName = datasharingService.storeFile(file);
+		// datasharing.setDataFile(fileName); // 필드명 수정
+		log.info("InstructorWrite - controller : " + datasharing.getDataName());
+		DataSharing savedData = datasharingService.InstructorWrite(datasharing);
 
-		return "redirect:/DataSharing_Instructor"; // 데이터 저장 후 목록 페이지로 리다이렉트
+		return "redirect:/DataSharingView"; // 데이터 저장 후 목록 페이지로 리다이렉트
 	}
 
-	//글 리스트보기
+	// 글 리스트 보기
 	@GetMapping("/DataSharing")
-	public String redirectToDataSharing(HttpServletRequest request) {
+	public String dataSharing(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		User loggedInUser = (User) session.getAttribute("loggedInUser");
-		
-		
-		if (loggedInUser != null) {
-			if (loggedInUser.getRole().equals("instructor") || loggedInUser.getRole().equals("student")) {
-				return "redirect:/DataSharingView"; // 강사와 학생 모두 DataSharing_View로 리다이렉트
-			}
-		}
 
-		// 로그인이 되지 않은 경우 로그인 페이지로 리다이렉트 또는 다른 처리
-		return "redirect:/login";
+		if (loggedInUser != null) {
+			List<DataSharing> dataSharingList = datasharingService.getDataSharing();
+			model.addAttribute("datasharingList", dataSharingList);
+			return "DataSharing_View";
+		} else {
+			return "redirect:/login";
+		}
 	}
-	
+
 	@GetMapping("/DataSharingView")
-	public String DataSharingView() {
+	public String dataSharingView(Model model) {
+		List<DataSharing> datasharingList = datasharingService.getDataSharing();
+		// db에 데이터를 읽어와서
+		model.addAttribute("datasharingList", datasharingList);
 		return "DataSharing_View";
 	}
 
+	// 글 상세보기
+	@GetMapping("/DataSharingViewDetail")
+	public String dataSharingViewDetail(@RequestParam("no") int no, Model model) {
+		DataSharing datasharing = datasharingService.findByNo(no); // data_no로 글 데이터 조회
+		if (datasharing == null) {
+			// 글이 존재하지 않는 경우 처리 (예: 글 목록 페이지로 리다이렉트)
+			return "redirect:/DataSharingView";
+		}
+		model.addAttribute("datasharing", datasharing); // 모델에 데이터 공유
+		return "DataSharing_Detail"; // 글 상세보기 페이지로 이동
+	}
 
+	// 글 삭제하기
+	@PostMapping("/deleteDataSharing")
+	public String deleteDataSharing(HttpServletResponse response, PrintWriter out, @RequestParam("dataNo") int no) {
+		datasharingService.deleteDataSharing(no);
+		return "redirect:/DataSharingView";
+	}
 
-	
+	// 글 수정하기
+	@PostMapping("/updateDataSharing")
+	public String updateDataSharing(@ModelAttribute("datasharing") DataSharing datasharing) {
+		datasharingService.updateDataSharing(datasharing);
+		return "redirect:/DataSharingView"; // 수정 후 리다이렉트할 페이지
+	}
+
+	// 글 수정 폼 이동
+	@GetMapping("/updateDataSharingForm")
+	public String updateDataSharingForm(@RequestParam("no") int no, Model model) {
+		DataSharing datasharing = datasharingService.findByNo(no); // 데이터베이스에서 글 조회
+		model.addAttribute("datasharing", datasharing); // 모델에 데이터 전달
+		return "DataSharing_Update"; // 수정 폼 템플릿으로 이동
+	}
 
 }

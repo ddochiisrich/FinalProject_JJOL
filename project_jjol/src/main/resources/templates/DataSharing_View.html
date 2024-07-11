@@ -362,10 +362,13 @@
 						<a class="nav-link" href="#">멘토링</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">커뮤니티</a>
+						<a class="nav-link" href="/AllCommunityView">커뮤니티</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/DataSharing_View">자료</a>
+						<!-- 로그인되어 있을 경우 -->
+						<a th:if="${session.loggedInUser != null}" th:href="@{/DataSharing}" class="nav-link">자료실</a>
+						<!-- 로그인되어 있지 않을 경우 -->
+						<a th:if="${session.loggedInUser == null}" th:href="@{/login}" class="nav-link">자료실</a>
 					</li>
 				</ul>
 			</div>
@@ -440,7 +443,7 @@
 							<div class="main_header_icon">
 								<a href="#">(홈)아이콘 > </a>
 								<a href="#">자료실 > </a>
-								<a href="#" ></a>
+								<a href="#"></a>
 							</div>
 							<div class="main_title">
 								<h2 class="main_title_name">자료실</h2>
@@ -486,8 +489,9 @@
 											class="data_search_textbox">
 										<button type="submit" class="data_search_button">검색</button>
 									</div>
-									<div class="write_instructor" th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}">
-									    <a href="/InstructorWrite">글쓰기</a>
+									<div class="write_instructor"
+										th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}">
+										<a href="/InstructorWrite">글쓰기</a>
 									</div>
 								</form>
 							</div>
@@ -504,7 +508,8 @@
 									</thead>
 									<tbody>
 										<tr th:each="datasharing : ${datasharingList}">
-											<td th:text="${datasharing.dataTitle}">제목 없음</td>
+											<td><a th:href="@{/DataSharingViewDetail(no=${datasharing.dataNo})}"
+													th:text="${datasharing.dataTitle}">제목 없음</a></td>
 											<td th:text="${#dates.format(datasharing.dataDate, 'yyyy-MM-dd')}">날짜 없음
 											</td>
 											<td th:text="${datasharing.dataFile}">파일 없음</td>
@@ -599,7 +604,7 @@
 			const subMenuLinks = document.querySelectorAll('.sub_menu_link');
 			const programmingSearchForms = document.querySelectorAll('.data_main_search form');
 			const dataSearchForm = document.getElementById('data_search_form');
-			
+
 
 			// 메인 메뉴 선택 시 처리
 			mainMenuSelectors.forEach(selector => {
