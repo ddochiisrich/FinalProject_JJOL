@@ -1,6 +1,7 @@
 package com.example.project_jjol.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,13 +14,16 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DataSharing {
-	private int dataNo;
-	private String dataName;
-	private String dataTitle;
-	private String dataContent;
-    private Timestamp dataDate;
-    private String dataPw;
-    private String dataFile;
+public class AllCommunity {
+	private int allcNo;
+	private String allcName;
+	private String allcTitle;
+	private String allcContent;
+    private Timestamp allcDate;
+    private String allcPass;
+    private String allcFile;
+
 
 }
+
+

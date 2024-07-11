@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.project_jjol.repository.AllCommunityMapper">
+	<!-- 검색 쿼리 -->
+	<select id="findCommunityListWithPaging"
+		resultType="AllCommunity"> SELECT * FROM allcommunity WHERE <if
+			test="type != null and type != ''">
+			<choose>
+				<when test="type.equals('username')">
+					allc_name LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="type.equals('title')">
+					allc_title LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="type.equals('content')">
+					allc_content LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<otherwise>
+					1 = 1
+				</otherwise>
+			</choose>
+		</if>
+		ORDER BY allc_no DESC </select>
+
+	<!-- 글 목록 수 조회 쿼리 -->
+	<select id="countCommunityList" resultType="int"> SELECT COUNT(*) FROM
+		allcommunity WHERE <if test="type != null and type != ''">
+			<choose>
+				<when test="type.equals('username')">
+					allc_name LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="type.equals('title')">
+					allc_title LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="type.equals('content')">
+					allc_content LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<otherwise>
+					1 = 1
+				</otherwise>
+			</choose>
+		</if>
+	</select>
+
+	<!-- 전체 필드에서 특정 키워드를 포함하는 글 목록 조회 -->
+	<select id="selectCommunityListForAll" parameterType="map"
+		resultType="AllCommunity">
+		SELECT *
+		FROM allcommunity
+		WHERE (allc_name LIKE CONCAT('%', #{keyword}, '%')
+		OR allc_title LIKE CONCAT('%', #{keyword}, '%')
+		OR allc_content LIKE CONCAT('%', #{keyword}, '%'))
+		ORDER BY allc_no DESC
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+
+	<!-- 전체 필드에서 특정 키워드를 포함하는 글 개수 조회 -->
+	<select id="countCommunityListForAll" parameterType="map"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM allcommunity
+		WHERE (allc_name LIKE CONCAT('%', #{keyword}, '%')
+		OR allc_title LIKE CONCAT('%', #{keyword}, '%')
+		OR allc_content LIKE CONCAT('%', #{keyword}, '%'))
+	</select>
+
+	<!-- 전체 필드에서 특정 키워드를 포함하는 글 개수 조회 (매개변수 하나만 사용하는 경우) -->
+	<select id="getCommunityCountForAll" parameterType="map"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM allcommunity
+		WHERE (allc_name LIKE CONCAT('%', #{keyword}, '%')
+		OR allc_title LIKE CONCAT('%', #{keyword}, '%')
+		OR allc_content LIKE CONCAT('%', #{keyword}, '%'))
+	</select>
+</mapper>

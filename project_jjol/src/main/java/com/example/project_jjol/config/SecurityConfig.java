@@ -8,6 +8,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 
 import com.example.project_jjol.service.CustomOAuth2UserService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration

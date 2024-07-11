@@ -13,13 +13,13 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DataSharing {
-	private int dataNo;
-	private String dataName;
-	private String dataTitle;
-	private String dataContent;
-    private Timestamp dataDate;
-    private String dataPw;
-    private String dataFile;
+public class DataSharingComment {
 
+	private int dscNo;
+	private int dscId;
+	//부모 테이블 datasharing의 data_no를 참조하는 외래키
+	private int ddNo;
+	private String dscContent;
+	private String dscWriter;
+	private Timestamp dscTime;
 }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/main_layout}">
+
+<head>
+    <meta charset="utf-8">
+    <title>자료실 강사 글 수정</title>
+</head>
+
+<body>
+    <div class="instructor_view_main">
+        <div class="instructor_view">
+            <div class="instructor_view_wrap">
+                <form th:action="@{/updateDataSharing}" method="post" enctype="multipart/form-data">
+                    <div class="instructor_content_box">
+                        <button type="submit">수정 완료</button>
+                        <a href="/DataSharingView">취소</a>
+                    </div>
+                    <div class="instructor_write">
+                        <!-- 수정할 데이터의 고유 번호(hidden 필드로 전달) -->
+                        <input type="hidden" name="dataNo" th:value="${datasharing.dataNo}">
+
+                        <!-- 강의 제목 -->
+                        <label for="lecture_title">강의 제목</label>
+                        <input type="text" id="lecture_title" name="dataTitle" th:value="${datasharing.dataTitle}"
+                            required><br>
+
+                        <!-- 강사 이름 -->
+                        <label for="instructor_write_name">강사 이름</label>
+                        <input type="text" id="instructor_write_name" name="dataName" th:value="${datasharing.dataName}"
+                            required><br>
+
+                        <!-- 비밀번호 -->
+                        <label for="instructor_write_pass">비밀번호</label>
+                        <input type="text" id="instructor_write_pass" name="dataPw" th:value="${datasharing.dataPw}"
+                            required><br>
+
+                        <!-- 날짜 -->
+                        <label for="instructor_write_date">날짜</label>
+                        <input type="date" id="instructor_write_date" name="dateData"
+                            th:value="${#dates.format(datasharing.dataDate, 'yyyy-MM-dd')}" required>
+                    </div>
+                    <div class="instructor_write_content">
+                        <!-- 파일 업로드 -->
+                        <label for="fileData">파일</label>
+                        <input type="file" id="fileData" name="fileData"><br>
+
+                        <!-- 내용 -->
+                        <label for="instructor_write_content">내용</label>
+						<textarea class="form-control" name="dataContent" id="instructor_write_content" required th:text="${datasharing.dataContent}"></textarea>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
