@@ -178,12 +178,18 @@
                 <div class="col-12 col-lg-4 lecture-detail-right-column">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title" th:if="${hasApplied}">학습중</h5>
-                            <h5 class="card-title" th:if="${!hasApplied}">수강 신청</h5>
-                            <a th:if="${hasApplied}" th:href="@{'/videos/player?lectureId=' + ${lecture.lectureId}}"><button class="btn btn-success btn-block mb-3">학습하기</button></a>
-                            <button th:if="${!hasApplied}" data-toggle="modal" data-target="#paymentModal" class="btn btn-primary btn-block mb-3">수강 신청하기</button>
-                            <!-- 개발용 임시 버튼 -->
-	                        <button data-toggle="modal" data-target="#paymentModal" class="btn btn-primary btn-block mb-3">개발용 수강신청</button>
+                            <th:block th:if="${lecture.instructorId} != ${loggedInUser.userId}">
+	                            <h5 class="card-title" th:if="${hasApplied}">학습중</h5>
+	                            <h5 class="card-title" th:if="${!hasApplied}">수강 신청</h5>
+	                            <a th:if="${hasApplied}" th:href="@{'/videos/player?lectureId=' + ${lecture.lectureId}}"><button class="btn btn-success btn-block mb-3">학습하기</button></a>
+	                            <button th:if="${!hasApplied}" data-toggle="modal" data-target="#paymentModal" class="btn btn-primary btn-block mb-3">수강 신청하기</button>
+                            </th:block>
+                            <th:block th:less="${lecture.instructorId} != ${loggedInUser.userId}">
+                            	<h5 class="card-title">나의 강의입니다.</h5>
+                            </th:block>
+                            <form th:action="@{/lectures/apply}" method="post" id="lectureAppleyForm">
+				                <input type="hidden" name="lectureId" th:value="${lecture.lectureId}">
+				            </form>
                             <div class="card-text">
                                 <p><strong>지식공유자:</strong> <span th:text="${lecture.instructorName}"></span></p>
                                 <p><strong>총 28개 수업:</strong> 5시간 21분</p>
