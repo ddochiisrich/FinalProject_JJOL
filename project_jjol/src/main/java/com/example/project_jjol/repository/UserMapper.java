@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.example.project_jjol.model.User;
 
@@ -19,4 +20,7 @@ public interface UserMapper {
 
     @Select("SELECT * FROM user WHERE user_id = #{userId}")
     User findById(String userId);
+    
+    @Update("UPDATE user SET name = #{name}, email = #{email}, phone = #{phone}, pass = #{pass} WHERE user_id = #{userId}")
+    void updateUser(User user);
 }
