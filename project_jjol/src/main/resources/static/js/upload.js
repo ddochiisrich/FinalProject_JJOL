@@ -1,42 +1,42 @@
 $(document).ready(function() {
     let chapterIndex = 1;
-    $('#addChapter').click(function() {
+    $('#addChapterUpload').off('click').on('click', function() {
         chapterIndex++;
         const chapterTemplate = `
-            <div class="chapter">
+            <div class="upload-chapter-upload">
                 <h3>챕터 ${chapterIndex}</h3>
-                <div class="form-group">
-                    <label for="chapterTitle${chapterIndex}">챕터 제목 :</label>
-                    <input type="text" id="chapterTitle${chapterIndex}" name="chapterTitles" class="form-control">
-                    <div class="error-message" id="errorChapterTitle${chapterIndex}"></div>
+                <div class="upload-form-group-upload form-group">
+                    <label for="chapterTitleUpload${chapterIndex}">챕터 제목 :</label>
+                    <input type="text" id="chapterTitleUpload${chapterIndex}" name="chapterTitles" class="form-control">
+                    <div class="error-message-upload" id="errorChapterTitleUpload${chapterIndex}"></div>
                 </div>
-                <div class="form-group">
-                    <label for="chapterDescription${chapterIndex}">챕터 설명 :</label>
-                    <input type="text" id="chapterDescription${chapterIndex}" name="chapterDescriptions" class="form-control">
-                    <div class="error-message" id="errorChapterDescription${chapterIndex}"></div>
+                <div class="upload-form-group-upload form-group">
+                    <label for="chapterDescriptionUpload${chapterIndex}">챕터 설명 :</label>
+                    <input type="text" id="chapterDescriptionUpload${chapterIndex}" name="chapterDescriptions" class="form-control">
+                    <div class="error-message-upload" id="errorChapterDescriptionUpload${chapterIndex}"></div>
                 </div>
-                <div class="form-group">
-                    <label for="chapterFile${chapterIndex}">챕터 비디오 :</label>
-                    <input type="file" id="chapterFile${chapterIndex}" name="chapterFiles" class="form-control-file">
-                    <div class="error-message" id="errorChapterFile${chapterIndex}"></div>
+                <div class="upload-form-group-upload form-group">
+                    <label for="chapterFileUpload${chapterIndex}">챕터 비디오 :</label>
+                    <input type="file" id="chapterFileUpload${chapterIndex}" name="chapterFiles" class="form-control-file">
+                    <div class="error-message-upload" id="errorChapterFileUpload${chapterIndex}"></div>
                 </div>
-                <div class="form-group">
-                    <label for="chapterOrder${chapterIndex}">챕터 순서 :</label>
-                    <input type="number" id="chapterOrder${chapterIndex}" name="chapterOrders" class="form-control">
-                    <div class="error-message" id="errorChapterOrder${chapterIndex}"></div>
+                <div class="upload-form-group-upload form-group">
+                    <label for="chapterOrderUpload${chapterIndex}">챕터 순서 :</label>
+                    <input type="number" id="chapterOrderUpload${chapterIndex}" name="chapterOrders" class="form-control">
+                    <div class="error-message-upload" id="errorChapterOrderUpload${chapterIndex}"></div>
                 </div>
                 <hr>
             </div>
         `;
-        $('#chapter-container').append(chapterTemplate);
+        $('#chapter-container-upload').append(chapterTemplate);
     });
 
-    $('#uploadForm').submit(function(e) {
+    $('#uploadFormUpload').off('submit').on('submit', function(e) {
         let isValid = true;
         let firstInvalidElement = null;
 
         function showError(element, message) {
-            const errorElement = $(element).next('.error-message');
+            const errorElement = $(element).next('.error-message-upload');
             errorElement.text(message);
             errorElement.addClass('show');
             if (isValid) firstInvalidElement = $(element);
@@ -44,81 +44,81 @@ $(document).ready(function() {
         }
 
         function hideError(element) {
-            const errorElement = $(element).next('.error-message');
+            const errorElement = $(element).next('.error-message-upload');
             errorElement.removeClass('show');
         }
 
-        if ($('#title').val() === '') {
-            showError('#title', '강의 제목을 입력해주세요.');
+        if ($('#titleUpload').val() === '') {
+            showError('#titleUpload', '강의 제목을 입력해주세요.');
         } else {
-            hideError('#title');
+            hideError('#titleUpload');
         }
 
-        if ($('#shortDescription').val() === '') {
-            showError('#shortDescription', '간략 설명을 입력해주세요.');
+        if ($('#shortDescriptionUpload').val() === '') {
+            showError('#shortDescriptionUpload', '간략 설명을 입력해주세요.');
         } else {
-            hideError('#shortDescription');
+            hideError('#shortDescriptionUpload');
         }
 
-        if ($('#longDescription').val() === '') {
-            showError('#longDescription', '상세 설명을 입력해주세요.');
+        if ($('#longDescriptionUpload').val() === '') {
+            showError('#longDescriptionUpload', '상세 설명을 입력해주세요.');
         } else {
-            hideError('#longDescription');
+            hideError('#longDescriptionUpload');
         }
 
-        if ($('#thumbnailVideo').val() === '') {
-            showError('#thumbnailVideo', '썸네일 비디오를 선택해주세요.');
+        if ($('#thumbnailVideoUpload').val() === '') {
+            showError('#thumbnailVideoUpload', '썸네일 비디오를 선택해주세요.');
         } else {
-            hideError('#thumbnailVideo');
+            hideError('#thumbnailVideoUpload');
         }
 
-        if ($('#thumbnailImage').val() === '') {
-            showError('#thumbnailImage', '썸네일 이미지를 선택해주세요.');
+        if ($('#thumbnailImageUpload').val() === '') {
+            showError('#thumbnailImageUpload', '썸네일 이미지를 선택해주세요.');
         } else {
-            hideError('#thumbnailImage');
+            hideError('#thumbnailImageUpload');
         }
 
-        if ($('#level').val() === '') {
-            showError('#level', '레벨을 선택해주세요.');
+        if ($('#levelUpload').val() === '') {
+            showError('#levelUpload', '레벨을 선택해주세요.');
         } else {
-            hideError('#level');
+            hideError('#levelUpload');
         }
 
-        if ($('#price').val() === '') {
-            showError('#price', '가격을 입력해주세요.');
+        if ($('#priceUpload').val() === '') {
+            showError('#priceUpload', '가격을 입력해주세요.');
         } else {
-            hideError('#price');
+            hideError('#priceUpload');
         }
 
-        if ($('#discount').val() === '') {
-            showError('#discount', '할인율을 입력해주세요.');
+        if ($('#discountUpload').val() === '') {
+            showError('#discountUpload', '할인율을 입력해주세요.');
         } else {
-            hideError('#discount');
+            hideError('#discountUpload');
         }
 
         for (let i = 1; i <= chapterIndex; i++) {
-            if ($(`#chapterTitle${i}`).val() === '') {
-                showError(`#chapterTitle${i}`, '챕터 제목을 입력해주세요.');
+            if ($(`#chapterTitleUpload${i}`).val() === '') {
+                showError(`#chapterTitleUpload${i}`, '챕터 제목을 입력해주세요.');
             } else {
-                hideError(`#chapterTitle${i}`);
+                hideError(`#chapterTitleUpload${i}`);
             }
 
-            if ($(`#chapterDescription${i}`).val() === '') {
-                showError(`#chapterDescription${i}`, '챕터 설명을 입력해주세요.');
+            if ($(`#chapterDescriptionUpload${i}`).val() === '') {
+                showError(`#chapterDescriptionUpload${i}`, '챕터 설명을 입력해주세요.');
             } else {
-                hideError(`#chapterDescription${i}`);
+                hideError(`#chapterDescriptionUpload${i}`);
             }
 
-            if ($(`#chapterFile${i}`).val() === '') {
-                showError(`#chapterFile${i}`, '챕터 비디오를 선택해주세요.');
+            if ($(`#chapterFileUpload${i}`).val() === '') {
+                showError(`#chapterFileUpload${i}`, '챕터 비디오를 선택해주세요.');
             } else {
-                hideError(`#chapterFile${i}`);
+                hideError(`#chapterFileUpload${i}`);
             }
 
-            if ($(`#chapterOrder${i}`).val() === '') {
-                showError(`#chapterOrder${i}`, '챕터 순서를 입력해주세요.');
+            if ($(`#chapterOrderUpload${i}`).val() === '') {
+                showError(`#chapterOrderUpload${i}`, '챕터 순서를 입력해주세요.');
             } else {
-                hideError(`#chapterOrder${i}`);
+                hideError(`#chapterOrderUpload${i}`);
             }
         }
 

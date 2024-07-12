@@ -70,7 +70,7 @@ public class MyLecturesController {
 				response.setContentType("text/html; charset=utf-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>");
-				out.println(" alert('수강중인 학생이 1명 이상인 강의를 삭제하기 위해서는 \\n 고객센터(1544-0000)에 문의해주시기 바랍니다.');");
+				out.println(" alert('수강중인 학생이 1명 이상인 강의를 삭제하기 위해서는\\n고객센터(1544-0000)에 문의해주시기 바랍니다.');");
 				out.println(" location.href='myLectures'");
 				out.println("</script>");
 				return null;
@@ -113,7 +113,7 @@ public class MyLecturesController {
 	        return null;
 		}
 		
-		return "lectureUpdateForm";
+		return "views/lectureUpdateForm";
 	}
 	
 	@PostMapping("updateProcess")

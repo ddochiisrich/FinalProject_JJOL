@@ -1,71 +1,215 @@
-body {
+/* 기본 배경과 폰트 설정 */
+body.mypage-body {
     background-color: #f0f2f5;
     font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-.navbar-brand {
-    font-size: 1.75rem;
-    font-weight: bold;
-    color: #007bff !important;
-}
-
-.navbar-nav .nav-link {
-    font-size: 1.1rem;
-    margin-right: 1rem;
-}
-
+/* 마이페이지 컨테이너 스타일 */
 .mypage-container {
     background-color: #fff;
     border-radius: 15px;
     padding: 2rem;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 2rem auto;
+    position: relative;
 }
 
+/* 마이페이지 제목 스타일 */
 .mypage-container h2 {
     font-weight: bold;
     color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
+/* 정보 수정 버튼 위치 조정 */
+.mypage-editProfile-btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-color: #0C1844;
+    color: #0C1844;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.mypage-editProfile-btn:hover {
+    background-color: #0C1844;
+    border-color: #0C1844;
+    color: white;
+}
+
+
+/* 안녕하세요 멘트 스타일 */
 .mypage-container h3 {
     color: #555;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
-.card {
+/* 카드 스타일 */
+.mypage-card {
     border: none;
     border-radius: 15px;
     overflow: hidden;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    background-color: #fff;
 }
 
-.card:hover {
+.mypage-card:hover {
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.card-img-top {
+/* 카드 이미지 스타일 */
+.mypage-card-img {
     border-radius: 15px 15px 0 0;
     height: 200px;
     object-fit: cover;
 }
 
-.card-body {
+/* 카드 본문 스타일 */
+.mypage-card-body {
     background-color: #f8f9fa;
     border-radius: 0 0 15px 15px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.card-title {
-    color: #007bff;
+.mypage-card-title {
+    color: #0C1844; /* 제목 색깔 변경 */
     font-weight: bold;
+    margin-bottom: 0.75rem;
+    text-align: center;
 }
 
-.card-text {
-    color: #666;
+.mypage-card-text {
+    color: #666666; /* 설명 색깔 변경, 적당한 회색 */
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
-.btn-block {
-    border-radius: 30px;
+
+/* 카드 버튼 스타일 */
+.mypage-card-btn-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
-.alert {
+.mypage-card-btn {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-color: #0C1844;
+    color: #0C1844;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.mypage-card-btn:hover {
+    background-color: #0C1844;
+    border-color: #0C1844;
+    color: white;
+}
+
+/* 알림 스타일 */
+.mypage-alert {
     border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* 유효성 검사 메시지 스타일 */
+.mypage-invalid-feedback {
+    color: red;
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.mypage-form-control:invalid + .mypage-invalid-feedback {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 모달 스타일 */
+.mypage-modal .mypage-modal-content {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.mypage-modal-header {
+    background-color: #0C1844;
+    color: white;
+    border-bottom: none;
+    text-align: center;
+    justify-content: center;
+}
+
+.mypage-modal-title {
+    font-weight: bold;
+    flex: 1;
+}
+
+.mypage-modal-close {
+    color: white;
+}
+
+.mypage-modal-body {
+    padding: 2rem;
+}
+
+.mypage-form-group {
+    margin-bottom: 1rem;
+}
+
+.mypage-form-control {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* 모달 버튼 스타일 */
+.mypage-btn {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border-color: #0C1844;
+    color: #0C1844;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.mypage-btn:hover {
+    background-color: #0C1844;
+    border-color: #0C1844;
+    color: white;
+}
+
+/* 버튼 그룹 스타일 */
+.mypage-button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* 버튼 사이의 간격 */
+}
+
+/* 강의 카드 컬럼 스타일 */
+.mypage-col-md-2 {
+    flex: 0 0 20%;
+    max-width: 20%;
 }

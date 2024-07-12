@@ -5,11 +5,15 @@ import com.example.project_jjol.model.Lecture;
 import com.example.project_jjol.model.User;
 import com.example.project_jjol.service.UserService;
 import com.example.project_jjol.service.LectureService;
+
+import org.apache.catalina.util.URLEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
@@ -81,5 +85,36 @@ public class MypageController {
         model.addAttribute("lecture", lecture);
         model.addAttribute("user", loggedInUser);
         return "views/certificate";
+    }
+
+    @GetMapping("/mypage/editProfile")
+    public String showEditProfilePage(HttpSession session, Model model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user", loggedInUser);
+        return "views/editProfile";
+    }
+
+    @PostMapping("/mypage/editProfile")
+    public String editProfile(@RequestParam("name") String name, 
+                              @RequestParam("email") String email, 
+                              @RequestParam("phone") String phone, 
+                              HttpSession session, Model model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+        User user = userService.findById(loggedInUser.getUserId());
+        user.setName(name);
+        user.setEmail(email);
+        user.setPhone(phone);
+
+        userService.updateUser(user);
+
+        session.setAttribute("loggedInUser", user); // 세션 업데이트
+
+        return "redirect:/mypage";
     }
 }

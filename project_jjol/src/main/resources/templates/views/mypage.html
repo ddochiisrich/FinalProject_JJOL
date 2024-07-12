@@ -1,46 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main_layout}">
-
-<body>
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}">
+    <script defer th:src="@{/js/mypage.js}"></script>
+</head>
+<body class="mypage-body">
     <th:block layout:fragment="content">
-        <div class="mypage-container mt-5">
-            <div class="row mb-4">
-                <div class="col">
-                    <h2>마이페이지</h2>
+        <div class="container mt-5 mypage-container position-relative">
+            <div class="mypage-row mb-4 justify-content-center">
+                <div class="mypage-col text-center">
+                    <h1>마이페이지</h1>
+                </div>
+                <div class="mypage-col text-right">
+                    <button type="button" class="btn btn-outline-primary mypage-editProfile-btn btn-sm" data-toggle="modal" data-target="#mypage-editProfileModal">정보 수정</button>
                 </div>
             </div>
-            <div class="row mb-4">
-                <div class="col">
-                    <h3 th:text="'안녕하세요, ' + ${user.name} + '님!'"></h3>
-                </div>
+            <div class="text-center mb-4">
+                <h4 th:text="'안녕하세요, ' + ${user.name} + '님!'"></h4>
             </div>
-            <div class="row mb-4">
-                <div class="col">
-                    <h4>내가 수강한 강의</h4>
-                </div>
+            <hr>
+            <div class="mb-4">
+                <h4>내가 수강한 강의</h4>
             </div>
-            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
-            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
-            <div class="row">
-                <div class="col-md-4 mb-4" th:each="lecture, iterStat : ${lectures}">
-                    <div class="card shadow-sm">
-                        <img class="card-img-top" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${lecture.lectureTitle}">강의 제목</h5>
-                            <p class="card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
-                            <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-info btn-block">강의 상세정보</a>
-                            
-                            <!-- 수료증 발급 버튼 -->
-                            <div th:if="${allChaptersCompleted[iterStat.index] && !certificatesIssued[iterStat.index]}">
-                                <a th:href="@{/mypage/issueCertificate/{lectureId}(lectureId=${lecture.lectureId})}" class="btn btn-success btn-block mt-2">수료증 발급</a>
-                            </div>
-                            
-                            <!-- 수료증 보기 버튼 -->
-                            <div th:if="${certificatesIssued[iterStat.index]}">
-                                <a th:href="@{/mypage/certificate/{lectureId}(lectureId=${lecture.lectureId})}" class="btn btn-primary btn-block mt-2">수료증 보기</a>
+            <div th:if="${successMessage}" class="alert alert-success mt-3 mypage-alert" th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert alert-danger mt-3 mypage-alert" th:text="${errorMessage}"></div>
+            <div class="mypage-row">
+                <div class="mypage-col-md-2 mb-4" th:each="lecture, iterStat : ${lectures}">
+                    <div class="card shadow-sm mypage-card">
+                        <img class="mypage-card-img" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
+                        <div class="mypage-card-body">
+                            <h5 class="mypage-card-title" th:text="${lecture.lectureTitle}">강의 제목</h5>
+                            <p class="mypage-card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
+                            <div class="mypage-card-btn-group">
+                                <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-outline-primary mypage-card-btn">강의 상세정보</a>
+                                <div th:if="${allChaptersCompleted[iterStat.index] && !certificatesIssued[iterStat.index]}">
+                                    <a th:href="@{/mypage/issueCertificate/{lectureId}(lectureId=${lecture.lectureId})}" class="btn btn-outline-success mypage-card-btn">수료증 발급</a>
+                                </div>
+                                <div th:if="${certificatesIssued[iterStat.index]}">
+                                    <a th:href="@{/mypage/certificate/{lectureId}(lectureId=${lecture.lectureId})}" class="btn btn-outline-info mypage-card-btn">수료증 보기</a>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Profile Modal -->
+        <div class="modal fade mypage-modal" id="mypage-editProfileModal" tabindex="-1" role="dialog" aria-labelledby="mypage-editProfileModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content mypage-modal-content">
+                    <div class="modal-header mypage-modal-header">
+                        <h5 class="modal-title mypage-modal-title text-center w-100" id="mypage-editProfileModalLabel">회원정보 수정</h5>
+                    </div>
+                    <div class="modal-body mypage-modal-body">
+                        <form id="mypage-editProfileForm" th:action="@{/mypage/editProfile}" method="post" novalidate>
+                            <div class="mypage-form-group">
+                                <label for="mypage-editProfile-name">이름</label>
+                                <input type="text" class="mypage-form-control" id="mypage-editProfile-name" name="name" th:value="${user.name}" required minlength="2">
+                                <div class="mypage-invalid-feedback">이름은 최소 2글자 이상이어야 합니다.</div>
+                            </div>
+                            <div class="mypage-form-group">
+                                <label for="mypage-editProfile-email">이메일</label>
+                                <input type="email" class="mypage-form-control" id="mypage-editProfile-email" name="email" th:value="${user.email}" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                                <div class="mypage-invalid-feedback">올바른 이메일 형식을 입력하세요.</div>
+                            </div>
+                            <div class="mypage-form-group">
+                                <label for="mypage-editProfile-phone">전화번호</label>
+                                <input type="text" class="mypage-form-control" id="mypage-editProfile-phone" name="phone" th:value="${user.phone}" required pattern="\d{3}-\d{4}-\d{4}">
+                                <div class="mypage-invalid-feedback">전화번호는 000-0000-0000 형식이어야 합니다.</div>
+                            </div>
+                            <div class="text-center mypage-button-group">
+                                <button type="submit" class="btn btn-outline-primary mypage-btn">수정하기</button>
+                                <button type="button" class="btn btn-outline-danger mypage-btn" data-dismiss="modal">닫기</button>
+                            </div>
+                        </form>
+                        <div th:if="${successMessage}" class="alert alert-success mt-3 mypage-alert" th:text="${successMessage}"></div>
+                        <div th:if="${errorMessage}" class="alert alert-danger mt-3 mypage-alert" th:text="${errorMessage}"></div>
                     </div>
                 </div>
             </div>
