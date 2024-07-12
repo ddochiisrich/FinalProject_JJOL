@@ -131,7 +131,5 @@ $(function() {
 	            console.error("검증 결과: 불일치", xhr.responseText, status, error);
 	        }
 	    });
-		
-
 	});
 })
