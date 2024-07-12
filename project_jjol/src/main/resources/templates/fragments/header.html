@@ -1,41 +1,62 @@
-<div class="header-container">
-    <nav class="custom-header-navbar">
-        <div class="navbar-left">
-            <a class="navbar-brand" href="/"><img src="/images/mainlogo.png" alt="Logo"></a>
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="/lectures">강의</a></li>
-                <li class="nav-item"><a class="nav-link" href="/chat">채팅</a></li>
-                <li class="nav-item"><a class="nav-link" href="/AllCommunityView">커뮤니티</a></li>
-                <li class="nav-item">
-                    <a th:if="${session.loggedInUser != null}" href="/DataSharing" class="nav-link">자료실</a>
-                    <a th:if="${session.loggedInUser == null}" href="/login" class="nav-link">자료실</a>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="/notifications/form">알림</a></li>
-            </ul>
-        </div>
-        <div class="navbar-center">
-            <form class="search-form" action="/lectures/search" method="get">
-                <input type="text" class="search-input" name="keyword" placeholder="나의 진짜 성장을 도와줄 실무 강의를 찾아보세요">
-                <button type="submit" class="search-button">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-        </div>
-        <div class="navbar-right">
-            <div class="notification" th:each="notification : ${mostUrgentNotification}">
-                시험 임박! <br>[ D - <span th:text="${notification.daysUntilExam}"></span> : <span th:text="${notification.subject}"></span> ]
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/path/to/your/css/style.css?v=1.1">
+    <title>Document</title>
+</head>
+<body>
+    <div id="header-container-header">
+        <nav id="custom-header-navbar-header">
+            <div id="navbar-left-header">
+                <a id="navbar-brand-header" href="/"><img src="/images/mainlogo.png" alt="Logo" class="me-5"></a>
+                <ul id="navbar-nav-header">
+                    <li class="nav-item-header"><a class="nav-link-header" href="/lectures">강의</a></li>
+                    <li class="nav-item-header"><a class="nav-link-header" href="/chat">채팅</a></li>
+                    <li class="nav-item-header"><a class="nav-link-header" href="/AllCommunityView">커뮤니티</a></li>
+                    <li class="nav-item-header">
+                        <a th:if="${session.loggedInUser != null}" href="/DataSharing" class="nav-link-header">자료실</a>
+                        <a th:if="${session.loggedInUser == null}" href="/login" class="nav-link-header">자료실</a>
+                    </li>
+                </ul>
             </div>
-            <div class="icon-links">
-                <div th:if="${session.loggedInUser == null}">
-                    <a href="/login" class="icon-link"><i class="fas fa-user"></i></a>
-                    <a href="/register" class="icon-link"><i class="fas fa-user-plus"></i></a>
+            <div id="navbar-center-header">
+                <form id="search-form-header" action="/lectures/search" method="get">
+                    <input type="text" id="search-input-header" name="keyword" placeholder="실무 강의를 찾아보세요">
+                    <button type="submit" id="search-button-header">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            <div id="navbar-right-header">
+                <div th:if="${session.loggedInUser != null}" class="notification-header">
+                    <a href="/notifications/form">
+                        <i class="fas fa-clock"></i>
+                        <span th:if="${mostUrgentNotification != null}">
+                            D - <span th:text="${mostUrgentNotification.daysUntilExam}"></span> : <span th:text="${mostUrgentNotification.subject}"></span>
+                        </span>
+                        <span th:if="${mostUrgentNotification == null}">
+                            일정 등록
+                        </span>
+                    </a>
                 </div>
-                <div th:if="${session.loggedInUser != null}">
-                    <span th:text="'안녕하세요!  ' + ${session.loggedInUser.name} + '  님'"></span>
-                    <a href="/logout" class="icon-link"><i class="fas fa-sign-out-alt"></i></a>
-                    <a href="/mypage" class="icon-link"><i class="fas fa-user-circle"></i></a>
+                <div class="icon-links-header">
+                    <div th:if="${session.loggedInUser == null}">
+                        <a href="/login" class="icon-link-header"><i class="fas fa-user"></i></a>
+                        <a href="/register" class="icon-link-header"><i class="fas fa-user-plus"></i></a>
+                    </div>
+                    <div th:if="${session.loggedInUser != null}" class="user-info-header">
+                        <span th:text="${session.loggedInUser.name} + '  님,' + '  오늘도 열공!'" class="me-3"></span>
+                        <a href="/mypage" class="icon-link-header"><i class="fas fa-user-circle"></i></a>
+                        <a href="/logout" class="icon-link-header"><i class="fas fa-sign-out-alt"></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
-</div>
+        </nav>
+    </div>
+    <div id="content">
+        <!-- 페이지별 컨텐츠 -->
+    </div>
+</body>
+</html>
