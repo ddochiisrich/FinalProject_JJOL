@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS Payment(
     lecture_title VARCHAR(255),                          -- 강의 제목
     user_id VARCHAR(100),                                -- 유저 ID
     lecture_id INT,                                      -- 강의 ID
+    merchant_uid VARCHAR(255) NOT NULL,                  -- 결제 ID
     FOREIGN KEY(user_id) REFERENCES user(user_id),
     FOREIGN KEY(lecture_id) REFERENCES Lecture(lecture_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

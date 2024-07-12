@@ -84,7 +84,7 @@
                                 <h3>수강평</h3>
                                 <div th:if="${hasApplied}">
                                     <form th:action="@{/lectures/review}" method="post" onsubmit="localStorage.setItem('activeTab', '#reviews');">
-                                        <input type="hidden" name="lectureId" th:value="${lecture.lectureId}" id="lectureId">
+                                        <input type="hidden" name="lectureId" th:value="${lecture.lectureId}">
                                         <div class="form-group">
                                             <label for="rating">별점 (0.5~5.0)</label>
                                             <select class="form-control" id="rating" name="rating" required>
@@ -181,7 +181,9 @@
                             <h5 class="card-title" th:if="${hasApplied}">학습중</h5>
                             <h5 class="card-title" th:if="${!hasApplied}">수강 신청</h5>
                             <a th:if="${hasApplied}" th:href="@{'/videos/player?lectureId=' + ${lecture.lectureId}}"><button class="btn btn-success btn-block mb-3">학습하기</button></a>
-                            <button th:if="${!hasApplied}" data-toggle="modal" data-target="#paymentModal" class="btn btn-primary btn-block mb-3">수강 신청하기</button> 
+                            <button th:if="${!hasApplied}" data-toggle="modal" data-target="#paymentModal" class="btn btn-primary btn-block mb-3">수강 신청하기</button>
+                            <!-- 개발용 임시 버튼 -->
+	                        <button data-toggle="modal" data-target="#paymentModal" class="btn btn-primary btn-block mb-3">개발용 수강신청</button>
                             <div class="card-text">
                                 <p><strong>지식공유자:</strong> <span th:text="${lecture.instructorName}"></span></p>
                                 <p><strong>총 28개 수업:</strong> 5시간 21분</p>
@@ -225,6 +227,7 @@
                             </div>
                             <h5 class="mt-5">구매자 정보</h5>
                             <input type="hidden" name="userId" th:value="${loggedInUser.userId}" id="userId"/>
+                            <input type="hidden" th:value="${lecture.lectureId}" id="lectureId"/>
                             <div class="row">
                                 <div class="col lecture-detail-test-secondary">
                                     <span>이름</span><br>

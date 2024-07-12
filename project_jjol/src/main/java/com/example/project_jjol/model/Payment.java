@@ -10,8 +10,15 @@ public class Payment {
     private String userId;
     private Integer lectureId;
     private String lectureTitle;
+    private String merchantUid;
     
-    public String getLectureTitle() {
+    public String getMerchantUid() {
+		return merchantUid;
+	}
+	public void setMerchantUid(String merchantUid) {
+		this.merchantUid = merchantUid;
+	}
+	public String getLectureTitle() {
     	return lectureTitle;
     }
     public void setLectureTitle(String lectureTitle) {
