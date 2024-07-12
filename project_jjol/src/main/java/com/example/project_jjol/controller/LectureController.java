@@ -22,7 +22,6 @@ import com.example.project_jjol.model.Lecture;
 import com.example.project_jjol.model.LectureAnswer;
 import com.example.project_jjol.model.LectureQuestion;
 import com.example.project_jjol.model.LectureReview;
-import com.example.project_jjol.model.Notification;
 import com.example.project_jjol.model.User;
 import com.example.project_jjol.service.LectureAnswerService;
 import com.example.project_jjol.service.LectureApplicationService;
@@ -72,6 +71,7 @@ public class LectureController {
 
             // 가장 임박한 알림 추가
             model.addAttribute("mostUrgentNotification", notificationService.getMostUrgentNotification(userId));
+            
         }
 
         // 강의 리스트 추가
