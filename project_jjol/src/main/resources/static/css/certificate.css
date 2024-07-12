@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
-.certificate-container {
+#certificate-container-certificate {
     border: 15px solid #2C3E50;
     padding: 40px;
     width: 80%;
@@ -9,76 +9,144 @@
     text-align: center;
     background-color: #FFFFFF;
     position: relative;
-    margin-top : 20px;
+    margin-top: 20px;
+    font-family: 'Times New Roman', Times, serif;
 }
 
-.certificate-header {
+.certificate-header-certificate {
     font-size: 3rem;
     font-weight: bold;
     color: #2C3E50;
     margin-bottom: 20px;
 }
 
-.certificate-body {
+.certificate-body-certificate {
     font-size: 1.3rem;
     color: #2C3E50;
     margin-bottom: 30px;
 }
 
-.certificate-body p {
+.certificate-body-certificate p {
     margin-bottom: 10px;
 }
 
-.certificate-body h2 {
+.certificate-body-certificate h2 {
     font-family: 'Great Vibes', cursive;
     font-size: 2.5rem;
     color: #E74C3C;
     margin: 20px 0;
 }
 
-.certificate-body h3 {
+.certificate-body-certificate h3 {
     font-size: 1.8rem;
     color: #2980B9;
     margin: 20px 0;
 }
 
-.certificate-footer {
+.certificate-footer-certificate {
     font-size: 1rem;
     color: #7F8C8D;
     margin-top: 30px;
+    position: relative;
 }
 
-.certificate-signature {
+.certificate-footer-certificate p {
+    display: inline;
+    margin-right: 10px;
+}
+
+.certificate-footer-image {
+    width: 200px;
+    vertical-align: middle;
+}
+
+.certificate-signature-certificate {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 10rem;
     align-items: center;
     margin-top: 40px;
 }
 
-.certificate-signature div {
+.certificate-signature-certificate div {
     width: 40%;
     text-align: center;
     font-size: 1rem;
     color: #2C3E50;
 }
 
-.certificate-signature-line {
+.certificate-signature-line-certificate {
     border-top: 1px solid #2C3E50;
     margin-top: 10px;
 }
 
-.certificate-logo {
+.certificate-logo-certificate {
     position: absolute;
     top: 20px;
     left: 20px;
     height: 80px;
 }
 
-.certificate-watermark {
+.certificate-watermark-certificate {
     position: absolute;
     bottom: 20px;
     right: 20px;
     opacity: 0.1;
     font-size: 5rem;
     color: #2C3E50;
+}
+
+.certificate-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.certificate-print-button {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid #0C1844;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.certificate-print-button:hover {
+    color: #fff;
+    background-color: #0C1844;
+    border-color: #0C1844;
+}
+
+/* Print-specific styles */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #certificate-container-certificate, #certificate-container-certificate * {
+        visibility: visible;
+    }
+
+    #certificate-container-certificate {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border: none;
+    }
+
+    .certificate-logo-certificate {
+        position: static;
+    }
 }

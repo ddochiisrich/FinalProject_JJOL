@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.project_jjol.model.Certificate;
@@ -79,5 +80,9 @@ public class UserService {
     public boolean hasIssuedCertificate(String userId, int lectureId) {
         Certificate certificate = getCertificate(userId, lectureId);
         return certificate != null;
+    }
+    
+    public void updateUser(User user) {
+        userMapper.updateUser(user);
     }
 }

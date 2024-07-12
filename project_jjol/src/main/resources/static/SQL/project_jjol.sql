@@ -152,26 +152,35 @@ CREATE TABLE IF NOT EXISTS lectureCommunity (
     FOREIGN KEY (user_id) REFERENCES user(user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 퀴즈생성 테이블
-DROP TABLE IF EXISTS create_quiz;
-CREATE TABLE IF NOT EXISTS create_quiz(    
-    quiz_title VARCHAR(1000) NOT NULL,                    -- 퀴즈 제목
-    quiz_content LONG NOT NULL,                           -- 퀴즈 내용
-    subject VARCHAR(100) NOT NULL,                        -- 과목
-    quiz_pass VARCHAR(1000) NOT NULL,                     -- 퀴즈 통과 여부
-    quiz_score VARCHAR(1000) NOT NULL,                    -- 퀴즈 점수
-    quiz_date TIMESTAMP NOT NULL,                         -- 퀴즈 날짜
-    quiz_file VARCHAR(1000) NOT NULL                      -- 퀴즈 파일
+-- 퀴즈 정보 저장 테이블
+DROP TABLE IF EXISTS quizzes;
+CREATE TABLE IF NOT EXISTS quizzes (
+    quizzes_no BIGINT AUTO_INCREMENT PRIMARY KEY,    -- 퀴즈의 고유 식별자
+    quizzes_title VARCHAR(255) NOT NULL              -- 퀴즈 제목 저장
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 퀴즈제출 테이블
-DROP TABLE IF EXISTS quiz_submission;
-CREATE TABLE IF NOT EXISTS quiz_submission(    
-    wrong_question LONG NOT NULL,                         -- 틀린 문제
-    quiz_score VARCHAR(1000) NOT NULL,                    -- 퀴즈 점수
-    quiz_date TIMESTAMP NOT NULL,                         -- 퀴즈 제출 날짜
-    acceptance_status VARCHAR(100) NOT NULL               -- 통과 상태
+-- 퀴즈 질문 정보 저장 테이블
+DROP TABLE IF EXISTS questions;
+CREATE TABLE IF NOT EXISTS questions(
+    questions_no BIGINT AUTO_INCREMENT PRIMARY KEY,  -- 고유 식별자
+    questions VARCHAR(255) NOT NULL,                 -- 각 질문
+    option_a VARCHAR(255) NOT NULL,
+    option_b VARCHAR(255) NOT NULL,
+    option_c VARCHAR(255) NOT NULL,
+    option_d VARCHAR(255) NOT NULL,
+    correct_answer VARCHAR(255) NOT NULL             -- 정답 선택지
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 퀴즈와 질문 간의 연결 테이블
+DROP TABLE IF EXISTS quizQuestions;
+CREATE TABLE IF NOT EXISTS quizQuestions(
+    quiz_no BIGINT NOT NULL,                         -- 퀴즈 고유 식별자
+    question_no BIGINT NOT NULL,                     -- 질문의 고유 식별자
+    PRIMARY KEY (quiz_no, question_no),              -- 기본 키 설정
+    FOREIGN KEY (quiz_no) REFERENCES quizzes(quizzes_no) ON DELETE CASCADE,
+    FOREIGN KEY (question_no) REFERENCES questions(questions_no) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- 자료공유 테이블
 DROP TABLE IF EXISTS datasharing;
