@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.project_jjol.model.Chapter;
 import com.example.project_jjol.model.Lecture;
 import com.example.project_jjol.repository.MyLecturesMapper;
-import com.example.project_jjol.repository.UserMapper;
 
 @Service
 public class MyLecturesService {
@@ -37,7 +36,9 @@ public class MyLecturesService {
 		myLecturesMapper.updateLecture(lecture);
 	}
 	
-	public void updateChapter(Chapter chapter) {
-		myLecturesMapper.updateChapter(chapter);
+	public void updateChapter(List<Chapter> chapters) {
+		for (Chapter chapter : chapters) {
+	        myLecturesMapper.updateChapter(chapter);
+	    }
 	}
 }

@@ -74,7 +74,7 @@
                 <hr>
                 <div id="lecture-update-chapter-container">
                     <div class="lecture-update-chapter" th:each="chapter, iterStat : ${chapters}">
-                	<input type="hidden" name="chapterId" th:value="${chapter.chapterId}" />
+                	<input type="hidden" name="chapterIds" th:value="${chapter.chapterId}" />
                         <h3>챕터 [[${iterStat.index + 1}]]</h3>
                         <div class="form-group">
                             <label for="chapterTitle[[${iterStat.index + 1}]]">챕터 제목 :</label>
@@ -95,8 +95,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="chapterOrder1">챕터 순서 :</label>
-                            <input type="number" id="chapterOrder1" name="chapterOrders" class="form-control" th:value="${chapter.chapterOrder}">
+                            <label for="chapterOrder[[${iterStat.index + 1}]]">챕터 순서 :</label>
+                            <input type="number" id="chapterOrder[[${iterStat.index + 1}]]" name="chapterOrders" class="form-control" th:value="${chapter.chapterOrder}">
                         </div>
                         <hr>
                     </div>

@@ -2,6 +2,7 @@ package com.example.project_jjol.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,7 +124,11 @@ public class MyLecturesController {
 	public String updateLectureProcess(@ModelAttribute Lecture lecture,
 			@RequestParam("thumbnailVideo") MultipartFile thumbnailVideo,
             @RequestParam("thumbnailImage") MultipartFile thumbnailImage,
-            @ModelAttribute Chapter chapter) throws IOException{
+            @RequestParam("chapterIds") List<Integer> chapterIds,
+            @RequestParam("chapterTitles") List<String> chapterTitles,
+            @RequestParam("chapterDescriptions") List<String> chapterDescriptions,
+            @RequestParam("chapterFiles") List<MultipartFile> chapterFiles,
+            @RequestParam("chapterOrders") List<Integer> chapterOrders) throws IOException{
 		
 		if (thumbnailVideo != null && !thumbnailVideo.isEmpty()) {
 			lecture.setLectureThumbnailVideo(s3Service.uploadFile(thumbnailVideo)); // S3Service 사용
@@ -131,9 +136,22 @@ public class MyLecturesController {
 		if (thumbnailImage != null && !thumbnailImage.isEmpty()) {
 			lecture.setLectureThumbnailImage(s3Service.uploadFile(thumbnailImage)); // S3Service 사용
 		}
+		
+		List<Chapter> chapters = new ArrayList<>();
+	    for (int i = 0; i < chapterIds.size(); i++) {
+	        Chapter chapter = new Chapter();
+	        chapter.setChapterId(chapterIds.get(i));
+	        chapter.setChapterTitle(chapterTitles.get(i));
+	        chapter.setChapterDescription(chapterDescriptions.get(i));
+	        if (chapterFiles.get(i) != null && !chapterFiles.get(i).isEmpty()) {
+	            chapter.setChapterUrl(s3Service.uploadFile(chapterFiles.get(i)));
+	        }
+	        chapter.setChapterOrder(chapterOrders.get(i));
+	        chapters.add(chapter);
+	    }
         
 		myLecturesService.updateLecture(lecture);
-		myLecturesService.updateChapter(chapter);
+		myLecturesService.updateChapter(chapters);
 		return "redirect:myLectures";
 	}
 }

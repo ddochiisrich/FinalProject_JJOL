@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.project_jjol.model.Chapter;
 import com.example.project_jjol.model.Lecture;
@@ -30,10 +31,8 @@ public interface MyLecturesMapper {
 			+ "lecture_title = #{lectureTitle}, "
 			+ "lecture_short_description = #{lectureShortDescription}, "
 			+ "lecture_long_description = #{lectureLongDescription}, "
-			+ "<set>"
 			+ "<if test='lectureThumbnailVideo != null'>lecture_thumbnail_video = #{lectureThumbnailVideo}, </if>"
 			+ "<if test='lectureThumbnailImage != null'>lecture_thumbnail_image = #{lectureThumbnailImage}, </if>"
-			+ "</set>"
 			+ "lecture_level = #{lectureLevel}, "
 			+ "lecture_price = #{lecturePrice}, "
 			+ "lecture_discount = #{lectureDiscount} "
@@ -41,11 +40,13 @@ public interface MyLecturesMapper {
 			+ "</script>")
 	void updateLecture(Lecture lecture);
 	
-	@Update("UPDATE Chapter SET "
+	@Update("<script>"
+			+ "UPDATE Chapter SET "
 			+ "chapter_title = #{chapterTitle}, "
 			+ "chapter_description = #{chapterDescription}, "
-			+ "chapter_url = #{chapterUrl}, "
+			+ "<if test='chapterUrl != null'>chapter_url = #{chapterUrl}, </if>"
 			+ "chapter_order = #{chapterOrder} "
-			+ "WHERE chapter_id = #{chapterId}")
+			+ "WHERE chapter_id = #{chapterId}"
+			+ "</script>")
 	void updateChapter(Chapter chapter);
 }
