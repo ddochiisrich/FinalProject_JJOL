@@ -2,9 +2,10 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    padding-top: 80px; /* 헤더의 높이만큼 패딩 추가 */
 }
 
-.header-container {
+#header-container-header {
     position: fixed;
     top: 0;
     width: 100%;
@@ -17,36 +18,45 @@ body {
     height: 80px;
 }
 
-.custom-header-navbar {
+#custom-header-navbar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     max-width: 1200px;
     padding: 0 20px;
+    position: relative; /* 검색창을 중앙에 위치시키기 위해 추가 */
 }
 
-.navbar-left, .navbar-center, .navbar-right {
+#navbar-left-header, #navbar-right-header {
     display: flex;
     align-items: center;
 }
 
-.navbar-brand img {
+#navbar-center-header {
+    position: absolute; /* 부모 요소에 상대적으로 배치 */
+    left: 50%;
+    transform: translateX(-50%); /* 중앙 정렬 */
+    display: flex;
+    align-items: center;
+}
+
+#navbar-brand-header img {
     height: 40px;
 }
 
-.navbar-nav {
+#navbar-nav-header {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.nav-item {
+.nav-item-header {
     margin-right: 20px;
 }
 
-.nav-link {
+.nav-link-header {
     color: #2c3e50;
     font-weight: 500;
     text-decoration: none;
@@ -55,7 +65,7 @@ body {
     transition: color 0.3s ease;
 }
 
-.nav-link::after {
+.nav-link-header::after {
     content: '';
     position: absolute;
     left: 0;
@@ -67,57 +77,96 @@ body {
     transition: transform 0.3s ease;
 }
 
-.nav-link:hover {
+.nav-link-header:hover {
     color: #1e90ff;
 }
 
-.nav-link:hover::after {
+.nav-link-header:hover::after {
     transform: scaleX(1);
 }
 
-.search-form {
+#search-form-header {
     display: flex;
     align-items: center;
     position: relative;
 }
 
-.search-input {
+#search-input-header {
     width: 100%;
-    max-width: 600px;
+    max-width: 800px; /* 검색창을 더 크게 */
     border: 1px solid #e0e0e0;
     border-radius: 20px;
-    padding: 5px 15px;
-    padding-right: 40px;
+    padding: 10px 20px; /* 패딩을 늘려 검색창 높이 증가 */
+    padding-right: 60px; /* 버튼 공간 확보 */
+    font-size: 16px; /* 글자 크기 증가 */
 }
 
-.search-button {
+#search-button-header {
     background: none;
     border: none;
     color: #2c3e50;
     position: absolute;
-    right: 15px;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     padding: 0;
     cursor: pointer;
+    font-size: 18px; /* 버튼 아이콘 크기 증가 */
 }
 
-.notification {
-    margin-right: 20px;
+.notification-header {
+    display: flex; /* Flexbox로 변경하여 중앙 정렬 가능 */
+    align-items: center; /* 상하 중앙 정렬 */
+    margin-right: 80px; /* 약간 왼쪽으로 이동 */
+    animation: pulse 1.5s infinite; /* 애니메이션 추가 */
 }
 
-.icon-links {
+.notification-header a {
+    display: flex;
+    align-items: center;
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: inherit; /* 부모 색상 상속 */
+}
+
+.notification-header i {
+    margin-right: 5px; /* 아이콘과 텍스트 사이에 약간의 간격 추가 */
+}
+
+.icon-links-header {
     display: flex;
     align-items: center;
 }
 
-.icon-link {
+.icon-link-header {
     color: #2c3e50;
     margin-right: 15px;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     text-decoration: none;
 }
 
-.icon-link:hover {
+.icon-link-header:hover {
     color: #1e90ff;
+}
+
+.user-info-header {
+    display: flex;
+    align-items: center; /* 상하 중앙 정렬 */
+}
+
+/* 새로운 컨텐츠 패딩 */
+#content {
+    padding-top: 80px; /* 헤더의 높이만큼 패딩 추가 */
+}
+
+/* 애니메이션 효과 */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
