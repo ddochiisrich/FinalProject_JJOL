@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.project_jjol.model.Chapter;
 import com.example.project_jjol.model.Lecture;
@@ -34,5 +35,9 @@ public class MyLecturesService {
 	
 	public void updateLecture(Lecture lecture) {
 		myLecturesMapper.updateLecture(lecture);
+	}
+	
+	public void updateChapter(Chapter chapter) {
+		myLecturesMapper.updateChapter(chapter);
 	}
 }

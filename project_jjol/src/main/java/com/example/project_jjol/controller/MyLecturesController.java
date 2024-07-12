@@ -32,6 +32,9 @@ public class MyLecturesController {
 	@Autowired
 	private MyLecturesService myLecturesService;
 	
+    @Autowired
+    private S3Service s3Service;
+	
 	@GetMapping("/myLectures")
 	public String myLectureList(HttpSession session, Model model, HttpServletResponse response) throws IOException {
 		User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -117,9 +120,20 @@ public class MyLecturesController {
 	}
 	
 	@PostMapping("updateProcess")
-	public String updateLectureProcess(@ModelAttribute Lecture lecture){
+	public String updateLectureProcess(@ModelAttribute Lecture lecture,
+			@RequestParam("thumbnailVideo") MultipartFile thumbnailVideo,
+            @RequestParam("thumbnailImage") MultipartFile thumbnailImage,
+            @ModelAttribute Chapter chapter) throws IOException{
+		
+		if (thumbnailVideo != null && !thumbnailVideo.isEmpty()) {
+			lecture.setLectureThumbnailVideo(s3Service.uploadFile(thumbnailVideo)); // S3Service 사용
+		}
+		if (thumbnailImage != null && !thumbnailImage.isEmpty()) {
+			lecture.setLectureThumbnailImage(s3Service.uploadFile(thumbnailImage)); // S3Service 사용
+		}
         
 		myLecturesService.updateLecture(lecture);
+		myLecturesService.updateChapter(chapter);
 		return "redirect:myLectures";
 	}
 }
