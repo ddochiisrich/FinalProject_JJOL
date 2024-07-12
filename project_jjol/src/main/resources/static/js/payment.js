@@ -19,7 +19,7 @@ $(function() {
 	$("#lecturePrice").text(lecturePrice);
 	$("#priceAfterPoint").text(lecturePrice);
 	
-	//포인트 사용
+	// 포인트 사용
 	var havePoint = parseInt($("#havePoint").text());
 	var priceAfterPoint = parseInt($("#priceAfterPoint").text());
 	$("#pointInput").on("keyup change", function() {
@@ -43,7 +43,7 @@ $(function() {
 		$("#priceAfterPoint").text(priceAfterPoint - usingPoint);
 	})
 	
-	// 전액 사용 버튼
+	// 포인트 전액 사용 버튼
 	$("#useAllPoint").on("click", function() {
 		if (lecturePrice > havePoint) {
 	    	$("#pointInput").attr("max", havePoint);
@@ -63,53 +63,75 @@ $(function() {
 	const lectureTitle = $("#lectureTitle").text();
 	const lectureId = $("#lectureId").val();
 	
-	$("#payBt").on("click", function() {
+	$("#payBt").on("click", async function() {
 		var havePoint = parseInt($("#havePoint").text());
+		var usingPoint = parseInt($("#pointInput").val());
 		const lecturePriceAfterPoint = parseInt($('#priceAfterPoint').text());
 		const merchantUid = `merchant_${crypto.randomUUID()}`;
 		
-		var usingPoint = parseInt($("#pointInput").val());
-		alert('usingPoint: ' + usingPoint);
-		alert('lecturePrice : ' + lecturePriceAfterPoint);
+		const dataForValidate = {
+	        userId: userId,
+	        lectureId: lectureId,
+	        lecturePrice: lecturePriceAfterPoint,
+			usingPoint: usingPoint,
+	    };
 		
-		IMP.init("imp62227326");
-		IMP.request_pay({
-			pg: "kakaopay",
-			pay_method: "kakaopay",
-			merchant_uid: merchantUid,
-			name: lectureTitle,
-			amount: lecturePriceAfterPoint,
-			buyer_name: userId,
-			lecture_id: lectureId
-		}, function (rsp) {
-			if(rsp.success) {
-				const dataToSend = {
-			        userId: userId,
-			        lectureTitle: lectureTitle,
-			        lectureId: lectureId,
-			        lecturePrice: lecturePriceAfterPoint,
-					point: havePoint,
-					usingPoint: usingPoint
-			    };
+		const dataForAddPayment = {
+			userId: userId,
+	        lectureId: lectureId,
+	        lectureTitle: lectureTitle,
+	        lecturePrice: lecturePriceAfterPoint,
+			point: havePoint,
+			merchantUid: merchantUid
+		}
+		
+		// 검증
+		await $.ajax({
+	        type: "POST",
+	        url: "/validatePayment",
+			contentType: "application/json",
+	        data: JSON.stringify(dataForValidate),
+	        dataType: "json",
+	        success: function() {
+				alert('검증 결과: 일치');
 				
-				// 서버(controller)에 정보 전달
-				$.ajax({
-			        type: "POST",
-			        url: "/addPayment",
-					contentType: "application/json",
-			        data: JSON.stringify(dataToSend),
-			        dataType: "json",
-			        success: function() {
-						alert('controller에 전송 성공');
-						// 결제 완료 후 수강신청 페이지로 이동						
-			            window.location.href = '/lectures/apply/' + lectureId;
-			        },
-			        error: function(xhr, status, error) {
-						alert('controller에 전송 실패');
-			            console.error("Controller에 데이터 전송 실패", xhr.responseText, status, error);
-			        }
-			    });
-			}
-		})
+				// 결제
+				IMP.init("imp62227326");
+				IMP.request_pay({
+					pg: "kakaopay",
+					pay_method: "kakaopay",
+					merchant_uid: merchantUid,
+					name: lectureTitle,
+					amount: lecturePriceAfterPoint,
+					buyer_name: userId,
+					lecture_id: lectureId
+				}, function (rsp) {
+					if(rsp.success) {
+						// DB 반영		
+						$.ajax({
+							type: "POST",
+					        url: "/addPayment",
+							contentType: "application/json",
+					        data: JSON.stringify(dataForAddPayment),
+					        dataType: "json",
+					        success: function() {
+								console.log('결제 성공');
+								// 결제 완료 후 수강신청 페이지로 이동						
+					            window.location.href = '/lectures/apply/' + lectureId;
+					        },
+					        error: async function(xhr, status, error) {
+					            console.error("결제 실패", xhr.responseText, status, error);
+					        }
+						})
+					}
+				})
+	        },
+	        error: async function(xhr, status, error) {
+				alert('비정상적인 접근입니다.');
+	            console.error("검증 결과: 불일치", xhr.responseText, status, error);
+	        }
+	    });
+		
+
 	});
 })
