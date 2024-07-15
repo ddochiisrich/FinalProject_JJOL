@@ -1,152 +1,160 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main_layout}">
+	layout:decorate="~{layouts/main_layout}">
 
 <body>
-    <th:block layout:fragment="content">
-        <div class="data-sharing-container container">
-            <div class="row my-5" id="data-content">
-                <div class="col-10 offset-1">
-                    <div class="data-sharing-all-content">
-                        <div class="data-sharing-box">
-                            <!--side bar-->
-                            <div class="data-sharing-tab-menu">
-                                <div class="data-sharing-tab-menu-side">
-                                    <ul class="data-sharing-main-menu">
-                                        <div class="data-sharing-tab-menu-title">자료실</div>
-                                        <li class="data-sharing-main-menu-selector">
-                                            <span class="data-sharing-main-menu-selector-wrapper" data-target="programming">프로그래밍</span>
-                                            <ul class="data-sharing-sub-menu" id="programming">
-                                                <li><a class="data-sharing-sub-menu-link" href="#">프로그래밍 전체보기></a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">프론트엔드 개발</a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">백엔드 개발</a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">모바일 앱 개발</a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">DevOps/infra</a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">블록체인 개발</a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">게임 개발</a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">컴퓨터 공학/SW엔지니어링</a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">풀스택 개발</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="data-sharing-main-menu-selector">
-                                            <span class="data-sharing-main-menu-selector-wrapper" data-target="datascience">데이터사이언스</span>
-                                            <ul class="data-sharing-sub-menu" id="datascience">
-                                                <li><a class="data-sharing-sub-menu-link" href="#">데이터사이언스 전체보기></a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">데이터분석</a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">머신러닝</a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">데이터엔지니어링</a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">Upstage:AI Lab</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="data-sharing-main-menu-selector">
-                                            <span class="data-sharing-main-menu-selector-wrapper" data-target="AI">인공지능</span>
-                                            <ul class="data-sharing-sub-menu" id="AI">
-                                                <li><a class="data-sharing-sub-menu-link" href="#">인공지능 전체보기></a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">딥러닝</a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">컴퓨터비전</a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">자연어처리</a></li>
-                                                <li><a class="data-sharing-sub-menu-link" href="#">ChatGPT</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!--main search-->
-                            <div class="data-sharing-main-search">
-                                <!--main header-->
-                                <div class="data-sharing-main-header-icon">
-                                    <a href="#">(홈)아이콘 > </a>
-                                    <a href="#">자료실 > </a>
-                                    <a href="#"></a>
-                                </div>
-                                <div class="data-sharing-main-title">
-                                    <h2 class="data-sharing-main-title-name">자료실</h2>
-                                    <p class="data-sharing-sub-title">학습에 필요한 학습자료를 다운 받아서 활용하세요.</p>
-                                </div>
-                                <!-- data 카테고리 검색기능 -->
-                                <div class="data-sharing-search-categories">
-                                    <form action="#" id="programming_search">
-                                        <select name="programming_search_select" id="programming_search_select">
-                                            <option value="programming_all">전체</option>
-                                            <option value="frontend">프론트엔드 개발</option>
-                                            <option value="backend">백엔드 개발</option>
-                                            <option value="mobile">모바일 앱 개발</option>
-                                            <option value="DevPos">DevOps/infra</option>
-                                            <option value="blockchain">블록체인 개발</option>
-                                            <option value="game">게임 개발</option>
-                                            <option value="computer_sw">컴퓨터 공학/SW엔지니어링</option>
-                                            <option value="fullstack">풀스택</option>
-                                        </select>
-                                    </form>
-                                    <form action="#" id="datascience_search" style="display:none;">
-                                        <select name="datascience_search_select" id="datascience_search_select">
-                                            <option value="datascience_all">전체</option>
-                                            <option value="dataanalysis">데이터 분석</option>
-                                            <option value="machinelearning">머신러닝</option>
-                                            <option value="dataengineering">데이터엔지니어링</option>
-                                            <option value="upstageailab">Upstage:AI Lab</option>
-                                        </select>
-                                    </form>
-                                    <form action="#" id="ai_search" style="display:none;">
-                                        <select name="ai_search_select" id="ai_search_select">
-                                            <option value="ai_all">전체</option>
-                                            <option value="machinelearning">딥러닝</option>
-                                            <option value="computer_vision">컴퓨터비전</option>
-                                            <option value="language_processing">자연어처리</option>
-                                            <option value="chat_gpt">ChatGPT</option>
-                                        </select>
-                                    </form>
+	<th:block layout:fragment="content">
+		<div class="data-sharing-container container">
+			<div class="row my-5" id="data-content">
+				<div class="col-10 offset-1">
+					<div class="data-sharing-all-content">
+						<div class="data-sharing-box">
+							<!--side bar-->
+							<div class="data-sharing-tab-menu">
+								<div class="data-sharing-tab-menu-side">
+									<ul class="data-sharing-main-menu">
+										<div class="data-sharing-tab-menu-title">자료실</div>
+										<li class="data-sharing-main-menu-selector">
+											<span class="data-sharing-main-menu-selector-wrapper"
+												data-target="programming">프로그래밍</span>
+											<ul class="data-sharing-sub-menu" id="programming">
+												<li><a class="data-sharing-sub-menu-link" href="#">프로그래밍 전체보기></a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">프론트엔드 개발</a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">백엔드 개발</a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">모바일 앱 개발</a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">DevOps/infra</a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">블록체인 개발</a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">게임 개발</a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">컴퓨터 공학/SW엔지니어링</a>
+												</li>
+												<li><a class="data-sharing-sub-menu-link" href="#">풀스택 개발</a></li>
+											</ul>
+										</li>
+										<li class="data-sharing-main-menu-selector">
+											<span class="data-sharing-main-menu-selector-wrapper"
+												data-target="datascience">데이터사이언스</span>
+											<ul class="data-sharing-sub-menu" id="datascience">
+												<li><a class="data-sharing-sub-menu-link" href="#">데이터사이언스 전체보기></a>
+												</li>
+												<li><a class="data-sharing-sub-menu-link" href="#">데이터분석</a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">머신러닝</a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">데이터엔지니어링</a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">Upstage:AI Lab</a>
+												</li>
+											</ul>
+										</li>
+										<li class="data-sharing-main-menu-selector">
+											<span class="data-sharing-main-menu-selector-wrapper"
+												data-target="AI">인공지능</span>
+											<ul class="data-sharing-sub-menu" id="AI">
+												<li><a class="data-sharing-sub-menu-link" href="#">인공지능 전체보기></a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">딥러닝</a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">컴퓨터비전</a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">자연어처리</a></li>
+												<li><a class="data-sharing-sub-menu-link" href="#">ChatGPT</a></li>
+											</ul>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<!--main search-->
+							<div class="data-sharing-main-search">
+								<!--main header-->
+								<div class="data-sharing-main-header-icon">
+									<a href="#">(홈)아이콘 > </a>
+									<a href="#">자료실 > </a>
+									<a href="#"></a>
+								</div>
+								<div class="data-sharing-main-title">
+									<h2 class="data-sharing-main-title-name">자료실</h2>
+									<p class="data-sharing-sub-title">학습에 필요한 학습자료를 다운 받아서 활용하세요.</p>
+								</div>
+								<!-- data 카테고리 검색기능 -->
+								<div class="data-sharing-search-categories">
+									<form action="#" id="programming_search">
+										<select name="programming_search_select" id="programming_search_select">
+											<option value="programming_all">전체</option>
+											<option value="frontend">프론트엔드 개발</option>
+											<option value="backend">백엔드 개발</option>
+											<option value="mobile">모바일 앱 개발</option>
+											<option value="DevPos">DevOps/infra</option>
+											<option value="blockchain">블록체인 개발</option>
+											<option value="game">게임 개발</option>
+											<option value="computer_sw">컴퓨터 공학/SW엔지니어링</option>
+											<option value="fullstack">풀스택</option>
+										</select>
+									</form>
+									<form action="#" id="datascience_search" style="display:none;">
+										<select name="datascience_search_select" id="datascience_search_select">
+											<option value="datascience_all">전체</option>
+											<option value="dataanalysis">데이터 분석</option>
+											<option value="machinelearning">머신러닝</option>
+											<option value="dataengineering">데이터엔지니어링</option>
+											<option value="upstageailab">Upstage:AI Lab</option>
+										</select>
+									</form>
+									<form action="#" id="ai_search" style="display:none;">
+										<select name="ai_search_select" id="ai_search_select">
+											<option value="ai_all">전체</option>
+											<option value="machinelearning">딥러닝</option>
+											<option value="computer_vision">컴퓨터비전</option>
+											<option value="language_processing">자연어처리</option>
+											<option value="chat_gpt">ChatGPT</option>
+										</select>
+									</form>
 
-                                    <form action="#" id="data_search_form">
-                                        <div class="data-sharing-data-search-box">
-                                            <input type="text" name="search_query" placeholder="검색어를 입력해주세요."
-                                                class="data-sharing-data-search-textbox">
-                                            <button type="submit" class="data-sharing-data-search-button">검색</button>
-                                        </div>
-                                        <div class="write_instructor"
+									<form action="#" id="data_search_form">
+										<div class="data-sharing-data-search-box">
+											<input type="text" name="search_query" placeholder="검색어를 입력해주세요."
+												class="data-sharing-data-search-textbox">
+											<button type="submit" class="data-sharing-data-search-button">검색</button>
+										</div>
+										<div class="write_instructor"
 											th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}">
 											<a href="/InstructorWrite">글쓰기</a>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- data search box, 검색 end-->
-                                <!--thead start-->
-                                <div class="data-sharing-thead-start">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="data-sharing-table-title">제목</th>
-                                                <th scope="col" class="data-sharing-table-date">등록일</th>
-                                                <th scope="col" class="data-sharing-table-download">다운로드</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr th:each="datasharing : ${datasharingList}">
-                                               <td><a th:href="@{/DataSharingViewDetail(no=${datasharing.dataNo})}"
-													th:text="${datasharing.dataTitle}">제목 없음</a></td>
-                                                <td th:text="${#dates.format(datasharing.dataDate, 'yyyy-MM-dd')}">날짜 없음
-                                                </td>
-                                                <td th:text="${datasharing.dataFile}">파일 없음</td>
-                                            </tr>
-                                            <!-- 데이터가 없는 경우 -->
-                                            <tr th:if="${#lists.isEmpty(datasharingList)}">
-                                                <td colspan="3">글이 존재하지 않음</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <!--thead end-->
-                        </div>
-                        </form>
-                        </ul>
-                        <!-- data 카테고리 검색기능 end -->
-                    </div>
-                </div>
-                <!--main end-->
-            </div>
-        </div>
-    </th:block>
+										</div>
+									</form>
+								</div>
+								<!-- data search box, 검색 end-->
+								<!--thead start-->
+								<div class="data-sharing-thead-start">
+									<table class="table">
+										<thead>
+											<tr>
+												<th scope="col" class="data-sharing-table-title">제목</th>
+												<th scope="col" class="data-sharing-table-writer">작성자</th>
+												<th scope="col" class="data-sharing-table-date">등록일</th>
+												<th scope="col" class="data-sharing-table-download">다운로드</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="datasharing : ${datasharingList}">
+												<td><a th:href="@{/DataSharingViewDetail(no=${datasharing.dataNo})}"
+														th:text="${datasharing.dataTitle}">제목 없음</a></td>
+												<td th:text="${datasharing.dataName}">작성자없음</td>
+												<td th:text="${#dates.format(datasharing.dataDate, 'yyyy-MM-dd')}">날짜 없음
+												</td>
+												<td th:text="${datasharing.dataFile}">파일 없음</td>
+											</tr>
+											<!-- 데이터가 없는 경우 -->
+											<tr th:if="${#lists.isEmpty(datasharingList)}">
+												<td colspan="3">글이 존재하지 않음</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!--thead end-->
+						</div>
+						</form>
+						</ul>
+						<!-- data 카테고리 검색기능 end -->
+					</div>
+				</div>
+				<!--main end-->
+			</div>
+		</div>
+	</th:block>
 </body>
 
 </html>

@@ -11,10 +11,11 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.example.project_jjol.model.AllCommunity;
+import com.example.project_jjol.model.CommunityComment;
+import com.example.project_jjol.model.DataSharingComment;
 
 @Mapper
 public interface AllCommunityMapper {
-
 
 	// 글 목록 no순으로 불러오기
 	@Select("SELECT * FROM allcommunity WHERE allc_no = #{no}")
@@ -34,22 +35,35 @@ public interface AllCommunityMapper {
 	@Update("UPDATE allcommunity SET allc_title = #{allcTitle}, allc_content = #{allcContent} WHERE allc_no = #{allcNo}")
 	void updateAllCommunity(AllCommunity allcommunity);
 
-	//페이징처리
+	// 페이징처리
 	List<AllCommunity> selectCommunityList(@Param("startRow") int startRow, @Param("pageSize") int pageSize,
 			@Param("type") String type, @Param("keyword") String keyword);
-	
-	//글 목록수
+
+	// 글 목록수
 	int getCommunityCount(@Param("type") String type, @Param("keyword") String keyword);
 
-	//글 리스트
-	 @Select("SELECT * FROM allcommunity ORDER BY allc_no DESC")
-	    List<AllCommunity> getAllCommunity();
-	 
-	 List<AllCommunity> selectCommunityListForAll(@Param("startRow") int startRow, @Param("pageSize") int pageSize, @Param("keyword") String keyword);
+	// 글 리스트
+	@Select("SELECT * FROM allcommunity ORDER BY allc_no DESC")
+	List<AllCommunity> getAllCommunity();
 
-	    int countCommunityListForAll(@Param("keyword") String keyword);
+	List<AllCommunity> selectCommunityListForAll(@Param("startRow") int startRow, @Param("pageSize") int pageSize,
+			@Param("keyword") String keyword);
 
-	    int getCommunityCountForAll(@Param("keyword") String keyword);
+	int countCommunityListForAll(@Param("keyword") String keyword);
 
+	int getCommunityCountForAll(@Param("keyword") String keyword);
 
+	// 댓글 추가
+	@Insert("INSERT INTO communitycomment (cc_no, cmc_content, cmc_writer, cmc_time)"
+			+ "VALUES (#{ccNo}, #{cmcContent}, #{cmcWriter}, NOW())")
+	@Options(useGeneratedKeys = true, keyProperty = "cmcNo")
+	void insertcommunitycomment(CommunityComment communitycomment);
+
+	// 특정 데이터 번호에 해당하는 모든 댓그 조회
+	@Select("SELECT cmc_no, cc_no, cmc_content, cmc_writer, cmc_time " + "FROM communitycomment " + "WHERE cc_no = #{allcNo} "
+			+ "ORDER BY cmc_time DESC")
+	List<CommunityComment> getCommentsByccNo(@Param("allcNo") int allcNo);
+
+	@Delete("DELETE FROM communitycomment WHERE cmc_no = #{no}")
+	void deleteCommunityComment(int no);
 }

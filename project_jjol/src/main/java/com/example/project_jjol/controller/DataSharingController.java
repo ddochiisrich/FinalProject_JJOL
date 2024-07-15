@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.project_jjol.model.DataSharing;
+import com.example.project_jjol.model.DataSharingComment;
 import com.example.project_jjol.model.User;
 import com.example.project_jjol.service.DataSharingCommentService;
 import com.example.project_jjol.service.DataSharingService;
@@ -46,7 +47,7 @@ public class DataSharingController {
 
 	@Autowired
 	private DataSharingService datasharingService;
-	
+
 	@Autowired
 	private DataSharingCommentService datasharingcommentSerivce;
 	@Autowired
@@ -60,11 +61,11 @@ public class DataSharingController {
 
 		User user = (User) session.getAttribute("loggedInUser");
 
-	       if (user != null) {
-	            List<String> lectures = lectureService.getLecturesByInstructorId(user.getUserId());
-	            log.info("lectures : " + lectures);
-	            model.addAttribute("lectures", lectures);
-	        }
+		if (user != null) {
+			List<String> lectures = lectureService.getLecturesByInstructorId(user.getUserId());
+			log.info("lectures : " + lectures);
+			model.addAttribute("lectures", lectures);
+		}
 
 		return "views/DataSharing_Instructor_Write";
 	}
@@ -124,6 +125,10 @@ public class DataSharingController {
 			// 글이 존재하지 않는 경우 처리 (예: 글 목록 페이지로 리다이렉트)
 			return "redirect:/DataSharingView";
 		}
+		List<DataSharingComment> commentList = datasharingcommentSerivce.getCommentsByDataNo(no);
+		log.info("commentList : " + commentList);
+		
+		model.addAttribute("dsccommentList", commentList);
 		model.addAttribute("datasharing", datasharing); // 모델에 데이터 공유
 		return "views/DataSharing_Detail"; // 글 상세보기 페이지로 이동
 	}
