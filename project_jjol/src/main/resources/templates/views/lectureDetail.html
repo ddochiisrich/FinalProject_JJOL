@@ -184,7 +184,7 @@
 	                            <a th:if="${hasApplied}" th:href="@{'/videos/player?lectureId=' + ${lecture.lectureId}}"><button class="btn btn-success btn-block mb-3">학습하기</button></a>
 	                            <button th:if="${!hasApplied}" data-toggle="modal" data-target="#paymentModal" class="btn btn-primary btn-block mb-3">수강 신청하기</button>
                             </th:block>
-                            <th:block th:less="${lecture.instructorId} != ${loggedInUser.userId}">
+                            <th:block th:unless="${lecture.instructorId} != ${loggedInUser.userId}">
                             	<h5 class="card-title">나의 강의입니다.</h5>
                             </th:block>
                             <form th:action="@{/lectures/apply}" method="post" id="lectureAppleyForm">
@@ -266,6 +266,14 @@
                                 </div>
                                 <div class="col">
                                     <span id="priceAfterPoint" th:text="${lecture.lecturePrice}"></span>원
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <span>적립예정 포인트(5%)</span>
+                                </div>
+                                <div class="col">
+                                    <span id="earningPoint">0</span>p
                                 </div>
                             </div>
                         </div>

@@ -71,10 +71,11 @@ public class PaymentController {
         
         paymentService.savePayment(payment);
         
-        // DB 기록(User table에 포인트 반영)
+        // DB 기록(User table에서 포인트 업데이트)
+        int finalPoint = point + lecturePrice * 5 / 100;
         User user = new User();
         user.setUserId(userId);
-        user.setPoint(point);
+        user.setPoint(finalPoint);
 
         paymentService.updatePoint(user);
         

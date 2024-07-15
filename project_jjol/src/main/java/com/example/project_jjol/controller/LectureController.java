@@ -30,6 +30,7 @@ import com.example.project_jjol.service.LectureReviewService;
 import com.example.project_jjol.service.LectureService;
 import com.example.project_jjol.service.NotificationService;
 import com.example.project_jjol.service.S3Service;
+import com.example.project_jjol.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -58,14 +59,23 @@ public class LectureController {
     
     @Autowired
     private final NotificationService notificationService;
+    
+    @Autowired
+    private UserService userService;
 
     @GetMapping({"/", "/lectures"})
     public String lectureList(Model model, HttpSession session) {
         // 세션에서 로그인된 사용자 정보 가져오기
         User loggedInUser = (User) session.getAttribute("loggedInUser");
+        
 
         // 로그인된 사용자가 있는 경우에만 처리
         if (loggedInUser != null) {
+        	
+        	// 세션 업데이트
+        	User updatedUser = userService.findById(loggedInUser.getUserId());
+        	session.setAttribute("loggedInUser", updatedUser);
+        	
             // 사용자 이름 가져오기
             String userId = loggedInUser.getUserId(); // 혹은 다른 사용자 식별자 필드
 
