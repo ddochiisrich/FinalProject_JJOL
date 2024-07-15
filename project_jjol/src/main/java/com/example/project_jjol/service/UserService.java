@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.project_jjol.model.Certificate;
@@ -33,6 +32,14 @@ public class UserService {
     
     public User findByEmailAndProvider(String email, String provider) {
         return userMapper.findByEmailAndProvider(email, provider);
+    }
+
+    public User findByEmail(String email) {
+        return userMapper.findByEmail(email);
+    }
+
+    public User findByPhone(String phone) {
+        return userMapper.findByPhone(phone);
     }
 
     public void saveUser(User user) {

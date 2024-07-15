@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
- <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>로그인</title>
     <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
-	<script th:src="@{/js/jquery-3.7.1.min.js}"></script> <!-- jQuery 경로 수정 -->
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script> <!-- jQuery 경로 수정 -->
     <script th:src="@{/js/loginformcheck.js}"></script> <!-- loginformcheck.js 경로 수정 -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
@@ -171,21 +171,34 @@
                 opacity: 1;
             }
         }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+            50% { transform: translateX(-5px); }
+        }
     </style>
 </head>
 <body>
 <div class="container">
- 	<span class="close-icon" onclick="window.location.href='/'">&times;</span>
+    <span class="close-icon" onclick="window.location.href='/'">&times;</span>
     <img th:src="@{/images/mainlogo.png}" alt="Logo" class="logo">
     <h2>JJol Edu에 오신 것을<br>환영합니다</h2>
     <form action="/login" method="post" name="loginForm" id="loginForm">
         <div class="form-group">
             <label for="userId">아이디</label>
             <input type="text" class="form-control" id="userId" name="userId" >
+            <small class="form-text"></small>
         </div>
         <div class="form-group">
             <label for="password">비밀번호</label>
             <input type="password" class="form-control" id="password" name="password" >
+            <small class="form-text"></small>
         </div>
         <button type="submit" class="btn btn-primary btn-block mt-3">로그인</button>
     </form>

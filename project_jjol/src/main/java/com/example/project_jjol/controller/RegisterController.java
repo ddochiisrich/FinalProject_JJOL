@@ -9,6 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Collections;
+import java.util.Map;
 
 @Controller
 public class RegisterController {
@@ -41,8 +45,47 @@ public class RegisterController {
             @RequestParam(value = "provider", required = false, defaultValue = "normal") String provider,
             Model model) {
 
+        // 아이디 중복 검사
+        if (userService.findById(userId) != null) {
+            model.addAttribute("error", "이미 사용중인 아이디입니다.");
+            return "views/register";
+        }
+
+        // 이메일 중복 검사
+        if (userService.findByEmail(email) != null) {
+            model.addAttribute("error", "이미 사용중인 이메일입니다.");
+            return "views/register";
+        }
+
+        // 핸드폰 번호 중복 검사
+        if (userService.findByPhone(phone) != null) {
+            model.addAttribute("error", "이미 사용중인 핸드폰 번호입니다.");
+            return "views/register";
+        }
+
         User user = new User(userId, password, name, email, phone, role, 0, null, provider);
         userService.saveUser(user);
         return "redirect:/lectures";
+    }
+
+    @GetMapping("/checkUserId")
+    @ResponseBody
+    public Map<String, Boolean> checkUserId(@RequestParam("userId") String userId) {
+        boolean isAvailable = userService.findById(userId) == null;
+        return Collections.singletonMap("available", isAvailable);
+    }
+
+    @GetMapping("/checkEmail")
+    @ResponseBody
+    public Map<String, Boolean> checkEmail(@RequestParam("email") String email) {
+        boolean isAvailable = userService.findByEmail(email) == null;
+        return Collections.singletonMap("available", isAvailable);
+    }
+
+    @GetMapping("/checkPhone")
+    @ResponseBody
+    public Map<String, Boolean> checkPhone(@RequestParam("phone") String phone) {
+        boolean isAvailable = userService.findByPhone(phone) == null;
+        return Collections.singletonMap("available", isAvailable);
     }
 }

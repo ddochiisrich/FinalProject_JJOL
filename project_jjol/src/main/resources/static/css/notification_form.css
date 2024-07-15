@@ -1,4 +1,4 @@
-.notification-form-container {
+.notification_form-container {
     background-color: #fff;
     border-radius: 15px;
     padding: 2rem;
@@ -8,40 +8,151 @@
     text-align: center;
 }
 
-.notification-form-container h2 {
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 2rem;
-}
-
-.notification-list-container {
+.notification_form-list-container {
     background-color: #fff;
     border-radius: 15px;
     padding: 2rem;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     margin: 2rem auto;
     max-width: 800px;
+    text-align: center;
 }
 
-.notification-list-container h2 {
+.notification_form-list-container h2 {
     font-weight: bold;
     color: #333;
     margin-bottom: 2rem;
 }
 
-.form-group {
+.notification_form-form-group {
     text-align: left;
     margin-bottom: 1.5rem;
 }
 
-.form-control {
+.notification_form-form-control {
     border-radius: 5px;
     padding: 0.75rem;
     font-size: 1rem;
 }
 
-.btn {
-    border-radius: 5px;
-    padding: 0.75rem 1.5rem;
+.notification_form-btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-color: #0C1844;
+    color: #0C1844;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.notification_form-btn:hover {
+    background-color: #0C1844;
+    border-color: #0C1844;
+    color: white;
+}
+
+/* 추가 스타일 */
+.notification_form-table th, .notification_form-table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.notification_form-table th {
+    background-color: #f8f9fa;
+}
+
+.notification_form-btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.notification_form-modal .notification_form-modal-content {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.notification_form-modal-header {
+    background-color: #0C1844;
+    color: white;
+    border-bottom: none;
+    text-align: center;
+    justify-content: center;
+}
+
+.notification_form-modal-title {
+    font-weight: bold;
+    flex: 1;
+}
+
+.notification_form-modal-body {
+    padding: 2rem;
+}
+
+.notification_form-modal-form-group {
+    margin-bottom: 1rem;
+}
+
+.notification_form-modal-form-control {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.notification_form-modal-close-btn {
+    width: 100%;
+    padding: 0.5rem;
     font-size: 1rem;
+    border-radius: 5px;
+    border-color: #0C1844;
+    color: #0C1844;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.notification_form-modal-close-btn:hover {
+    background-color: #0C1844;
+    border-color: #0C1844;
+    color: white;
+}
+
+.notification_form-invalid-feedback {
+    color: red;
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.was-validated .notification_form-form-control:invalid ~ .notification_form-invalid-feedback {
+    display: block;
+}
+
+.notification_form-form-control::placeholder {
+    color: #aaa;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 메인 페이지로 돌아가기 버튼 스타일 */
+.notification_form-go-back-btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-color: #0C1844;
+    color: #0C1844;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.notification_form-go-back-btn:hover {
+    background-color: #0C1844;
+    border-color: #0C1844;
+    color: white;
 }
