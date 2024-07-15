@@ -2,6 +2,7 @@ package com.example.project_jjol.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class MyLecturesController {
 	
 	@Autowired
 	private MyLecturesService myLecturesService;
+	
+    @Autowired
+    private S3Service s3Service;
 	
 	@GetMapping("/myLectures")
 	public String myLectureList(HttpSession session, Model model, HttpServletResponse response) throws IOException {
@@ -63,7 +67,6 @@ public class MyLecturesController {
 			HttpServletResponse response) throws IOException {
 		
 		User loggedInUser = (User) session.getAttribute("loggedInUser");
-		
 		if (password.equals(loggedInUser.getPass())) {
 			try {
 				myLecturesService.deleteLecture(lectureId);
@@ -118,9 +121,37 @@ public class MyLecturesController {
 	}
 	
 	@PostMapping("updateProcess")
-	public String updateLectureProcess(@ModelAttribute Lecture lecture){
+	public String updateLectureProcess(@ModelAttribute Lecture lecture,
+			@RequestParam("thumbnailVideo") MultipartFile thumbnailVideo,
+            @RequestParam("thumbnailImage") MultipartFile thumbnailImage,
+            @RequestParam("chapterIds") List<Integer> chapterIds,
+            @RequestParam("chapterTitles") List<String> chapterTitles,
+            @RequestParam("chapterDescriptions") List<String> chapterDescriptions,
+            @RequestParam("chapterFiles") List<MultipartFile> chapterFiles,
+            @RequestParam("chapterOrders") List<Integer> chapterOrders) throws IOException{
+		
+		if (thumbnailVideo != null && !thumbnailVideo.isEmpty()) {
+			lecture.setLectureThumbnailVideo(s3Service.uploadFile(thumbnailVideo)); // S3Service 사용
+		}
+		if (thumbnailImage != null && !thumbnailImage.isEmpty()) {
+			lecture.setLectureThumbnailImage(s3Service.uploadFile(thumbnailImage)); // S3Service 사용
+		}
+		
+		List<Chapter> chapters = new ArrayList<>();
+	    for (int i = 0; i < chapterIds.size(); i++) {
+	        Chapter chapter = new Chapter();
+	        chapter.setChapterId(chapterIds.get(i));
+	        chapter.setChapterTitle(chapterTitles.get(i));
+	        chapter.setChapterDescription(chapterDescriptions.get(i));
+	        if (chapterFiles.get(i) != null && !chapterFiles.get(i).isEmpty()) {
+	            chapter.setChapterUrl(s3Service.uploadFile(chapterFiles.get(i)));
+	        }
+	        chapter.setChapterOrder(chapterOrders.get(i));
+	        chapters.add(chapter);
+	    }
         
 		myLecturesService.updateLecture(lecture);
+		myLecturesService.updateChapter(chapters);
 		return "redirect:myLectures";
 	}
 }

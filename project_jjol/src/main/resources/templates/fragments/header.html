@@ -46,9 +46,14 @@
                         <a href="/login" class="icon-link-header"><i class="fas fa-user"></i></a>
                         <a href="/register" class="icon-link-header"><i class="fas fa-user-plus"></i></a>
                     </div>
-                    <div th:if="${session.loggedInUser != null}" class="user-info-header">
+                    <div th:if="${session.loggedInUser != null and session.loggedInUser.role == 'student'}" class="user-info-header">
                         <span th:text="${session.loggedInUser.name} + '  님,' + '  오늘도 열공!'" class="me-3"></span>
                         <a href="/mypage" class="icon-link-header"><i class="fas fa-user-circle"></i></a>
+                        <a href="/logout" class="icon-link-header"><i class="fas fa-sign-out-alt"></i></a>
+                    </div>
+                    <div th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}" class="user-info-header">
+                        <span th:text="${session.loggedInUser.name} + '  강사님,' + '  안녕하세요!'" class="me-3"></span>
+                        <a href="/myLectures" class="icon-link-header"><i class="fas fa-user-circle"></i></a>
                         <a href="/logout" class="icon-link-header"><i class="fas fa-sign-out-alt"></i></a>
                     </div>
                 </div>

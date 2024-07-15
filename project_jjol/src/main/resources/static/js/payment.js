@@ -93,7 +93,6 @@ $(function() {
 	        data: JSON.stringify(dataForValidate),
 	        dataType: "json",
 	        success: function() {
-				alert('검증 결과: 일치');
 				
 				// 결제
 				IMP.init("imp62227326");
@@ -116,8 +115,8 @@ $(function() {
 					        dataType: "json",
 					        success: function() {
 								console.log('결제 성공');
-								// 결제 완료 후 수강신청 페이지로 이동						
-					            window.location.href = '/lectures/apply/' + lectureId;
+								// 수강신청						
+								$('#lectureAppleyForm').submit();
 					        },
 					        error: async function(xhr, status, error) {
 					            console.error("결제 실패", xhr.responseText, status, error);
@@ -131,7 +130,5 @@ $(function() {
 	            console.error("검증 결과: 불일치", xhr.responseText, status, error);
 	        }
 	    });
-		
-
 	});
 })
