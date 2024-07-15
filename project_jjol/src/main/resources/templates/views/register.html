@@ -162,7 +162,7 @@
 
         .divider:not(:empty)::after {
             margin-left: .5em;
-        }               
+        }
 
         @keyframes fadeIn {
             from {
@@ -183,11 +183,27 @@
                 opacity: 1;
             }
         }
+        
+        .fadeIn {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
     </style>
 </head>
 <body>
 <div class="container">
-	<span class="close-icon" onclick="window.location.href='/'">&times;</span>
+    <span class="close-icon" onclick="window.location.href='/'">&times;</span>
     <img th:src="@{/images/mainlogo.png}" alt="Logo" class="logo">
     <h2>JJol Edu에 오신 것을<br>환영합니다</h2>
     <ul class="nav nav-tabs justify-content-center" id="registerTab" role="tablist">
@@ -202,26 +218,31 @@
         <div class="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab">
             <form action="/register" method="post" id="studentRegisterForm" name="registerForm">
                 <input type="hidden" name="role" value="student">
-                <input type="hidden" th:name="provider" th:value="${provider}">
+                <input type="hidden" name="provider" th:value="${provider != null ? provider : 'normal'}">
                 <div class="form-group">
-                    <label for="userId">아이디</label>
-                    <input type="text" class="form-control" id="userId" name="userId">
+                    <label for="studentUserId">아이디</label>
+                    <input type="text" class="form-control" id="studentUserId" name="userId" placeholder="아이디">
+                    <small id="studentUserIdFeedback" class="form-text"></small>
                 </div>
                 <div class="form-group">
-                    <label for="password">비밀번호</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <label for="studentPassword">비밀번호</label>
+                    <input type="password" class="form-control" id="studentPassword" name="password" placeholder="비밀번호">
+                    <small id="studentPasswordFeedback" class="form-text"></small>
                 </div>
                 <div class="form-group">
-                    <label for="name">이름</label>
-                    <input type="text" class="form-control" id="name" name="name" th:value="${name}">
+                    <label for="studentName">이름</label>
+                    <input type="text" class="form-control" id="studentName" name="name" th:value="${name}" placeholder="이름">
+                    <small id="studentNameFeedback" class="form-text"></small>
                 </div>
                 <div class="form-group">
-                    <label for="email">이메일</label>
-                    <input type="text" class="form-control" id="email" name="email" th:value="${email}">
+                    <label for="studentEmail">이메일</label>
+                    <input type="text" class="form-control" id="studentEmail" name="email" th:value="${email}" placeholder="이메일">
+                    <small id="studentEmailFeedback" class="form-text"></small>
                 </div>
                 <div class="form-group">
-                    <label for="phone">핸드폰</label>
-                    <input type="text" class="form-control" id="phone" name="phone" >
+                    <label for="studentPhone">핸드폰</label>
+                    <input type="text" class="form-control" id="studentPhone" name="phone" placeholder="전화번호">
+                    <small id="studentPhoneFeedback" class="form-text"></small>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block mt-3">학생 회원가입</button>
             </form>
@@ -238,26 +259,31 @@
         <div class="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
             <form action="/register" method="post" id="instructorRegisterForm" name="registerForm">
                 <input type="hidden" name="role" value="instructor">
-                <input type="hidden" th:name="provider" th:value="${provider}">
+                <input type="hidden" name="provider" th:value="${provider != null ? provider : 'normal'}">
                 <div class="form-group">
-                    <label for="userId">아이디</label>
-                    <input type="text" class="form-control" id="userId" name="userId">
+                    <label for="instructorUserId">아이디</label>
+                    <input type="text" class="form-control" id="instructorUserId" name="userId" placeholder="아이디">
+                    <small id="instructorUserIdFeedback" class="form-text"></small>
                 </div>
                 <div class="form-group">
-                    <label for="password">비밀번호</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <label for="instructorPassword">비밀번호</label>
+                    <input type="password" class="form-control" id="instructorPassword" name="password" placeholder="비밀번호">
+                    <small id="instructorPasswordFeedback" class="form-text"></small>
                 </div>
                 <div class="form-group">
-                    <label for="name">이름</label>
-                    <input type="text" class="form-control" id="name" name="name" th:value="${name}">
+                    <label for="instructorName">이름</label>
+                    <input type="text" class="form-control" id="instructorName" name="name" th:value="${name}" placeholder="이름">
+                    <small id="instructorNameFeedback" class="form-text"></small>
                 </div>
                 <div class="form-group">
-                    <label for="email">이메일</label>
-                    <input type="text" class="form-control" id="email" name="email" th:value="${email}">
+                    <label for="instructorEmail">이메일</label>
+                    <input type="text" class="form-control" id="instructorEmail" name="email" th:value="${email}" placeholder="이메일">
+                    <small id="instructorEmailFeedback" class="form-text"></small>
                 </div>
                 <div class="form-group">
-                    <label for="phone">핸드폰</label>
-                    <input type="text" class="form-control" id="phone" name="phone">
+                    <label for="instructorPhone">핸드폰</label>
+                    <input type="text" class="form-control" id="instructorPhone" name="phone" placeholder="전화번호">
+                    <small id="instructorPhoneFeedback" class="form-text"></small>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block mt-3">강사 회원가입</button>
             </form>

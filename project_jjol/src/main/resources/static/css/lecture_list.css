@@ -1,99 +1,211 @@
-.lecture-hero-section {
-    background: linear-gradient(135deg, #3498db 0%, #9b59b6 100%);
-    color: white;
-    margin-top: 80px;
-    padding: 100px 0;
-    text-align: center;
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    padding-top: 80px; /* 헤더의 높이만큼 패딩 추가 */
+}
+
+#lecture_list-header-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+
+#lecture_list-custom-header-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+    position: relative; /* 검색창을 중앙에 위치시키기 위해 추가 */
+}
+
+#lecture_list-navbar-left, #lecture_list-navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+#lecture_list-navbar-center {
+    position: absolute; /* 부모 요소에 상대적으로 배치 */
+    left: 50%;
+    transform: translateX(-50%); /* 중앙 정렬 */
+    display: flex;
+    align-items: center;
+}
+
+#lecture_list-navbar-brand img {
+    height: 40px;
+}
+
+#lecture_list-navbar-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.lecture_list-nav-item {
+    margin-right: 20px;
+}
+
+.lecture_list-nav-link {
+    color: #2c3e50;
+    font-weight: 500;
+    text-decoration: none;
+    padding-bottom: 5px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.lecture_list-nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #1e90ff;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.lecture_list-nav-link:hover {
+    color: #1e90ff;
+}
+
+.lecture_list-nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+#lecture_list-search-form {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+#lecture_list-search-input {
+    width: 100%;
+    max-width: 800px; /* 검색창을 더 크게 */
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 10px 20px; /* 패딩을 늘려 검색창 높이 증가 */
+    padding-right: 60px; /* 버튼 공간 확보 */
+    font-size: 16px; /* 글자 크기 증가 */
+}
+
+#lecture_list-search-button {
+    background: none;
+    border: none;
+    color: #2c3e50;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+    cursor: pointer;
+    font-size: 18px; /* 버튼 아이콘 크기 증가 */
+}
+
+.lecture_list-hero-section {
     position: relative;
     overflow: hidden;
 }
 
-.lecture-hero-section .lecture-container {
-    position: relative;
-    z-index: 2;
+.lecture_list-carousel-item {
+    transition: opacity 0.2s ease-in-out; /* 전환 시간을 줄여 부드럽게 넘어가도록 수정 */
+    opacity: 0; /* 초기 상태로 투명하게 설정 */
 }
 
-.lecture-hero-title {
+.lecture_list-carousel-item.active {
+    opacity: 1; /* 활성 상태일 때 불투명하게 설정 */
+}
+
+
+.lecture_list-hero-section .carousel-item img {
+    height: 400px;
+    object-fit: cover;
+    border-radius: 10px; /* 이미지에 약간의 border-radius 추가 */
+    transition: transform 0.1s ease-in-out; /* 부드러운 전환 효과 추가 */
+}
+
+.lecture_list-carousel-inner {
+    display: flex;
+    align-items: center;
+}
+
+.lecture_list-hero-section .carousel-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.lecture_list-hero-title {
     font-size: 3.5rem;
     margin-bottom: 20px;
     font-weight: 700;
-    animation: fadeInDown 1s ease-in-out;
+    animation: lecture_list-fadeInDown 1s ease-in-out;
 }
 
-.lecture-hero-subtitle {
+.lecture_list-hero-subtitle {
     font-size: 1.5rem;
     margin-bottom: 30px;
-    animation: fadeInUp 1s ease-in-out;
+    animation: lecture_list-fadeInUp 1s ease-in-out;
 }
 
-.lecture-btn-hero {
-    background-color: #E74C3C;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    animation: fadeIn 1.5s ease-in-out;
-}
-
-.lecture-btn-hero:hover {
-    background-color: #C0392B;
-}
-
-.lecture-hero-section::before {
-    content: '';
-    position: absolute;
-    top: -100px;
-    left: -100px;
-    width: 300%;
-    height: 300%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%);
-    z-index: 1;
-    animation: rotate 20s linear infinite;
-}
-
-.lecture-section-title {
+.lecture_list-section-title {
     font-size: 2.5rem;
     margin-bottom: 30px;
     font-weight: 700;
     color: #2C3E50;
     text-align: center;
-    animation: fadeIn 1s ease-in-out;
+    animation: lecture_list-fadeIn 1s ease-in-out;
 }
 
-.lecture-col-lg-custom {
+.lecture_list-col-lg-custom {
     flex: 0 0 20%;
     max-width: 20%;
 }
 
-.lecture-card {
+.lecture_list-card {
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.lecture-card:hover {
+.lecture_list-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.lecture-card img {
+.lecture_list-card img {
     border-radius: 10px 10px 0 0;
     width: 100%;
     height: 200px;
     object-fit: cover;
 }
 
-.lecture-card .card-body {
+.lecture_list-card .card-body {
     padding: 20px;
 }
 
-.lecture-card .card-title {
+.lecture_list-card .card-title {
     font-size: 1.8rem;
     color: #2C3E50;
     margin-bottom: 15px;
 }
 
-.lecture-card .card-text {
+.lecture_list-card .card-text {
     font-size: 1rem;
     color: #7F8C8D;
     margin-bottom: 20px;
@@ -108,7 +220,7 @@
     background-color: #2980B9;
 }
 
-@keyframes fadeInDown {
+@keyframes lecture_list-fadeInDown {
     from {
         opacity: 0;
         transform: translateY(-50px);
@@ -120,7 +232,7 @@
     }
 }
 
-@keyframes fadeInUp {
+@keyframes lecture_list-fadeInUp {
     from {
         opacity: 0;
         transform: translateY(50px);
@@ -132,7 +244,7 @@
     }
 }
 
-@keyframes fadeIn {
+@keyframes lecture_list-fadeIn {
     from {
         opacity: 0;
     }
@@ -142,7 +254,7 @@
     }
 }
 
-@keyframes rotate {
+@keyframes lecture_list-rotate {
     from {
         transform: rotate(0deg);
     }

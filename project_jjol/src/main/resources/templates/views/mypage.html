@@ -4,16 +4,19 @@
 <head>
     <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}">
     <script defer th:src="@{/js/mypage.js}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body class="mypage-body">
     <th:block layout:fragment="content">
         <div class="container mt-5 mypage-container position-relative">
             <div class="mypage-row mb-4 justify-content-center">
                 <div class="mypage-col text-center">
-                    <h1>마이페이지</h1>
+                    <h1><i class="fas fa-user"></i> 마이페이지</h1>
                 </div>
                 <div class="mypage-col text-right">
-                    <button type="button" class="btn btn-outline-primary mypage-editProfile-btn btn-sm" data-toggle="modal" data-target="#mypage-editProfileModal">정보 수정</button>
+                    <button type="button" class="btn btn-outline-primary mypage-editProfile-btn btn-sm" data-toggle="modal" data-target="#mypage-editProfileModal">
+                        <i class="fas fa-edit"></i> 정보 수정
+                    </button>
                 </div>
             </div>
             <div class="text-center mb-4">
@@ -21,24 +24,33 @@
             </div>
             <hr>
             <div class="mb-4">
-                <h4>내가 수강한 강의</h4>
+                <h4><i class="fas fa-chalkboard-teacher"></i> 내가 수강한 강의</h4>
             </div>
             <div th:if="${successMessage}" class="alert alert-success mt-3 mypage-alert" th:text="${successMessage}"></div>
             <div th:if="${errorMessage}" class="alert alert-danger mt-3 mypage-alert" th:text="${errorMessage}"></div>
-            <div class="mypage-row">
+            <div th:if="${#lists.isEmpty(lectures)}" class="text-center mb-4">
+                <h5>수강한 강의가 없습니다.</h5>
+            </div>
+            <div class="mypage-row" th:if="${!#lists.isEmpty(lectures)}">
                 <div class="mypage-col-md-2 mb-4" th:each="lecture, iterStat : ${lectures}">
                     <div class="card shadow-sm mypage-card">
                         <img class="mypage-card-img" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
                         <div class="mypage-card-body">
-                            <h5 class="mypage-card-title" th:text="${lecture.lectureTitle}">강의 제목</h5>
+                            <h5 class="mypage-card-title" th:text="${lecture.lectureTitle}"><i class="fas fa-book"></i> 강의 제목</h5>
                             <p class="mypage-card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
                             <div class="mypage-card-btn-group">
-                                <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-outline-primary mypage-card-btn">강의 상세정보</a>
+                                <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-outline-primary mypage-card-btn">
+                                    <i class="fas fa-info-circle"></i> 강의 상세정보
+                                </a>
                                 <div th:if="${allChaptersCompleted[iterStat.index] && !certificatesIssued[iterStat.index]}">
-                                    <a th:href="@{/mypage/issueCertificate/{lectureId}(lectureId=${lecture.lectureId})}" class="btn btn-outline-success mypage-card-btn">수료증 발급</a>
+                                    <a th:href="@{/mypage/issueCertificate/{lectureId}(lectureId=${lecture.lectureId})}" class="btn btn-outline-success mypage-card-btn">
+                                        <i class="fas fa-certificate"></i> 수료증 발급
+                                    </a>
                                 </div>
                                 <div th:if="${certificatesIssued[iterStat.index]}">
-                                    <a th:href="@{/mypage/certificate/{lectureId}(lectureId=${lecture.lectureId})}" class="btn btn-outline-info mypage-card-btn">수료증 보기</a>
+                                    <a th:href="@{/mypage/certificate/{lectureId}(lectureId=${lecture.lectureId})}" class="btn btn-outline-info mypage-card-btn">
+                                        <i class="fas fa-award"></i> 수료증 보기
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -52,28 +64,28 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content mypage-modal-content">
                     <div class="modal-header mypage-modal-header">
-                        <h5 class="modal-title mypage-modal-title text-center w-100" id="mypage-editProfileModalLabel">회원정보 수정</h5>
+                        <h5 class="modal-title mypage-modal-title text-center w-100" id="mypage-editProfileModalLabel"><i class="fas fa-user-edit"></i> 회원정보 수정</h5>
                     </div>
                     <div class="modal-body mypage-modal-body">
                         <form id="mypage-editProfileForm" th:action="@{/mypage/editProfile}" method="post" novalidate>
                             <div class="mypage-form-group">
-                                <label for="mypage-editProfile-name">이름</label>
+                                <label for="mypage-editProfile-name"><i class="fas fa-user"></i> 이름</label>
                                 <input type="text" class="mypage-form-control" id="mypage-editProfile-name" name="name" th:value="${user.name}" required minlength="2">
-                                <div class="mypage-invalid-feedback">이름은 최소 2글자 이상이어야 합니다.</div>
+                                <div class="mypage-invalid-feedback">이름은 최소 2자 이상 입력하세요.</div>
                             </div>
                             <div class="mypage-form-group">
-                                <label for="mypage-editProfile-email">이메일</label>
+                                <label for="mypage-editProfile-email"><i class="fas fa-envelope"></i> 이메일</label>
                                 <input type="email" class="mypage-form-control" id="mypage-editProfile-email" name="email" th:value="${user.email}" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-                                <div class="mypage-invalid-feedback">올바른 이메일 형식을 입력하세요.</div>
+                                <div class="mypage-invalid-feedback">유효한 이메일 주소를 입력하세요.</div>
                             </div>
                             <div class="mypage-form-group">
-                                <label for="mypage-editProfile-phone">전화번호</label>
+                                <label for="mypage-editProfile-phone"><i class="fas fa-phone"></i> 전화번호</label>
                                 <input type="text" class="mypage-form-control" id="mypage-editProfile-phone" name="phone" th:value="${user.phone}" required pattern="\d{3}-\d{4}-\d{4}">
                                 <div class="mypage-invalid-feedback">전화번호는 000-0000-0000 형식이어야 합니다.</div>
                             </div>
                             <div class="text-center mypage-button-group">
-                                <button type="submit" class="btn btn-outline-primary mypage-btn">수정하기</button>
-                                <button type="button" class="btn btn-outline-danger mypage-btn" data-dismiss="modal">닫기</button>
+                                <button type="submit" class="btn btn-outline-primary mypage-btn"><i class="fas fa-check"></i> 수정하기</button>
+                                <button type="button" class="btn btn-outline-danger mypage-btn" data-dismiss="modal"><i class="fas fa-times"></i> 닫기</button>
                             </div>
                         </form>
                         <div th:if="${successMessage}" class="alert alert-success mt-3 mypage-alert" th:text="${successMessage}"></div>
