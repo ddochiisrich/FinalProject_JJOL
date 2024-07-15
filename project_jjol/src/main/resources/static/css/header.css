@@ -117,7 +117,7 @@ body {
 .notification-header {
     display: flex; /* Flexbox로 변경하여 중앙 정렬 가능 */
     align-items: center; /* 상하 중앙 정렬 */
-    margin-right: 80px; /* 약간 왼쪽으로 이동 */
+    margin-right: 35px; /* 약간 왼쪽으로 이동 */
     animation: pulse 1.5s infinite; /* 애니메이션 추가 */
 }
 
