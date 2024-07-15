@@ -22,7 +22,7 @@ $(function() {
 	// 포인트 사용
 	var havePoint = parseInt($("#havePoint").text());
 	var priceAfterPoint = parseInt($("#priceAfterPoint").text());
-	$("#earningPoint").text(priceAfterPoint * 5 / 100);
+	$("#earningPoint").text(Math.ceil(priceAfterPoint * 5 / 100));
 	$("#pointInput").on("keyup change", function() {
 		if (lecturePrice > havePoint) {
 	    	$("#pointInput").attr("max", havePoint);
