@@ -34,6 +34,10 @@ public class MypageController {
         if (loggedInUser == null) {
             return "redirect:/login";
         }
+        
+        // 세션 업데이트
+        User updatedUser = userService.findById(loggedInUser.getUserId());
+        session.setAttribute("loggedInUser", updatedUser);
 
         List<Lecture> lectures = userService.getLecturesByUserId(loggedInUser.getUserId());
         List<Boolean> certificatesIssued = lectures.stream()
@@ -47,7 +51,7 @@ public class MypageController {
         model.addAttribute("lectures", lectures);
         model.addAttribute("certificatesIssued", certificatesIssued);
         model.addAttribute("allChaptersCompleted", allChaptersCompleted);
-        model.addAttribute("user", loggedInUser);
+        model.addAttribute("user", updatedUser);
         return "views/mypage";
     }
 
