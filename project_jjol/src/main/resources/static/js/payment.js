@@ -22,6 +22,7 @@ $(function() {
 	// 포인트 사용
 	var havePoint = parseInt($("#havePoint").text());
 	var priceAfterPoint = parseInt($("#priceAfterPoint").text());
+	$("#earningPoint").text(priceAfterPoint * 5 / 100);
 	$("#pointInput").on("keyup change", function() {
 		if (lecturePrice > havePoint) {
 	    	$("#pointInput").attr("max", havePoint);
@@ -41,6 +42,8 @@ $(function() {
 		$("#havePoint").text(havePoint - usingPoint);
 		
 		$("#priceAfterPoint").text(priceAfterPoint - usingPoint);
+		
+		$("#earningPoint").text(Math.ceil(parseInt($("#priceAfterPoint").text()) * 5 / 100));
 	})
 	
 	// 포인트 전액 사용 버튼
@@ -56,6 +59,8 @@ $(function() {
 		$("#havePoint").text(havePoint - usingPoint);
 		
 		$("#priceAfterPoint").text(priceAfterPoint - usingPoint);
+		
+		$("#earningPoint").text(Math.ceil(parseInt($("#priceAfterPoint").text()) * 5 / 100));
 	});
 	
 	// 결제
