@@ -13,24 +13,32 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.project_jjol.model.DataSharingComment;
 import com.example.project_jjol.service.DataSharingCommentService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class DataSharingCommentController {
 
-    @Autowired
-    private DataSharingCommentService datasharingcommentService;
-    
- // 댓글 추가
-    @PostMapping("/comments/datacommentadd")
-    @ResponseBody
-    public DataSharingComment datacommentadd(@RequestBody DataSharingComment datasharingcomment) {
-        return datasharingcommentService.insertdatacomment(datasharingcomment);
-    }
+	@Autowired
+	private DataSharingCommentService datasharingcommentService;
 
-    
-    // 특정 데이터 번호에 해당하는 모든 댓글 가져오기
-    @GetMapping("/comments/byDataNo/{no}")
-    @ResponseBody
-    public List<DataSharingComment> getCommentsByDataNo(@PathVariable int no){
-        return datasharingcommentService.getCommentsByDataNo(no);
-    }
+	// 댓글 추가
+	@PostMapping("/comments/datacommentadd")
+	@ResponseBody
+	public List<DataSharingComment> datacommentadd(@RequestBody DataSharingComment datasharingcomment) {
+
+		log.info("dsComment : " + datasharingcomment.getDscContent() + ", writer : "
+				+ datasharingcomment.getDscWriter());
+
+		datasharingcommentService.insertdatacomment(datasharingcomment);
+		return datasharingcommentService.getCommentsByDataNo(datasharingcomment.getDdNo());
+
+	}
+
+	// 특정 데이터 번호에 해당하는 모든 댓글 가져오기
+	@GetMapping("/comments/byDataNo/{no}")
+	@ResponseBody
+	public List<DataSharingComment> getCommentsByDataNo(@PathVariable("no") int no) {
+		return datasharingcommentService.getCommentsByDataNo(no);
+	}
 }

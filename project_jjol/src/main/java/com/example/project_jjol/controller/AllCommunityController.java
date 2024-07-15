@@ -7,16 +7,24 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.project_jjol.model.AllCommunity;
+import com.example.project_jjol.model.CommunityComment;
+import com.example.project_jjol.model.DataSharingComment;
 import com.example.project_jjol.model.User;
 import com.example.project_jjol.service.AllCommunityService;
 
@@ -95,10 +103,15 @@ public class AllCommunityController {
 	@GetMapping("/AllCommunityViewDetail")
 	public String AllCommunityViewDetail(@RequestParam("no") int no, Model model) {
 		AllCommunity allcommunity = allCommunityService.findByNo(no);
+
 		if (allcommunity == null) {
 			return "redirect:/AllCommunityView";
 		}
+		List<CommunityComment> commentsList = allCommunityService.getCommentsByccNo(no);
+		log.info("commentsList :" + commentsList);
+
 		model.addAttribute("allcommunity", allcommunity);
+		model.addAttribute("commentsList", commentsList);
 		return "views/AllCommunity_Detail";
 	}
 
@@ -113,6 +126,7 @@ public class AllCommunityController {
 	public String saveAllc(AllCommunity allcommunity, @RequestParam(value = "fileAllc") MultipartFile file,
 			@RequestParam(value = "dateAllc") Date dateAllc, RedirectAttributes redirectAttributes) throws Exception {
 		Timestamp myDate = new Timestamp(dateAllc.getTime());
+		allcommunity.setAllcDate(myDate);
 		log.info("AllCommunityWrite - controller : " + allcommunity.getAllcName());
 		AllCommunity saveAllc = allCommunityService.insertuser(allcommunity);
 		return "redirect:/AllCommunityView";
@@ -138,6 +152,44 @@ public class AllCommunityController {
 	public String updateAllCommunity(@ModelAttribute("allcommunity") AllCommunity allcommunity) {
 		allCommunityService.updateAllCommunity(allcommunity);
 		return "redirect:/AllCommunityView";
+	}
+
+	// 댓글 추가
+	@PostMapping("/comments/cccommentadd")
+	@ResponseBody
+	public List<CommunityComment> cccommentadd(@RequestBody CommunityComment communitycomment) {
+
+		log.info("cmcComment : " + communitycomment.getCmcContent() + ", writer : " + communitycomment.getCmcWriter());
+
+		allCommunityService.insertcommunitycomment(communitycomment);
+		return allCommunityService.getCommentsByccNo(communitycomment.getCcNo());
+
+	}
+
+//	// 특정 데이터 번호에 해당하는 모든 댓글 가져오기
+//	@GetMapping("/comments/cmcNo/{no}")
+//	@ResponseBody
+//	public List<CommunityComment> getCommentsByccNo(@PathVariable("no") int no) {
+//		return allCommunityService.getCommentsByccNo(no);
+//	}
+
+	@PostMapping("/deleteComment")
+	@ResponseBody
+	public List<CommunityComment> deleteCommunityComment(
+			@RequestParam("commentId") int commentId,
+			@RequestParam("no") int no) {
+		// 댓글 삭제 로직
+		boolean deleted = allCommunityService.deleteCommunityComment(commentId); // 예시: 실제 서비스 메소드 호출
+
+		return allCommunityService.getCommentsByccNo(no);
+		
+		/*
+		if (deleted) {
+			return ResponseEntity.ok("댓글이 성공적으로 삭제되었습니다.");
+		} else {
+			return ResponseEntity.badRequest().body("댓글 삭제에 실패했습니다.");
+		}
+		*/
 	}
 
 }

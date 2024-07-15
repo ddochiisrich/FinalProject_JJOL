@@ -13,12 +13,11 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DataSharingComment {
+public class CommunityComment {
 
-	private int dscNo;
-	//부모 테이블 datasharing의 data_no를 참조하는 외래키
-	private int ddNo;
-	private String dscContent;
-	private String dscWriter;
-	private Timestamp dscTime;
+	private int cmcNo;
+	private int ccNo;
+	private String cmcContent;
+	private String cmcWriter;
+	private Timestamp cmcTime;
 }

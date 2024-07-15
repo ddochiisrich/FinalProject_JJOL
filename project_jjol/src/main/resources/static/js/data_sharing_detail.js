@@ -14,45 +14,47 @@ $(function () {
     $("#commentForm").submit(function (event) {
         event.preventDefault(); // 기본 동작 방지
 
-        var formData = $(this).serialize(); // 폼 데이터 직렬화
+        var formData = {
+            ddNo: $("input[name='dataNo']").val(),
+            dscContent: $("#commentContent").val(),
+            dscWriter: $("#commentWriter").val()
+        };
 
         $.ajax({
             type: "POST",
             url: "/comments/datacommentadd",
-            data: formData,
+            contentType: "application/json",
+            data: JSON.stringify(formData),
             success: function (response) {
+                console.log("response : ", response);
                 // 성공적으로 댓글을 추가한 경우, 댓글 목록을 업데이트
-                updateCommentList();
+                updateCommentList(response);
                 // 폼 초기화
                 $("#commentContent").val("");
+                $("#commentWriter").val("");
             },
             error: function (e) {
                 console.log("Error: ", e);
             }
         });
     });
-
-    // 댓글 목록 업데이트 함수
-    function updateCommentList() {
-        $.get("/comments/byDataNo/" + $("input[name='dataNo']").val(), function (data) {
-            // 댓글 목록을 업데이트
-            var listItems = "";
-            if (data.length > 0) {
-                $.each(data, function (index, comment) {
-                    listItems += '<li class="list-group-item">';
-                    listItems += '<p>' + comment.commentContent + '</p>';
-                    listItems += '<small>작성자: ' + comment.commentWriter + '</small>';
-                    listItems += '</li>';
-                });
-            } else {
-                listItems += '<li class="list-group-item">';
-                listItems += '<p>등록된 댓글이 없습니다.</p>';
-                listItems += '</li>';
-            }
-            $(".data-sharing-detail-comment-list").html(listItems);
-        });
-    }
-
-    // 페이지 로드 시 댓글 목록 초기화
-    updateCommentList();
 });
+
+// 댓글을 쓰거나, 수정하거나, 삭제 할 때 - 이벤트 handler로 사용
+function updateCommentList(data) {
+    // 댓글 목록을 업데이트
+    var listItems = "";
+    if (data.length > 0) {
+        $.each(data, function (index, comment) {
+            listItems += '<li class="list-group-item">';
+            listItems += '<p>' + comment.dscContent + '</p>'; // 데이터베이스 속성명에 맞추기
+            listItems += '<small>작성자: ' + comment.dscWriter + '</small>'; // 데이터베이스 속성명에 맞추기
+            listItems += '</li>';
+        });
+    } else {
+        listItems += '<li class="list-group-item">';
+        listItems += '<p>등록된 댓글이 없습니다.</p>';
+        listItems += '</li>';
+    }
+    $(".datasharing-detail-comment-list").html(listItems); // 댓글 목록 업데이트
+}
