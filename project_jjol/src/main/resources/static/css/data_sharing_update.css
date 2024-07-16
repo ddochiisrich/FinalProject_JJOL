@@ -1,41 +1,41 @@
-.data-sharing-instructor-write-container {
+.data-sharing-update-container {
     padding: 20px;
     background-color: #f9f9f9;
 }
 
-.data-sharing-instructor-write {
+.data-sharing-update {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.data-sharing-instructor-write-wrap {
+.data-sharing-update-wrap {
     margin-bottom: 20px;
 }
 
-.data-sharing-instructor-content-box {
+.data-sharing-update-content-box {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 }
 
-.data-sharing-instructor-content-box button,
-.data-sharing-instructor-content-box a {
+.data-sharing-update-content-box button,
+.data-sharing-update-content-box a {
     border: 1px solid #0C1844;
     color: #0C1844;
 }
 
-.data-sharing-instructor-write label {
+.data-sharing-update-form label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
     color: #0C1844;
 }
 
-.data-sharing-instructor-write input,
-.data-sharing-instructor-write textarea,
-.data-sharing-instructor-write select {
+.data-sharing-update-form input,
+.data-sharing-update-form textarea,
+.data-sharing-update-form select {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -43,15 +43,15 @@
     border-radius: 5px;
 }
 
-.data-sharing-instructor-write-content label {
+.data-sharing-update-content label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
     color: #0C1844;
 }
 
-.data-sharing-instructor-write-content input,
-.data-sharing-instructor-write-content textarea {
+.data-sharing-update-content input,
+.data-sharing-update-content textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;

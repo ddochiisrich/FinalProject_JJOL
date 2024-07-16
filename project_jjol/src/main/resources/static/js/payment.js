@@ -1,5 +1,15 @@
-$(function() {
-	
+function generateUUID() {
+    // crypto.getRandomValues를 사용하여 UUID를 생성하는 함수
+    const cryptoObj = window.crypto || window.msCrypto; // 인터넷 익스플로러 지원
+    const buf = new Uint8Array(16);
+    cryptoObj.getRandomValues(buf);
+    const S4 = () => {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+}
+
+$(function() {	
 	// 할인 적용
 	var lectureDiscountText = $("#lectureDiscount").text();
 	var discountMatch = lectureDiscountText.match(/\d+/); // 숫자 추출

@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const mainMenuSelectors = document.querySelectorAll('.data-sharing-main-menu-selector-wrapper');
-    const subMenus = document.querySelectorAll('.data-sharing-sub-menu');
-    const subMenuLinks = document.querySelectorAll('.data-sharing-sub-menu-link');
-    const programmingSearchForms = document.querySelectorAll('.data-sharing-main-search form');
-    const dataSearchForm = document.getElementById('data_search_form');
+    const mainMenuSelectors = document.querySelectorAll('.data-sharing-view-main-menu-selector-wrapper');
+    const subMenus = document.querySelectorAll('.data-sharing-view-sub-menu');
+    const subMenuLinks = document.querySelectorAll('.data-sharing-view-sub-menu-link');
+    const programmingSearchForms = document.querySelectorAll('.data-sharing-view-main-search form');
+    const dataSearchForm = document.getElementById('data-sharing-view-data_search_form');
 
     // 메인 메뉴 선택 시 처리
     mainMenuSelectors.forEach(selector => {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.classList.add('active');
 
             // 클릭된 메뉴의 부모 요소인 서브 메뉴를 활성화 상태로 유지
-            const parentSubMenu = this.closest('.data-sharing-sub-menu');
+            const parentSubMenu = this.closest('.data-sharing-view-sub-menu');
             parentSubMenu.classList.add('active');
 
             // 클릭된 메인 메뉴 선택자에 active 클래스 추가
@@ -81,9 +81,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // AI 카테고리 선택 시 처리
-    const aiSelector = document.querySelector('.data-sharing-main-menu-selector-wrapper[data-target="AI"]');
+    const aiSelector = document.querySelector('.data-sharing-view-main-menu-selector-wrapper[data-target="AI"]');
     const aiSubMenu = document.getElementById('AI');
-    const aiSearchForm = document.getElementById('ai_search');
+    const aiSearchForm = document.getElementById('data-sharing-view-ai_search');
 
     aiSelector.addEventListener('click', function () {
         // 모든 sub_menu를 숨김

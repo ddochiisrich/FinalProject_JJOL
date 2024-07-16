@@ -1,51 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main_layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main_layout}">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/data_sharing_instructor_write.css">
+</head>
 <body>
 <th:block layout:fragment="content">
-    <div class="container instructor-view-main">
-        <div class="instructor-view">
-            <div class="instructor-view-wrap">
+    <div class="container data-sharing-instructor-write-container">
+        <div class="data-sharing-instructor-write">
+            <div class="data-sharing-instructor-write-wrap">
                 <form th:action="@{/InstructorWrite}" method="post" enctype="multipart/form-data">
-                    <div class="instructor-content-box">
-                        <button type="submit" class="btn btn-primary">등록</button>
-                        <a href="/DataSharingView" class="btn btn-secondary">목록</a>
+                    <div class="data-sharing-instructor-content-box mb-4">
+                        <button type="submit" class="btn btn-outline-primary data-sharing-instructor-submit-button">등록</button>
+                        <a href="/DataSharingView" class="btn btn-outline-primary data-sharing-instructor-cancel-button">목록</a>
                     </div>
-                    <div class="instructor-write">
-                        <!-- 강의 제목 선택 드롭다운 -->
-                        <label for="lectures">강의</label>
-                        <select id="lectures" name="dataTitle" class="form-control">
+                    <div class="form-group">
+                        <label for="data-sharing-instructor-lectures">강의</label>
+                        <select id="data-sharing-instructor-lectures" name="dataTitle" class="form-control">
                             <option th:each="lecture : ${lectures}" th:value="${lecture}" th:text="${lecture}"></option>
                         </select>
-
-                        <!-- 강사 이름 입력 -->
-                        <label for="instructor_write_name">강사 이름</label>
-                        <input type="text" id="instructor_write_name" name="dataName" class="form-control" required
-                               th:value="${session.loggedInUser.name}" readonly><br>
-
-                        <!-- 비밀번호 입력 -->
-                        <label for="instructor_write_pass">비밀번호</label>
-                        <input type="password" id="instructor_write_pass" name="dataPw" class="form-control" required><br>
-
-                        <!-- 날짜 입력 -->
-                        <label for="instructor_write_date">Date</label>
-                        <input type="date" id="instructor_write_date" name="dateData" class="form-control"
-                               th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
                     </div>
-                    <div class="instructor-write-content">
-                        <!-- 파일 업로드 -->
-                        <label for="fileData">File</label>
-                        <input type="file" id="fileData" name="fileData" class="form-control-file"><br>
-
-                        <!-- 강의 내용 입력 -->
-                        <label for="instructor_write_content">Content</label>
-                        <textarea class="form-control" name="dataContent" id="instructor_write_content" required></textarea>
+                    <div class="form-group">
+                        <label for="data-sharing-instructor-write-name">강사 이름</label>
+                        <input type="text" id="data-sharing-instructor-write-name" name="dataName" class="form-control" required th:value="${session.loggedInUser.name}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="data-sharing-instructor-write-pass">비밀번호</label>
+                        <input type="password" id="data-sharing-instructor-write-pass" name="dataPw" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="data-sharing-instructor-write-date">Date</label>
+                        <input type="date" id="data-sharing-instructor-write-date" name="dateData" class="form-control" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="data-sharing-instructor-fileData">File</label>
+                        <input type="file" id="data-sharing-instructor-fileData" name="fileData" class="form-control-file">
+                    </div>
+                    <div class="form-group">
+                        <label for="data-sharing-instructor-write-content">Content</label>
+                        <textarea class="form-control" name="dataContent" id="data-sharing-instructor-write-content" rows="5" required></textarea>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    </th:block>
+</th:block>
 </body>
-
 </html>

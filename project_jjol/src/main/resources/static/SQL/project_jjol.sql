@@ -30,6 +30,12 @@ CREATE TABLE IF NOT EXISTS user(
     provider VARCHAR(50)                -- 소셜 로그인 제공자 (google 등)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+update user set point = 20000 where user_id='stud6';
+select * from user;
+DELETE FROM user WHERE provider = 'normal';
+
+SET SQL_SAFE_UPDATES = 0;
+
 -- 강의 테이블
 DROP TABLE IF EXISTS Lecture;
 CREATE TABLE Lecture (
@@ -46,6 +52,8 @@ CREATE TABLE Lecture (
     instructor_id VARCHAR(100) NOT NULL,                 -- 강사 ID
     instructor_name VARCHAR(255) NULL                    -- 강사 이름
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+select * from lecture;
 
 -- 챕터 테이블
 DROP TABLE IF EXISTS Chapter;
@@ -97,6 +105,9 @@ CREATE TABLE IF NOT EXISTS LectureApplication (
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (lecture_id) REFERENCES Lecture(lecture_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+select * from lectureapplication;
+delete from lectureapplication where user_id = 'stud6';
 
 -- 강의페이지 테이블
 DROP TABLE IF EXISTS LecturePage;
@@ -311,4 +322,16 @@ CREATE TABLE Notification (
     subject VARCHAR(255) NOT NULL,                         -- 주제
     user_name VARCHAR(20) NOT NULL,                        -- 사용자 이름
     exam_date DATE NOT NULL                                -- 시험 날짜
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- 커뮤니티 댓글 테이블
+DROP TABLE IF EXISTS communitycomment;
+CREATE TABLE communitycomment (
+  cmc_no INT AUTO_INCREMENT PRIMARY KEY,                  -- 댓글 ID
+  cc_no INT NOT NULL,                                      -- 자료 번호
+  cmc_content TEXT NOT NULL,                              -- 댓글 내용
+  cmc_writer VARCHAR(100) NOT NULL,                       -- 작성자
+  cmc_time TIMESTAMP NOT NULL,                            -- 작성 시간
+  CONSTRAINT reply_fkk FOREIGN KEY (cc_no) REFERENCES allcommunity (allc_no)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

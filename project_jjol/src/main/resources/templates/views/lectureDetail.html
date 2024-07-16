@@ -13,16 +13,16 @@
 
 <body>
     <th:block layout:fragment="content">
-        <div class="container lecture-detail-main-container">
-            <div class="lecture-detail-header-section">
-                <div class="lecture-detail-video-container">
+        <div class="container lectureDetail-main-container">
+            <div class="lectureDetail-header-section">
+                <div class="lectureDetail-video-container">
                     <video controls autoplay th:src="${lecture.lectureThumbnailVideo}">
                         <source th:src="${lecture.lectureThumbnailVideo}" type="video/mp4">
                     </video>
                 </div>
-                <div class="lecture-detail-course-info">
-                    <div class="lecture-detail-course-title" th:text="${lecture.lectureTitle}" id="lectureTitle"></div>
-                    <div class="lecture-detail-course-details">
+                <div class="lectureDetail-course-info ms-3">
+                    <div class="lectureDetail-course-title" th:text="${lecture.lectureTitle}" id="lectureDetailTitle"></div>
+                    <div class="lectureDetail-course-details">
                         <div>
                             <i class="fas fa-user"></i> <span th:text="'강사: ' + ${lecture.instructorName}"></span>
                         </div>
@@ -33,42 +33,31 @@
                             <i class="fas fa-users"></i> <span th:text="${numberOfStudents} + '명의 수강생'"></span>
                         </div>
                         <div>
-                            <i class="fa-solid fa-wallet"></i> <span class="lecturePrice" th:text="'가격: ' + ${lecture.lecturePrice} + '원'"></span> <span id="lectureDiscount">(할인 [[ ${lecture.lectureDiscount} ]]% 적용)</span>
-                        </div>
-                        <div>
-                            <i class="fas fa-tags"></i> <span>태그: </span>
-                            <span class="badge badge-primary">Java</span>
-                            <span class="badge badge-secondary">Spring</span>
-                            <span class="badge badge-success">MVC</span>
-                            <span class="badge badge-info">Spring Boot</span>
+                            <i class="fa-solid fa-wallet"></i> <span class="lectureDetailPrice" th:text="'가격: ' + ${lecture.lecturePrice} + '원'"></span> <span id="lectureDetailDiscount">(할인 [[ ${lecture.lectureDiscount} ]]% 적용)</span>
                         </div>
                     </div>
                     <div class="mt-3">
-					    <button class="btn btn-outline-light btn-sm" id="shareButton">공유하기</button>
-					    <div class="share-message" id="shareMessage">복사 완료</div>
+					    <button class="btn btn-outline-primary btn-sm shareBtn-lectureDetail" id="lectureDetailShareButton">공유하기</button>
 					</div>
-                    <div class="mt-3">
-                        <span th:text="'로그인된 사용자: ' + ${loggedInUser.name}"></span>
-                    </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-12 col-lg-8 lecture-detail-left-column">
-                    <div class="lecture-detail-progress-container">
+                <div class="col-12 col-lg-8 lectureDetail-left-column">
+                    <div class="lectureDetail-progress-container">
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" style="width: 14.29%;" aria-valuenow="14.29" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <p class="mt-2">진도율: 4강/28강 (14.29%)</p>
                     </div>
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">강의소개</a></li>
-                        <li class="nav-item"><a class="nav-link" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">수강평</a></li>
-                        <li class="nav-item"><a class="nav-link" id="questions-tab" data-toggle="tab" href="#questions" role="tab" aria-controls="questions" aria-selected="false">Q&A</a></li>
+                    <ul class="nav nav-tabs lectureDetail-tab" id="lectureDetailTab" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" id="lectureDetail-description-tab" data-toggle="tab" href="#lectureDetail-description" role="tab" aria-controls="lectureDetail-description" aria-selected="true">강의소개</a></li>
+                        <li class="nav-item"><a class="nav-link" id="lectureDetail-reviews-tab" data-toggle="tab" href="#lectureDetail-reviews" role="tab" aria-controls="lectureDetail-reviews" aria-selected="false">수강평</a></li>
+                        <li class="nav-item"><a class="nav-link" id="lectureDetail-questions-tab" data-toggle="tab" href="#lectureDetail-questions" role="tab" aria-controls="lectureDetail-questions" aria-selected="false">Q&A</a></li>
                     </ul>
-                    <div class="tab-content lecture-detail-tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                            <div class="lecture-detail-content-section">
+                    <div class="tab-content lectureDetail-tab-content" id="lectureDetailTabContent">
+                        <div class="tab-pane fade show active" id="lectureDetail-description" role="tabpanel" aria-labelledby="lectureDetail-description-tab">
+                            <div class="lectureDetail-content-section">
                                 <h3>강의 소개</h3>
                                 <p th:text="${lecture.lectureLongDescription}"></p>
                                 <h5>이런 걸 배워요!</h5>
@@ -79,15 +68,15 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                            <div class="lecture-detail-content-section">
+                        <div class="tab-pane fade" id="lectureDetail-reviews" role="tabpanel" aria-labelledby="lectureDetail-reviews-tab">
+                            <div class="lectureDetail-content-section">
                                 <h3>수강평</h3>
                                 <div th:if="${hasApplied}">
-                                    <form th:action="@{/lectures/review}" method="post" onsubmit="localStorage.setItem('activeTab', '#reviews');">
+                                    <form th:action="@{/lectures/review}" method="post" onsubmit="localStorage.setItem('activeTab', '#lectureDetail-reviews');">
                                         <input type="hidden" name="lectureId" th:value="${lecture.lectureId}">
                                         <div class="form-group">
-                                            <label for="rating">별점 (0.5~5.0)</label>
-                                            <select class="form-control" id="rating" name="rating" required>
+                                            <label for="lectureDetailRating">별점 (0.5~5.0)</label>
+                                            <select class="form-control" id="lectureDetailRating" name="rating" required>
                                                 <option value="0.5">0.5</option>
                                                 <option value="1">1.0</option>
                                                 <option value="1.5">1.5</option>
@@ -101,14 +90,14 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="reviewContent">리뷰 내용</label>
-                                            <textarea class="form-control" id="reviewContent" name="reviewContent" rows="3" required></textarea>
+                                            <label for="lectureDetailReviewContent">리뷰 내용</label>
+                                            <textarea class="form-control" id="lectureDetailReviewContent" name="reviewContent" rows="3" required></textarea>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">리뷰 작성</button>
+                                        <button type="submit" class="btn btn-outline-primary lectureDetail-btn-primary">리뷰 작성</button>
                                     </form>
                                 </div>
                                 <div th:each="review : ${reviews}">
-                                    <div class="lecture-detail-review">
+                                    <div class="lectureDetail-review">
                                         <p>
                                             <strong th:text="${review.userId}"></strong>
                                             <span>
@@ -138,14 +127,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="questions" role="tabpanel" aria-labelledby="questions-tab">
-                            <div class="lecture-detail-content-section">
+                        <div class="tab-pane fade" id="lectureDetail-questions" role="tabpanel" aria-labelledby="lectureDetail-questions-tab">
+                            <div class="lectureDetail-content-section">
                                 <h3>Q&A</h3>
                                 <div th:each="question : ${questions}">
-                                    <div class="lecture-detail-question">
+                                    <div class="lectureDetail-question">
                                         <p><strong th:text="${question.userId}"></strong>: <span th:text="${question.content}"></span></p>
                                         <div th:each="answer : ${question.answers}">
-                                            <div class="lecture-detail-answer" style="margin-left: 20px;">
+                                            <div class="lectureDetail-answer" style="margin-left: 20px;">
                                                 <p><strong th:text="${answer.instructorId}"></strong>: <span th:text="${answer.content}"></span></p>
                                             </div>
                                         </div>
@@ -154,91 +143,90 @@
                                         <form th:action="@{/lectures/answers}" method="post">
                                             <input type="hidden" name="questionId" th:value="${question.id}" />
                                             <div class="form-group">
-                                                <label for="answerContent">답변</label>
-                                                <textarea class="form-control" id="answerContent" name="content" rows="3" required></textarea>
+                                                <label for="lectureDetailAnswerContent">답변</label>
+                                                <textarea class="form-control" id="lectureDetailAnswerContent" name="content" rows="3" required></textarea>
                                             </div>
-                                            <button type="submit" class="btn btn-primary">답변달기</button>
+                                            <button type="submit" class="btn btn-outline-primary lectureDetail-btn-primary">답변달기</button>
                                         </form>
                                     </div>
                                 </div>
                                 <div th:if="${hasApplied}">
-                                    <form th:action="@{/lectures/questions}" method="post" onsubmit="localStorage.setItem('activeTab', '#questions');">
+                                    <form th:action="@{/lectures/questions}" method="post" onsubmit="localStorage.setItem('activeTab', '#lectureDetail-questions');">
                                         <input type="hidden" name="lectureId" th:value="${lecture.lectureId}">
                                         <div class="form-group">
-                                            <label for="questionContent">질문</label>
-                                            <textarea class="form-control" id="questionContent" name="content" rows="3" required></textarea>
+                                            <label for="lectureDetailQuestionContent">질문</label>
+                                            <textarea class="form-control" id="lectureDetailQuestionContent" name="content" rows="3" required></textarea>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">질문달기</button>
+                                        <button type="submit" class="btn btn-outline-primary lectureDetail-btn-primary">질문달기</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-4 lecture-detail-right-column">
-                    <div class="card">
-                        <div class="card-body">
-                            <th:block th:if="${lecture.instructorId} != ${loggedInUser.userId}">
-	                            <h5 class="card-title" th:if="${hasApplied}">학습중</h5>
-	                            <h5 class="card-title" th:if="${!hasApplied}">수강 신청</h5>
-	                            <a th:if="${hasApplied}" th:href="@{'/videos/player?lectureId=' + ${lecture.lectureId}}"><button class="btn btn-success btn-block mb-3">학습하기</button></a>
-	                            <button th:if="${!hasApplied}" data-toggle="modal" data-target="#paymentModal" class="btn btn-primary btn-block mb-3">수강 신청하기</button>
-                            </th:block>
-                            <th:block th:if="${lecture.instructorId} == ${loggedInUser.userId}">
-                            	<h5 class="card-title">나의 강의입니다.</h5>
-                            </th:block>
-                            <form th:action="@{/lectures/apply}" method="post" id="lectureAppleyForm">
-				                <input type="hidden" name="lectureId" th:value="${lecture.lectureId}">
-				            </form>
-                            <div class="card-text">
-                                <p><strong>지식공유자:</strong> <span th:text="${lecture.instructorName}"></span></p>
-                                <p><strong>총 28개 수업:</strong> 5시간 21분</p>
-                                <p><strong>수강기한:</strong> 무제한</p>
-                                <p><strong>수준:</strong> 입문 - 초급 - 중급 이상</p>
-                            </div>
+                <div class="col-12 col-lg-4 lectureDetail-right-column">
+                    <div class="lectureDetail-info-section">
+                        <th:block th:if="${lecture.instructorId} != ${loggedInUser.userId}">
+                            <h5 class="lectureDetail-info-title" th:if="${hasApplied}">학습중</h5>
+                            <h5 class="lectureDetail-info-title" th:if="${!hasApplied}">수강 신청</h5>
+                            <a th:if="${hasApplied}" th:href="@{'/videos/player?lectureId=' + ${lecture.lectureId}}"><button class="btn btn-outline-primary btn-block mb-3 lectureDetail-btn-primary">학습하기</button></a>
+                            <button th:if="${!hasApplied}" data-toggle="modal" data-target="#lectureDetailPaymentModal" class="btn btn-outline-primary btn-block mb-3 lectureDetail-btn-primary">수강 신청하기</button>
+                        </th:block>
+                        <th:block th:if="${lecture.instructorId} == ${loggedInUser.userId}">
+                            <h5 class="lectureDetail-info-title">나의 강의입니다.</h5>
+                        </th:block>
+                        <form th:action="@{/lectures/apply}" method="post" id="lectureDetailAppleyForm">
+                            <input type="hidden" name="lectureId" th:value="${lecture.lectureId}">
+                        </form>
+                        <div class="lectureDetail-info-text">
+                            <p><strong>지식공유자:</strong> <span th:text="${lecture.instructorName}"></span></p>
+                            <p><strong>총 28개 수업:</strong> 5시간 21분</p>
+                            <p><strong>수강기한:</strong> 무제한</p>
+                            <p><strong>수준:</strong> <span th:text="${lecture.lectureLevel}"></span></p>
                         </div>
                     </div>
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            <h5 class="card-title">수강 전 궁금한 점이 있나요?</h5>
-                            <button class="btn btn-outline-primary btn-block">문의하기</button>
-                        </div>
+                    <div class="lectureDetail-info-section">
+                        <h5 class="lectureDetail-info-title">수강 전 궁금한 점이 있나요?</h5>
+                        <button class="btn btn-outline-primary btn-block lectureDetail-btn-secondary">문의하기</button>
                     </div>
                 </div>
             </div>
+
             <!-- 강의 결제 모달 -->
-            <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="paymentModalLabel">강의 구매하기</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal fade" id="lectureDetailPaymentModal" tabindex="-1" aria-labelledby="lectureDetailPaymentModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered"> <!-- 중앙 정렬을 위한 클래스 추가 -->
+                    <div class="modal-content lectureDetail-modal-content">
+                        <div class="modal-header lectureDetail-modal-header">
+                            <h5 class="modal-title lectureDetail-modal-title" id="lectureDetailPaymentModalLabel">
+                                <i class="fas fa-shopping-cart"></i> 강의 구매하기
+                            </h5>
+                            <button type="button" class="close lectureDetail-close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body lectureDetail-modal-body">
                             <h5>강의 정보</h5>
-                            <div class="row">
-                                <div class="col lecture-detail-test-secondary">
-                                    <span>강의명</span><br>
-                                    <span>강사</span><br>
-                                    <span>가격</span><br>
+                            <div class="row mb-4">
+                                <div class="col lectureDetail-test-secondary">
+                                    <span><i class="fas fa-book"></i> 강의명</span><br>
+                                    <span><i class="fas fa-chalkboard-teacher"></i> 강사</span><br>
+                                    <span><i class="fas fa-money-bill-wave"></i> 가격</span><br>
                                 </div>
                                 <div class="col">
-                                    <span id="lectureTitle">[[ ${lecture.lectureTitle} ]]</span><br>
+                                    <span id="lectureDetailTitle">[[ ${lecture.lectureTitle} ]]</span><br>
                                     <span>[[ ${lecture.instructorName} ]]</span><br>
-                                    <span id="lecturePrice" th:text="${lecture.lecturePrice}"></span>원 <span>(할인 [[ ${lecture.lectureDiscount} ]]% 적용)</span>
-									<br>
+                                    <span id="lectureDetailPrice" th:text="${lecture.lecturePrice}"></span>원 <span>(할인 [[ ${lecture.lectureDiscount} ]]% 적용)</span>
+                                    <br>
                                 </div>
                             </div>
                             <h5 class="mt-5">구매자 정보</h5>
-                            <input type="hidden" name="userId" th:value="${loggedInUser.userId}" id="userId"/>
-                            <input type="hidden" th:value="${lecture.lectureId}" id="lectureId"/>
-                            <div class="row">
-                                <div class="col lecture-detail-test-secondary">
-                                    <span>이름</span><br>
-                                    <span>이메일</span><br>
-                                    <span>휴대폰 번호</span>
+                            <input type="hidden" name="userId" th:value="${loggedInUser.userId}" id="lectureDetailUserId"/>
+                            <input type="hidden" th:value="${lecture.lectureId}" id="lectureDetailLectureId"/>
+                            <div class="row mb-4">
+                                <div class="col lectureDetail-test-secondary">
+                                    <span><i class="fas fa-user"></i> 이름</span><br>
+                                    <span><i class="fas fa-envelope"></i> 이메일</span><br>
+                                    <span><i class="fas fa-phone"></i> 휴대폰 번호</span>
                                 </div>
                                 <div class="col">
                                     <span>[[ ${session.loggedInUser.name} ]]</span><br>
@@ -246,40 +234,46 @@
                                     <span>[[ ${session.loggedInUser.phone} ]]</span>
                                 </div>
                             </div>
-                            <div class="row mt-3">
+                            <div class="row mt-3 mb-4">
                                 <div class="col">
-                                    <span class="fw-bold">포인트</span>
+                                    <span class="fw-bold"><i class="fas fa-coins"></i> 포인트</span>
                                 </div>
                                 <div class="col text-end">
-                                    보유(결제 후) <span id="havePoint">[[ ${session.loggedInUser.point} ]]</span>p
+                                    보유(결제 후) <span id="lectureDetailHavePoint">[[ ${session.loggedInUser.point} ]]</span>p
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <input type="number" min="0" id="pointInput" value="0"/>
-                                    <button class="fw-bold" id="useAllPoint">전액 사용</button>
+                            <div class="row mb-4">
+                                <div class="col-8">
+                                    <input type="number" class="form-control" min="0" id="lectureDetailPointInput" value="0"/>
+                                </div>
+                                <div class="col-4">
+                                    <button class="btn btn-outline-primary w-100 lectureDetail-custom-modal-button" id="lectureDetailUseAllPoint">전액 사용</button>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col">
-                                    <span>포인트 적용 후</span>
+                                    <span><i class="fas fa-tag"></i> 포인트 적용 후</span>
                                 </div>
-                                <div class="col">
-                                    <span id="priceAfterPoint" th:text="${lecture.lecturePrice}"></span>원
+                                <div class="col text-end">
+                                    <span id="lectureDetailPriceAfterPoint" th:text="${lecture.lecturePrice}"></span>원
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col">
-                                    <span>적립예정 포인트(5%)</span>
+                                    <span><i class="fas fa-gift"></i> 적립예정 포인트(5%)</span>
                                 </div>
-                                <div class="col">
-                                    <span id="earningPoint">0</span>p
+                                <div class="col text-end">
+                                    <span id="lectureDetailEarningPoint">0</span>p
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                            <button type="button" class="btn btn-primary" id="payBt">카카오페이 결제</button>
+                        <div class="modal-footer lectureDetail-modal-footer">
+                            <button type="button" class="btn btn-outline-primary lectureDetail-custom-modal-button" data-dismiss="modal">
+                                <i class="fas fa-times"></i> 닫기
+                            </button>
+                            <button type="button" class="btn btn-outline-primary lectureDetail-custom-modal-button" id="lectureDetailPayBt">
+                                <i class="fas fa-credit-card"></i> 카카오페이 결제
+                            </button>
                         </div>
                     </div>
                 </div>
