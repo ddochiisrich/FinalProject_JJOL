@@ -72,7 +72,8 @@ $(function() {
 		var havePoint = parseInt($("#havePoint").text());
 		var usingPoint = parseInt($("#pointInput").val());
 		const lecturePriceAfterPoint = parseInt($('#priceAfterPoint').text());
-		const merchantUid = `merchant_${crypto.randomUUID()}`;
+		const uuid = crypto.randomUUID();
+		const merchantUid = "merchant_" + uuid;
 		
 		const dataForValidate = {
 	        userId: userId,
