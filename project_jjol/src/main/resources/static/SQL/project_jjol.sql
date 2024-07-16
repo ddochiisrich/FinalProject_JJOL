@@ -219,12 +219,25 @@ CREATE TABLE datasharingcomment (
 -- 커뮤니티 테이블
 DROP TABLE IF EXISTS allcommunity;
 CREATE TABLE IF NOT EXISTS allcommunity(    
-   allc_no INT PRIMARY KEY AUTO_INCREMENT,                -- 커뮤니티 ID
+   	allc_no INT PRIMARY KEY AUTO_INCREMENT,                -- 커뮤니티 ID
     allc_name VARCHAR(100) NOT NULL,                      -- 커뮤니티 이름
     allc_title VARCHAR(1000) NOT NULL,                    -- 커뮤니티 제목
     allc_content LONG NOT NULL,                           -- 커뮤니티 내용
     allc_date TIMESTAMP                                  -- 커뮤니티 날짜
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- 커뮤니티 댓글 테이블
+DROP TABLE IF EXISTS communitycomment;
+CREATE TABLE communitycomment (
+  cmc_no INT AUTO_INCREMENT PRIMARY KEY,                  -- 댓글 ID
+  cc_no INT NOT NULL,                                      -- 자료 번호
+  cmc_content TEXT NOT NULL,                              -- 댓글 내용
+  cmc_writer VARCHAR(100) NOT NULL,                       -- 작성자
+  cmc_time TIMESTAMP NOT NULL,                            -- 작성 시간
+  CONSTRAINT reply_fkk FOREIGN KEY (cc_no) REFERENCES allcommunity (allc_no) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- 개인채팅 테이블
 DROP TABLE IF EXISTS personal_chat;

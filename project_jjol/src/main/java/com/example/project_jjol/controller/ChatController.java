@@ -13,14 +13,9 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 public class ChatController {
-
-	
 	private final ChatService chatService;
-	
 	@GetMapping("/chatting")
 	public List<Chat> chatList(){
 		return chatService.ChatList();
 	}
-	
-	 
 }
