@@ -4,27 +4,20 @@ import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.project_jjol.model.AllCommunity;
 import com.example.project_jjol.model.CommunityComment;
-import com.example.project_jjol.model.DataSharingComment;
 import com.example.project_jjol.model.User;
 import com.example.project_jjol.service.AllCommunityService;
 
@@ -39,7 +32,7 @@ public class AllCommunityController {
 
 	@Autowired
 	private AllCommunityService allCommunityService;
-
+	
 	// 글 리스트 보기
 	// 페이징 처리
 	@GetMapping("/AllCommunityView")
@@ -100,20 +93,29 @@ public class AllCommunityController {
 	}
 
 	// 글 상세보기
-	@GetMapping("/AllCommunityViewDetail")
-	public String AllCommunityViewDetail(@RequestParam("no") int no, Model model) {
-		AllCommunity allcommunity = allCommunityService.findByNo(no);
+	   @GetMapping("/AllCommunityViewDetail")
+	    public String AllCommunityViewDetail(@RequestParam("no") int no, Model model, HttpSession session) {
+	        AllCommunity allcommunity = allCommunityService.findByNo(no);
+	        User loggedInUser = (User) session.getAttribute("loggedInUser");
 
-		if (allcommunity == null) {
-			return "redirect:/AllCommunityView";
-		}
-		List<CommunityComment> commentsList = allCommunityService.getCommentsByccNo(no);
-		log.info("commentsList :" + commentsList);
+	        if (allcommunity == null) {
+	            return "redirect:/AllCommunityView";
+	        }
 
-		model.addAttribute("allcommunity", allcommunity);
-		model.addAttribute("commentsList", commentsList);
-		return "views/AllCommunity_Detail";
-	}
+	        List<CommunityComment> commentsList = allCommunityService.getCommentsByccNo(no);
+	        log.info("commentsList :" + commentsList);
+
+	        model.addAttribute("allcommunity", allcommunity);
+	        model.addAttribute("commentsList", commentsList);
+
+	        // 로그인된 사용자가 있는 경우에만 사용자 이름을 모델에 추가
+	        if (loggedInUser != null) {
+	            String userName = loggedInUser.getName(); // 사용자 이름 또는 식별자 필드
+	            model.addAttribute("loggedInUser", userName);
+	        }
+
+	        return "views/AllCommunity_Detail";
+	    }
 
 	// 글쓰기 폼 요청
 	@GetMapping("AllCommunityWrite")
@@ -123,8 +125,7 @@ public class AllCommunityController {
 
 	// 글쓰기 요청 처리
 	@PostMapping("/AllCommunityWrite")
-	public String saveAllc(AllCommunity allcommunity, @RequestParam(value = "fileAllc") MultipartFile file,
-			@RequestParam(value = "dateAllc") Date dateAllc, RedirectAttributes redirectAttributes) throws Exception {
+	public String saveAllc(AllCommunity allcommunity,@RequestParam(value = "dateAllc") Date dateAllc, RedirectAttributes redirectAttributes) throws Exception {
 		Timestamp myDate = new Timestamp(dateAllc.getTime());
 		allcommunity.setAllcDate(myDate);
 		log.info("AllCommunityWrite - controller : " + allcommunity.getAllcName());
@@ -157,11 +158,15 @@ public class AllCommunityController {
 	// 댓글 추가
 	@PostMapping("/comments/cccommentadd")
 	@ResponseBody
-	public List<CommunityComment> cccommentadd(@RequestBody CommunityComment communitycomment) {
+	public List<CommunityComment> cccommentadd(@RequestBody CommunityComment communitycomment, HttpSession session) {
 
 		log.info("cmcComment : " + communitycomment.getCmcContent() + ", writer : " + communitycomment.getCmcWriter());
 
+		User user = (User) session.getAttribute("loggedInUser");
+		
 		allCommunityService.insertcommunitycomment(communitycomment);
+		communitycomment.setCmcWriter(null);
+		
 		return allCommunityService.getCommentsByccNo(communitycomment.getCcNo());
 
 	}

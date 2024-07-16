@@ -21,20 +21,12 @@
                         <input type="text" id="allcommunity_write_name" name="allcName" class="form-control" required
                                th:value="${session.loggedInUser.name}" readonly><br>
 
-                        <!--pw-->
-                        <label for="allcommunity_write_pass">비밀번호</label>
-                        <input type="password" id="allcommunity_write_pass" name="allcPass" class="form-control" required><br>
-
                         <!-- 오늘의 시간을 자동으로 들어가게 한다. -->
                         <label for="allcommunity_write_date">Date</label>
                         <input type="date" id="allcommunity_write_date" name="dateAllc" class="form-control"
                                th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
                     </div>
                     <div class="allcommunity-write-content">
-                        <!-- file upload -->
-                        <label for="allcommunity_write_file">File</label>
-                        <input type="file" id="fileAllcommunity" name="fileAllc" class="form-control-file"><br>
-
                         <label for="allcommunity_write_content">Content</label>
                         <textarea class="form-control" name="allcContent" id="allcommunity_write_content"
                                   required></textarea>

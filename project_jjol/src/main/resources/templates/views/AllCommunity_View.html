@@ -30,7 +30,6 @@
                             <th scope="col">제목</th>
                             <th scope="col">작성자</th>
                             <th scope="col">등록일</th>
-                            <th scope="col">다운로드</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -39,7 +38,6 @@
                                    th:text="${community.allcTitle}">제목 없음</a></td>
                             <td th:text="${community.allcName}">작성자 없음</td>
                             <td th:text="${#dates.format(community.allcDate, 'yyyy-MM-dd')}">날짜 없음</td>
-                            <td th:text="${community.allcFile}">파일 없음</td>
                         </tr>
                         <tr th:if="${#lists.isEmpty(communityList)}">
                             <td colspan="4">글이 존재하지 않음</td>

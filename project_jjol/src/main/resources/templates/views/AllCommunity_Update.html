@@ -26,21 +26,12 @@
                         <input type="text" id="allcommunity_write_name" name="allcName" th:value="${allcommunity.allcName}"
                             required><br>
 
-                        <!-- 비밀번호 -->
-                        <label for="allcommunity_write_pass">비밀번호</label>
-                        <input type="text" id="allcommunity_write_pass" name="allcPass" th:value="${allcommunity.allcPass}"
-                            required><br>
-
                         <!-- 날짜 -->
                         <label for="allcommunity_write_date">날짜</label>
                         <input type="date" id="allcommunity_write_date" name="dateAllc"
                             th:value="${#dates.format(allcommunity.allcDate, 'yyyy-MM-dd')}" required>
                     </div>
                     <div class="all-community-update-content">
-                        <!-- 파일 업로드 -->
-                        <label for="fileSllcommunity">파일</label>
-                        <input type="file" id="fileAllcommunity" name="fileAlcommunity"><br>
-
                         <!-- 내용 -->
                         <label for="allcommunity_write_content">내용</label>
                         <textarea class="form-control" name="allcContent" id="allcommunity_write_content" required th:text="${allcommunity.allcContent}"></textarea>

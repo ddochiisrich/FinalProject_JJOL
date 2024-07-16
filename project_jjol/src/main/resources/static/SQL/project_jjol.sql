@@ -223,9 +223,7 @@ CREATE TABLE IF NOT EXISTS allcommunity(
     allc_name VARCHAR(100) NOT NULL,                      -- 커뮤니티 이름
     allc_title VARCHAR(1000) NOT NULL,                    -- 커뮤니티 제목
     allc_content LONG NOT NULL,                           -- 커뮤니티 내용
-    allc_date TIMESTAMP,                                  -- 커뮤니티 날짜
-    allc_pass VARCHAR(1000) NOT NULL,                     -- 커뮤니티 비밀번호
-    allc_file VARCHAR(1000)                               -- 커뮤니티 파일
+    allc_date TIMESTAMP                                  -- 커뮤니티 날짜
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 개인채팅 테이블
