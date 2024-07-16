@@ -1,8 +1,8 @@
-.lecture-detail-main-container {
+.lectureDetail-main-container {
     padding: 20px;
 }
 
-.lecture-detail-header-section {
+.lectureDetail-header-section {
     background-color: #2C3E50;
     color: white;
     padding: 20px;
@@ -12,34 +12,34 @@
     align-items: center;
 }
 
-.lecture-detail-header-section .lecture-detail-video-container {
+.lectureDetail-header-section .lectureDetail-video-container {
     flex: 2;
     margin-right: 20px;
 }
 
-.lecture-detail-header-section .lecture-detail-video-container video {
+.lectureDetail-header-section .lectureDetail-video-container video {
     width: 100%;
 }
 
-.lecture-detail-header-section .lecture-detail-course-info {
+.lectureDetail-header-section .lectureDetail-course-info {
     flex: 3;
 }
 
-.lecture-detail-course-title {
+.lectureDetail-course-title {
     font-size: 24px;
     font-weight: bold;
     color: #E74C3C;
 }
 
-.lecture-detail-course-details {
+.lectureDetail-course-details {
     margin-top: 10px;
 }
 
-.lecture-detail-course-details i {
+.lectureDetail-course-details i {
     margin-right: 5px;
 }
 
-.lecture-detail-progress-container {
+.lectureDetail-progress-container {
     margin-top: 20px;
 }
 
@@ -51,11 +51,20 @@
     background-color: #E74C3C;
 }
 
-.lecture-detail-tab-content {
+.lectureDetail-tab .nav-link {
+    color: #0C1844;
+}
+
+.lectureDetail-tab .nav-link.active {
+    background-color: #0C1844;
+    color: white;
+}
+
+.lectureDetail-tab-content {
     margin-top: 20px;
 }
 
-.lecture-detail-content-section {
+.lectureDetail-content-section {
     padding: 20px;
     background-color: #ECF0F1;
     border-radius: 10px;
@@ -63,112 +72,196 @@
     color: #2C3E50;
 }
 
-.lecture-detail-content-section h3 {
+.lectureDetail-content-section h3 {
     margin-bottom: 20px;
 }
 
-.lecture-detail-video-section {
+.lectureDetail-video-section {
     text-align: center;
     margin: 20px 0;
 }
 
-.btn-outline-light {
-    border-color: #3498DB;
-    color: #3498DB;
-}
-
-.btn-outline-light:hover {
-    background-color: #3498DB;
-    color: white;
-}
-
-.btn-success {
-    background-color: #3498DB;
-    border: none;
-}
-
-.btn-success:hover {
-    background-color: #2980B9;
-}
-
-.btn-outline-primary {
-    border-color: #2C3E50;
-    color: #2C3E50;
-}
-
-.btn-outline-primary:hover {
-    background-color: #2C3E50;
-    color: white;
-}
-
-.lecture-detail-rating {
-    display: inline-block;
-    position: relative;
-    font-size: 1.5em;
-    color: #d3d3d3;
-}
-
-.lecture-detail-rating .lecture-detail-star {
-    position: relative;
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    margin-right: 0.1em;
-}
-
-.lecture-detail-rating .lecture-detail-star:before {
-    content: "\2605";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-}
-
-.lecture-detail-rating .lecture-detail-star.full:before {
-    color: #ffcc00;
-}
-
-.lecture-detail-rating .lecture-detail-star.half:before {
-    width: 50%;
-    color: #ffcc00;
-}
-
-.share-message {
+.lectureDetail-share-message {
     display: none;
     color: #fff;
     background-color: #28a745;
     padding: 5px 10px;
     border-radius: 5px;
     margin-top: 10px;
-    animation: fadeInOut 2s forwards;
     text-align: center;
 }
 
-#shareButton {
+#lectureDetailShareButton {
     transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: #fff; /* 기본 배경색 흰색 */
+    color: #0C1844; /* 기본 텍스트 색상 */
+    border: none; /* 기본 테두리 제거 */
 }
 
-#shareButton.copied {
-    background-color: #28a745;
+#lectureDetailShareButton:hover {
+    background-color: #0C1844;
+    color: #fff;
+    border: none; /* 호버 시 테두리 제거 */
+}
+
+#lectureDetailShareButton.copied {
+    background-color: #28a745; /* 클릭 시 초록색 배경 */
+    color: #fff;
+    border: none; /* 클릭 시 테두리 제거 */
+}
+
+.lectureDetail-review {
+    margin-bottom: 20px;
+}
+
+/* Global button styles */
+.btn-outline-primary {
+    border-color: #0C1844;
+    color: #0C1844;
+    background-color: #fff; /* 기본 배경색 흰색 */
+}
+
+.btn-outline-primary:hover {
+    background-color: #0C1844;
+    color: #fff;
+    border-color: #0C1844; /* 호버 시 테두리 유지 */
+}
+
+.lectureDetail-btn-primary {
+    background-color: #fff;
+    border-color: #0C1844;
+    color: #0C1844;
+}
+
+.lectureDetail-btn-primary:hover {
+    background-color: #0C1844;
+    border-color: #0C1844;
     color: #fff;
 }
 
-@keyframes fadeInOut {
-    0% {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    10% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    90% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
+.lectureDetail-btn-secondary {
+    border-color: #0C1844;
+    color: #0C1844;
 }
+
+.lectureDetail-btn-secondary:hover {
+    background-color: #0C1844;
+    color: white;
+    border-color: #0C1844; /* 호버 시 테두리 유지 */
+}
+
+/* Remove hover effects for specific buttons */
+.lectureDetail-right-column .btn-outline-primary {
+    border-color: #0C1844;
+    color: #0C1844;
+}
+
+.lectureDetail-right-column .btn-outline-primary:hover {
+    background-color: inherit;
+    color: #0C1844;
+    border-color: #0C1844; /* 호버 시 테두리 유지 */
+}
+
+/* Modal customization */
+.lectureDetail-modal-content {
+    background-color: #ffffff; /* 모달 배경 색상 */
+    border-radius: 10px; /* 모서리를 둥글게 */
+    padding: 0; /* 모달 내부 패딩 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+.lectureDetail-modal-header {
+    background-color: #0C1844; /* 헤더 배경 색상 */
+    border-top-left-radius: 10px; /* 모서리를 둥글게 */
+    border-top-right-radius: 10px; /* 모서리를 둥글게 */
+    padding: 15px; /* 패딩 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lectureDetail-modal-title {
+    font-size: 1.5rem; /* 타이틀 폰트 크기 */
+    color: #fff; /* 타이틀 색상 */
+}
+
+.lectureDetail-close {
+    font-size: 1.5rem; /* 닫기 버튼 크기 */
+    color: #fff; /* 닫기 버튼 색상 */
+    cursor: pointer;
+}
+
+.lectureDetail-close:hover {
+    color: #ddd; /* 닫기 버튼 호버 시 색상 */
+}
+
+.lectureDetail-modal-body {
+    font-size: 1rem; /* 바디 폰트 크기 */
+    color: #0C1844; /* 바디 텍스트 색상 */
+    padding: 20px; /* 바디 패딩 */
+}
+
+.lectureDetail-modal-body h5 {
+    color: #0C1844; /* 바디 헤더 색상 */
+    margin-bottom: 15px; /* 하단 여백 */
+}
+
+.lectureDetail-test-secondary span {
+    color: #888; /* 보조 텍스트 색상 */
+}
+
+.lectureDetail-custom-modal-button {
+    color: #0C1844; /* 버튼 텍스트 색상 */
+    border-color: #0C1844; /* 버튼 테두리 색상 */
+}
+
+.lectureDetail-custom-modal-button:hover {
+    background-color: #0C1844; /* 호버 시 배경 색상 */
+    color: #fff; /* 호버 시 텍스트 색상 */
+}
+
+.btn-outline-primary {
+    border-color: #0C1844; /* 버튼 테두리 색상 */
+    color: #0C1844; /* 버튼 텍스트 색상 */
+}
+
+.btn-outline-primary:hover {
+    background-color: #0C1844; /* 호버 시 배경 색상 */
+    color: #fff; /* 호버 시 텍스트 색상 */
+    border-color: #0C1844; /* 호버 시 테두리 유지 */
+}
+
+.lectureDetail-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px; /* 푸터 패딩 */
+}
+
+.lectureDetail-info-section {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.lectureDetail-info-title {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+}
+
+.lectureDetail-info-text p {
+    margin-bottom: 10px;
+}
+
+.lectureDetail-progress-container {
+    margin-top: 20px;
+}
+
+.progress {
+    height: 20px;
+}
+
+.progress-bar {
+    background-color: #E74C3C;
+}
+

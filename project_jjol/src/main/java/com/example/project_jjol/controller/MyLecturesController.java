@@ -37,20 +37,15 @@ public class MyLecturesController {
     private S3Service s3Service;
 	
 	@GetMapping("/myLectures")
-	public String myLectureList(HttpSession session, Model model, HttpServletResponse response) throws IOException {
+	public String myLectureList(HttpSession session, Model model) throws IOException {
 		User loggedInUser = (User) session.getAttribute("loggedInUser");
 		if(loggedInUser == null) {
 			return "redirect:/login";
 		}
 		
 		if("student".equals(loggedInUser.getRole())) {
-			response.setContentType("text/html; charset=utf-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>");
-			out.println(" alert('강사 전용 페이지입니다.');");
-			out.println(" location.href='lectures'");
-			out.println("</script>");
-			return null;
+			model.addAttribute("errorMessage", "강사 전용 페이지입니다.");
+			return "views/myLectures";
 		}
 		
 		List<Lecture> lectures = myLecturesService.findMyLecturesByUserId(loggedInUser.getUserId());
@@ -63,30 +58,20 @@ public class MyLecturesController {
 	
 	@PostMapping("/deleteLecture")
 	public String deleteLecture(HttpSession session, @RequestParam("lectureId") int lectureId,
-			@RequestParam("password") String password,
-			HttpServletResponse response) throws IOException {
+			@RequestParam("password") String password, Model model, RedirectAttributes redirectAttributes) throws IOException {
 		
 		User loggedInUser = (User) session.getAttribute("loggedInUser");
 		if (password.equals(loggedInUser.getPass())) {
 			try {
 				myLecturesService.deleteLecture(lectureId);
+				redirectAttributes.addFlashAttribute("successMessage", "강의가 성공적으로 삭제되었습니다.");
 			} catch(Exception e) {
-				response.setContentType("text/html; charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script>");
-				out.println(" alert('수강중인 학생이 1명 이상인 강의를 삭제하기 위해서는\\n고객센터(1544-0000)에 문의해주시기 바랍니다.');");
-				out.println(" location.href='myLectures'");
-				out.println("</script>");
-				return null;
+				redirectAttributes.addFlashAttribute("errorMessage", "수강생이 있는 강의는 삭제할 수 없습니다. 문의: 고객센터(1544-0000)");
+				return "redirect:/myLectures";
 			}
 		} else {
-			response.setContentType("text/html; charset=utf-8");
-	        PrintWriter out = response.getWriter();
-	        out.println("<script>");
-	        out.println(" alert('비밀번호가 일치하지 않습니다.');");
-	        out.println(" location.href='myLectures'");
-	        out.println("</script>");
-	        return null;
+			redirectAttributes.addFlashAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
+			return "redirect:/myLectures";
 		}
 		return "redirect:/myLectures";
 	}
@@ -94,8 +79,7 @@ public class MyLecturesController {
 	@PostMapping("updateLecture")
 	public String updateLecture(HttpSession session, Model model,
 			@RequestParam("lectureId") int lectureId,
-			@RequestParam("password") String password,
-			HttpServletResponse response) throws IOException {
+			@RequestParam("password") String password) throws IOException {
 		
 		User loggedInUser = (User) session.getAttribute("loggedInUser");
 		
@@ -108,13 +92,8 @@ public class MyLecturesController {
 			model.addAttribute("chapters", chapters);
 			
 		} else {
-			response.setContentType("text/html; charset=utf-8");
-	        PrintWriter out = response.getWriter();
-	        out.println("<script>");
-	        out.println(" alert('비밀번호가 일치하지 않습니다.');");
-	        out.println(" location.href='myLectures'");
-	        out.println("</script>");
-	        return null;
+			model.addAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
+			return "views/myLectures";
 		}
 		
 		return "views/lectureUpdateForm";

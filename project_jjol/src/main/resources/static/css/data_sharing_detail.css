@@ -1,47 +1,71 @@
-.datasharing-detail-main {
+.data-sharing-detail-container {
     padding: 20px;
     background-color: #f9f9f9;
 }
 
-.datasharing-detail-card {
+.data-sharing-detail-card {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.datasharing-detail-header h3 {
+.data-sharing-detail-header h3 {
     font-weight: bold;
+    color: #0C1844;
 }
 
-.datasharing-detail-body {
+.data-sharing-detail-body {
     padding-top: 20px;
+    color: #0C1844;
 }
 
-.datasharing-detail-info li {
+.data-sharing-detail-info li {
     margin-bottom: 10px;
+    color: #0C1844;
 }
 
-.datasharing-detail-footer {
+.data-sharing-detail-footer {
     display: flex;
     justify-content: space-between;
 }
 
-.datasharing-detail-comment-card,
-.datasharing-detail-comment-list-card {
+.data-sharing-detail-back-button {
+    border: 1px solid #0C1844;
+    color: #0C1844;
+}
+
+.data-sharing-detail-delete-button {
+    border: 1px solid #0C1844;
+    color: #0C1844;
+}
+
+.data-sharing-detail-update-button {
+    border: 1px solid #0C1844;
+    color: #0C1844;
+}
+
+.data-sharing-detail-comment-card,
+.data-sharing-detail-comment-list-card {
     margin-top: 20px;
 }
 
-.datasharing-detail-comment-list {
+.data-sharing-detail-comment-list {
     margin-top: 20px;
 }
 
-.datasharing-detail-comment-list .list-group-item {
+.data-sharing-detail-comment-list .list-group-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.datasharing-detail-comment-list .list-group-item p {
+.data-sharing-detail-comment-list .list-group-item p {
     margin: 0;
+    color: #0C1844;
+}
+
+.data-sharing-detail-submit-button {
+    border: 1px solid #0C1844;
+    color: #0C1844;
 }

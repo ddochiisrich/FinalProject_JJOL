@@ -76,4 +76,9 @@ public class DataSharingService {
 	public Path getFilePath(String fileName) {
 		return this.fileStorageLocation.resolve(fileName).normalize();
 	}
+	
+	// 검색 기능
+    public List<DataSharing> searchDataSharing(String searchQuery) {
+        return datasharingMapper.searchDataSharing(searchQuery);
+    }
 }

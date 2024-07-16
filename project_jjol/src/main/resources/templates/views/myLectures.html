@@ -1,49 +1,179 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main_layout}">
-
-<body>
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/my_lectures.css}">
+    <script defer th:src="@{/js/my_lectures.js}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body class="mylectures-body">
     <th:block layout:fragment="content">
-        <div class="my-lectures-container mt-5">
-            <div class="row mb-4">
-                <div class="col">
-                    <h2>마이페이지</h2>
+        <div class="container mt-5 mylectures-container position-relative">
+            <div class="row mb-4 justify-content-center">
+                <div class="col text-center">
+                    <h1><i class="fas fa-user"></i> 마이페이지</h1>
+                    <button type="button" class="btn btn-outline-primary mylectures-editProfile-btn btn-sm" data-toggle="modal" data-target="#mylectures-editProfileModal">
+                        <i class="fas fa-edit"></i> 정보 수정
+                    </button>
                 </div>
             </div>
-            <div class="row mb-4">
-                <div class="col">
-                    <h3 th:text="'안녕하세요, ' + ${user.name} + '님!'"></h3>
-                </div>
+            <div class="text-center mb-4">
+                <h4 th:text="'안녕하세요, ' + ${user.name} + '님!'"></h4> <span th:text="'보유 포인트 : ' + ${user.point} + 'p'"></span>
             </div>
-            <div class="row mb-4">
-                <div class="col">
-                    <h4>나의 강의</h4>
-                </div>
+            <hr>
+            <div class="mb-4">
+                <h4><i class="fas fa-chalkboard-teacher"></i> 내가 업로드한 강의</h4>
             </div>
-            <th:block th:if="${lectures}">
-                <div class="row">
-                    <div class="col-md-4 mb-4" th:each="lecture: ${lectures}">
-                        <div class="card shadow-sm">
-                            <img class="card-img-top" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
-                            <div class="card-body">
-                                <h5 class="card-title" th:text="${lecture.lectureTitle}">강의 제목</h5>
-                                <p class="card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
-                                <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-info btn-block">강의 상세정보</a>
-                                <a class="btn btn-danger btn-block" th:attr="id='deleteLecture' + ${lecture.lectureId}">삭제</a>
-                                <a class="btn btn-success btn-block" th:attr="id='updateLecture' + ${lecture.lectureId}">수정</a>
+            <!-- Error Modal -->
+			<div th:if="${errorMessage}" class="modal fade" id="errorModal_mylectures" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel_mylectures" aria-hidden="true">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content mylectures-modal-content">
+			            <div class="modal-header mylectures-modal-header">
+			                <h5 class="modal-title" id="errorModalLabel_mylectures">Error</h5>
+			                <button type="button" class="close mylectures-modal-close" data-dismiss="modal" aria-label="Close">
+			                    <span aria-hidden="true">&times;</span>
+			                </button>
+			            </div>
+			            <div class="modal-body mylectures-modal-body">
+			                <p th:utext="${errorMessage}"></p>
+			                <div class="text-center mt-4">
+			                    <button type="button" class="btn btn-outline-primary mylectures-btn" data-dismiss="modal">Close</button>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+
+			
+			<!-- Success Modal -->
+			<div th:if="${successMessage}" class="modal fade" id="successModal_mylectures" tabindex="-1" role="dialog" aria-labelledby="successModalLabel_mylectures" aria-hidden="true">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content mylectures-modal-content">
+			            <div class="modal-header mylectures-modal-header">
+			                <h5 class="modal-title" id="successModalLabel_mylectures">Success</h5>
+			                <button type="button" class="close mylectures-modal-close" data-dismiss="modal" aria-label="Close">
+			                    <span aria-hidden="true">&times;</span>
+			                </button>
+			            </div>
+			            <div class="modal-body">
+			                <p th:text="${successMessage}"></p>
+			            </div>
+			            <div class="modal-footer d-flex justify-content-between">
+			                <button type="button" class="btn btn-outline-primary mylectures-btn" data-dismiss="modal">Close</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			
+			<!-- Password Modal -->
+			<div class="modal fade mylectures-modal" id="mylectures-passwordModal" tabindex="-1" role="dialog" aria-labelledby="mylectures-passwordModalLabel" aria-hidden="true">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content mylectures-modal-content">
+			            <div class="modal-header mylectures-modal-header">
+			                <h5 class="modal-title" id="mylectures-passwordModalLabel">비밀번호 확인</h5>
+			                <button type="button" class="close mylectures-modal-close" data-dismiss="modal" aria-label="Close">
+			                    <span aria-hidden="true">&times;</span>
+			                </button>
+			            </div>
+			            <div class="modal-body mylectures-modal-body">
+			                <input type="password" id="mylectures-passwordInput" class="form-control" placeholder="비밀번호를 입력하세요">
+			            </div>
+			            <div class="modal-footer d-flex justify-content-between">
+			                <button type="button" class="btn btn-outline-primary mylectures-btn" id="mylectures-passwordModalButton">확인</button>
+			                <button type="button" class="btn btn-outline-secondary mylectures-btn" data-dismiss="modal">닫기</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+
+
+
+            <div th:if="${#lists.isEmpty(lectures)}" class="text-center mb-4">
+                <h5>업로드한 강의가 없습니다.</h5>
+            </div>
+            <div class="row" th:if="${!#lists.isEmpty(lectures)}">
+                <div class="col-md-4 mb-4" th:each="lecture, iterStat : ${lectures}">
+                    <div class="card shadow-sm mylectures-card">
+                        <img class="mylectures-card-img" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
+                        <div class="mylectures-card-body">
+                            <h5 class="mylectures-card-title" th:text="${lecture.lectureTitle}"><i class="fas fa-book"></i> 강의 제목</h5>
+                            <p class="mylectures-card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
+                            <div class="mylectures-card-btn-group">
+                                <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-outline-primary mylectures-card-btn">
+                                    <i class="fas fa-info-circle"></i> 강의 상세정보
+                                </a>
+                                <a class="btn btn-outline-danger mylectures-card-btn" th:attr="id='mylecturesDeleteLecture' + ${lecture.lectureId}">
+                                    <i class="fas fa-trash"></i> 삭제
+                                </a>
+                                <a class="btn btn-outline-success mylectures-card-btn" th:attr="id='mylecturesUpdateLecture' + ${lecture.lectureId}">
+                                    <i class="fas fa-edit"></i> 수정
+                                </a>
                             </div>
-                            <form th:attr="name='checkForm' + ${lecture.lectureId}, id='checkForm' + ${lecture.lectureId}">
+                            <form th:attr="name='mylecturesCheckForm' + ${lecture.lectureId}, id='mylecturesCheckForm' + ${lecture.lectureId}">
                                 <input type="hidden" th:attr="name='lectureId', value=${lecture.lectureId}" />
                             </form>
                         </div>
                     </div>
                 </div>
-            </th:block>
-            <th:block th:unless="${lectures}">
-                <div class="row">
-                    <h5>업로드한 강의가 없습니다.</h5>
+            </div>
+        </div>
+
+        <!-- Edit Profile Modal -->
+        <div class="modal fade mylectures-modal" id="mylectures-editProfileModal" tabindex="-1" role="dialog" aria-labelledby="mylectures-editProfileModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content mylectures-modal-content">
+                    <div class="modal-header mylectures-modal-header">
+                        <h5 class="modal-title mylectures-modal-title text-center w-100" id="mylectures-editProfileModalLabel"><i class="fas fa-user-edit"></i> 회원정보 수정</h5>
+                        <button type="button" class="close mylectures-modal-close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mylectures-modal-body">
+                        <form id="mylectures-editProfileForm" th:action="@{/mypage/editProfile}" method="post" novalidate>
+                            <div class="mylectures-form-group">
+                                <label for="mylectures-editProfile-name"><i class="fas fa-user"></i> 이름</label>
+                                <input type="text" class="mylectures-form-control" id="mylectures-editProfile-name" name="name" th:value="${user.name}" required minlength="2">
+                                <div class="mylectures-invalid-feedback">이름은 최소 2자 이상 입력하세요.</div>
+                            </div>
+                            <div class="mylectures-form-group">
+                                <label for="mylectures-editProfile-email"><i class="fas fa-envelope"></i> 이메일</label>
+                                <input type="email" class="mylectures-form-control" id="mylectures-editProfile-email" name="email" th:value="${user.email}" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                                <div class="mylectures-invalid-feedback">유효한 이메일 주소를 입력하세요.</div>
+                            </div>
+                            <div class="mylectures-form-group">
+                                <label for="mylectures-editProfile-phone"><i class="fas fa-phone"></i> 전화번호</label>
+                                <input type="text" class="mylectures-form-control" id="mylectures-editProfile-phone" name="phone" th:value="${user.phone}" required pattern="\d{3}-\d{4}-\d{4}">
+                                <div class="mylectures-invalid-feedback">전화번호는 000-0000-0000 형식이어야 합니다.</div>
+                            </div>
+                            <div class="text-center mylectures-button-group">
+                                <button type="submit" class="btn btn-outline-primary mylectures-btn"><i class="fas fa-check"></i> 수정하기</button>
+                                <button type="button" class="btn btn-outline-secondary mylectures-btn" data-dismiss="modal"><i class="fas fa-times"></i> 닫기</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </th:block>
+            </div>
+        </div>
+
+        <!-- Password Modal -->
+        <div class="modal fade mylectures-modal" id="mylectures-passwordModal" tabindex="-1" role="dialog" aria-labelledby="mylectures-passwordModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content mylectures-modal-content">
+                    <div class="modal-header mylectures-modal-header">
+                        <h5 class="modal-title" id="mylectures-passwordModalLabel">비밀번호 확인</h5>
+                        <button type="button" class="close mylectures-modal-close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mylectures-modal-body">
+                        <input type="password" id="mylectures-passwordInput" class="form-control" placeholder="비밀번호를 입력하세요">
+                    </div>
+                    <div class="modal-footer mylectures-modal-footer">
+                        <button type="button" class="btn btn-outline-primary mylectures-btn" id="mylectures-passwordModalButton">확인</button>
+                        <button type="button" class="btn btn-outline-secondary mylectures-btn" data-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </th:block>
 </body>

@@ -36,5 +36,9 @@ public interface DataSharingMapper {
     @Update("UPDATE datasharing SET data_title = #{dataTitle}, data_content = #{dataContent} WHERE data_no = #{dataNo}")
     void updateDataSharing(DataSharing datasharing);
     
+    // 검색 쿼리
+    @Select("SELECT * FROM datasharing WHERE data_title LIKE CONCAT('%', #{searchQuery}, '%') OR data_content LIKE CONCAT('%', #{searchQuery}, '%')")
+    List<DataSharing> searchDataSharing(@Param("searchQuery") String searchQuery);
+    
     
 }

@@ -154,5 +154,14 @@ public class DataSharingController {
 		model.addAttribute("datasharing", datasharing); // 모델에 데이터 전달
 		return "views/DataSharing_Update"; // 수정 폼 템플릿으로 이동
 	}
+	
+	// 검색
+	@GetMapping("/DataSharingSearch")
+	public String searchDataSharing(@RequestParam("search_query") String searchQuery, Model model) {
+	    List<DataSharing> searchResults = datasharingService.searchDataSharing(searchQuery);
+	    model.addAttribute("datasharingList", searchResults);
+	    return "views/DataSharing_View";
+	}
+
 
 }
