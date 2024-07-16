@@ -1,4 +1,4 @@
-.data-sharing-view-container {
+.data-sharing-view-main {
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 10px;
@@ -13,18 +13,46 @@
     color: #6c757d;
 }
 
+#data-sharing-view-data_search_form {
+    width: 100%;
+}
+
 .data-sharing-view-data-search-textbox {
     width: 70%;
     border-radius: 5px;
+    height: 38px; /* Adjusted to match button height */
 }
 
 .data-sharing-view-data-search-button {
+    width: 100px;
+    height: 38px; /* Adjusted to match input height */
     border: 1px solid #0C1844;
     color: #0C1844;
-    transition: background-color 0.3s, color 0.3s;
+    background-color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center; /* Align text vertically */
+    justify-content: center; /* Align text horizontally */
 }
 
 .data-sharing-view-data-search-button:hover {
+    background-color: #0C1844;
+    color: white;
+}
+
+.data-sharing-view-write-button {
+    width: 100px;
+    height: 38px; /* Adjusted to match input height */
+    border: 1px solid #0C1844;
+    color: #0C1844;
+    background-color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center; /* Align text vertically */
+    justify-content: center; /* Align text horizontally */
+}
+
+.data-sharing-view-write-button:hover {
     background-color: #0C1844;
     color: white;
 }
@@ -35,24 +63,27 @@
     border-radius: 10px;
 }
 
-.data-sharing-view-write-button {
-    border: 1px solid #0C1844;
-    color: #0C1844;
-    transition: background-color 0.3s, color 0.3s;
+.data-sharing-view-table {
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.data-sharing-view-write-button:hover {
+.data-sharing-view-table th, .data-sharing-view-table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.data-sharing-view-table th {
     background-color: #0C1844;
     color: white;
 }
 
-.form-inline .form-control {
-    display: inline-block;
-    width: auto;
-    vertical-align: middle;
+.data-sharing-view-link {
+    color: #0C1844;
+    text-decoration: none;
 }
 
-.form-inline .btn {
-    display: inline-block;
-    vertical-align: middle;
+.data-sharing-view-link:hover {
+    color: #0A1230;
+    text-decoration: underline;
 }

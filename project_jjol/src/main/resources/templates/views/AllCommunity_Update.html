@@ -1,47 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layouts/main_layout}">
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main_layout}">
+<head>
+    <title>커뮤니티 수정</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/all_community_update.css">
+</head>
 <body>
 <th:block layout:fragment="content">
-    <div class="all-community-update-main">
-        <div class="all-community-update-view">
-            <div class="all-community-update-wrap">
-                <form th:action="@{/updateAllCommunity}" method="post" enctype="multipart/form-data">
-                    <div class="all-community-update-content-box">
-                        <button type="submit">수정 완료</button>
-                        <a href="/AllCommunityView">취소</a>
-                    </div>
-                    <div class="all-community-update-write">
-                        <!-- 수정할 데이터의 고유 번호(hidden 필드로 전달) -->
+    <div class="container community-update-main">
+        <div class="text-center my-5">
+            <h2 class="community-update-title">커뮤니티 수정</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="community-update-wrap">
+                    <form th:action="@{/updateAllCommunity}" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="allcNo" th:value="${allcommunity.allcNo}">
-
-                        <!-- 강의 제목 -->
-                        <label for="lecture_title">제목</label>
-                        <input type="text" id="allcommunity_title" name="allcTitle" th:value="${allcommunity.allcTitle}"
-                            required><br>
-
-                        <!-- 강사 이름 -->
-                        <label for="allcommunity_write_name">작성자</label>
-                        <input type="text" id="allcommunity_write_name" name="allcName" th:value="${allcommunity.allcName}"
-                            required><br>
-
-                        <!-- 날짜 -->
-                        <label for="allcommunity_write_date">날짜</label>
-                        <input type="date" id="allcommunity_write_date" name="dateAllc"
-                            th:value="${#dates.format(allcommunity.allcDate, 'yyyy-MM-dd')}" required>
-                    </div>
-                    <div class="all-community-update-content">
-                        <!-- 내용 -->
-                        <label for="allcommunity_write_content">내용</label>
-                        <textarea class="form-control" name="allcContent" id="allcommunity_write_content" required th:text="${allcommunity.allcContent}"></textarea>
-
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <label for="allcommunity_title">제목</label>
+                            <input type="text" id="allcommunity_title" name="allcTitle" class="form-control" th:value="${allcommunity.allcTitle}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="allcommunity_name">작성자</label>
+                            <input type="text" id="allcommunity_name" name="allcName" class="form-control" th:value="${allcommunity.allcName}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="allcommunity_date">날짜</label>
+                            <input type="date" id="allcommunity_date" name="dateAllc" class="form-control" th:value="${#dates.format(allcommunity.allcDate, 'yyyy-MM-dd')}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="allcommunity_content">내용</label>
+                            <textarea class="form-control" name="allcContent" id="allcommunity_content" rows="5" required th:text="${allcommunity.allcContent}"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-center mt-4">
+                            <button type="submit" class="btn btn-outline-primary mr-2">수정 완료</button>
+                            <a href="/AllCommunityView" class="btn btn-outline-secondary">취소</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    </th:block>
+</th:block>
 </body>
-
 </html>

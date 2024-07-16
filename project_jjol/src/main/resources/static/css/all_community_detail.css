@@ -1,5 +1,8 @@
 .all-community-detail-container {
     padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .all-community-detail-row {
@@ -20,6 +23,7 @@
 .all-community-detail-card-header h3 {
     font-size: 24px;
     font-weight: bold;
+    color: #0C1844; /* 제목 색상 */
 }
 
 .all-community-detail-card-body p {
@@ -28,20 +32,64 @@
 
 .all-community-detail-card-footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 
 .all-community-detail-card-footer .btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4A90E2;
-    color: white;
-    text-decoration: none;
+    width: 100px;
+    height: 38px;
+    border: 1px solid #0C1844;
+    color: #0C1844;
+    background-color: white;
     font-weight: bold;
-    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
 }
 
 .all-community-detail-card-footer .btn:hover {
-    opacity: 0.8;
+    background-color: #0C1844;
+    color: white;
+}
+
+.btn-outline-danger {
+    border: none;
+    color: #dc3545;
+    background-color: transparent;
+}
+
+.btn-outline-danger:hover {
+    color: #dc3545;
+    background-color: transparent;
+}
+
+.all-community-detail-card-header,
+.all-community-detail-card-body {
+    padding: 10px 20px;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-item {
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+}
+
+.comment-item:hover {
+    background-color: #e9ecef;
+}
+
+.comment-item .mb-1 {
+    font-weight: bold;
+}
+
+.comment-item small {
+    color: #6c757d;
 }

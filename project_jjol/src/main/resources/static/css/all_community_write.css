@@ -1,71 +1,48 @@
-.instructor-view-main {
+.community-write-main {
     padding: 20px;
     background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.instructor-view {
+.community-write-title {
+    color: #0C1844;
+}
+
+.community-write-subtitle {
+    color: #6c757d;
+}
+
+.community-write {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.instructor-view-wrap {
-    margin-bottom: 20px;
+.form-group label {
+    font-weight: bold;
+    color: #0C1844;
 }
 
-.allcommunity-content-box {
+.form-group input, .form-group textarea {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.btn {
+    width: 100px;
+    height: 38px; /* Adjusted to match input height */
+    border: 1px solid #0C1844;
+    color: #0C1844;
+    background-color: white;
+    font-weight: bold;
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    align-items: center; /* Align text vertically */
+    justify-content: center; /* Align text horizontally */
 }
 
-.allcommunity-write label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.allcommunity-write input,
-.allcommunity-write textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.allcommunity-write-content label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.allcommunity-write-content input,
-.allcommunity-write-content textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.allcommunity-content-box button,
-.allcommunity-content-box a {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4A90E2;
+.btn:hover {
+    background-color: #0C1844;
     color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.allcommunity-content-box a {
-    background-color: #e74c3c;
-}
-
-.allcommunity-content-box button:hover,
-.allcommunity-content-box a:hover {
-    opacity: 0.8;
 }

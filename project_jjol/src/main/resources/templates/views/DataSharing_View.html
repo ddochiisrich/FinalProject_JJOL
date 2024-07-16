@@ -2,49 +2,60 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main_layout}">
 <head>
     <title>자료실</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/data_sharing_view.css">
 </head>
 <body>
 <th:block layout:fragment="content">
-    <div class="container data-sharing-view-container">
+    <div class="container data-sharing-view-main">
         <div class="text-center my-5">
             <h2 class="data-sharing-view-title">자료실</h2>
             <p class="data-sharing-view-subtitle">학습에 필요한 학습자료를 다운 받아서 활용하세요.</p>
         </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mb-4">
             <div class="col-md-8">
-                <form action="/DataSharingSearch" method="get" id="data-sharing-view-data_search_form" class="form-inline mb-4 justify-content-center">
-                    <input type="text" name="search_query" placeholder="검색어를 입력해주세요." class="form-control mr-2 data-sharing-view-data-search-textbox">
-                    <button type="submit" class="btn btn-outline-primary my-2 my-sm-0 data-sharing-view-data-search-button">검색</button>
-                </form>
+                <div class="d-flex justify-content-center align-items-center">
+                    <form action="/DataSharingSearch" method="get" id="data-sharing-view-data_search_form" class="d-flex flex-grow-1 justify-content-center align-items-center">
+                        <input type="text" name="search_query" placeholder="검색어를 입력해주세요." class="form-control mr-2 data-sharing-view-data-search-textbox">
+                        <button type="submit" class="btn btn-outline-primary data-sharing-view-data-search-button">검색</button>
+                    </form>
+                </div>
+                <div class="d-flex justify-content-end mt-2">
+                    <a href="/InstructorWrite" class="btn btn-outline-primary data-sharing-view-write-button" th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}">글쓰기</a>
+                </div>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="card data-sharing-view-card">
-                    <table class="table table-hover">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">제목</th>
-                                <th scope="col">작성자</th>
-                                <th scope="col">등록일</th>
-                                <th scope="col">다운로드</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="datasharing : ${datasharingList}">
-                                <td><a th:href="@{/DataSharingViewDetail(no=${datasharing.dataNo})}" th:text="${datasharing.dataTitle}">제목 없음</a></td>
-                                <td th:text="${datasharing.dataName}">작성자없음</td>
-                                <td th:text="${#dates.format(datasharing.dataDate, 'yyyy-MM-dd')}">날짜 없음</td>
-                                <td th:text="${datasharing.dataFile}">파일 없음</td>
-                            </tr>
-                            <tr th:if="${#lists.isEmpty(datasharingList)}">
-                                <td colspan="4" class="text-center">글이 존재하지 않음</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="text-right mt-3">
-                    <a href="/InstructorWrite" class="btn btn-outline-primary data-sharing-view-write-button" th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}">글쓰기</a>
+        <div class="row">
+            <div class="col-10 offset-1">
+                <div class="data-sharing-view-content">
+                    <div class="card data-sharing-view-card">
+                        <table class="table table-hover data-sharing-view-table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">제목</th>
+                                    <th scope="col">작성자</th>
+                                    <th scope="col">등록일</th>
+                                    <th scope="col">다운로드</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="datasharing : ${datasharingList}">
+                                    <td><a class="data-sharing-view-link" th:href="@{/DataSharingViewDetail(no=${datasharing.dataNo})}" th:text="${datasharing.dataTitle}">제목 없음</a></td>
+                                    <td th:text="${datasharing.dataName}">작성자없음</td>
+                                    <td th:text="${#dates.format(datasharing.dataDate, 'yyyy-MM-dd')}">날짜 없음</td>
+                                    <td>
+                                        <a th:href="${datasharing.dataFile}" title="파일 다운로드">
+                                            <i class="fas fa-save"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(datasharingList)}">
+                                    <td colspan="4" class="text-center">글이 존재하지 않음</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

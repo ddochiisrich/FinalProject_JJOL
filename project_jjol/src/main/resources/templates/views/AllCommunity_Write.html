@@ -1,41 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main_layout}">
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main_layout}">
+<head>
+    <title>커뮤니티 글쓰기</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/all_community_write.css">
+</head>
 <body>
 <th:block layout:fragment="content">
-    <div class="container instructor-view-main">
-        <div class="instructor-view">
-            <div class="instructor-view-wrap">
-                <form th:action="@{/AllCommunityWrite}" method="post" enctype="multipart/form-data">
-                    <div class="allcommunity-content-box">
-                        <button type="submit" class="btn btn-primary">등록</button>
-                        <a href="/AllCommunityView" class="btn btn-secondary">목록</a>
-                    </div>
-                    <div class="allcommunity-write">
-                        <label for="allcommunity_title">제목</label>
-                        <input type="text" id="allcommunity_title" name="allcTitle" class="form-control" required><br>
-
-                        <!--로그인 한 유저 이름 자동으로 들어가게 한다.-->
-                        <label for="allcommunity_write_name">작성자</label>
-                        <input type="text" id="allcommunity_write_name" name="allcName" class="form-control" required
-                               th:value="${session.loggedInUser.name}" readonly><br>
-
-                        <!-- 오늘의 시간을 자동으로 들어가게 한다. -->
-                        <label for="allcommunity_write_date">Date</label>
-                        <input type="date" id="allcommunity_write_date" name="dateAllc" class="form-control"
-                               th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
-                    </div>
-                    <div class="allcommunity-write-content">
-                        <label for="allcommunity_write_content">Content</label>
-                        <textarea class="form-control" name="allcContent" id="allcommunity_write_content"
-                                  required></textarea>
-                    </div>
-                </form>
+    <div class="container community-write-main">
+        <div class="text-center my-5">
+            <h2 class="community-write-title">커뮤니티 글쓰기</h2>
+            <p class="community-write-subtitle">글을 작성하고 공유하세요.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="community-write">
+                    <form th:action="@{/AllCommunityWrite}" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="community-title">제목</label>
+                            <input type="text" id="community-title" name="allcTitle" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="community-name">작성자</label>
+                            <input type="text" id="community-name" name="allcName" class="form-control" th:value="${session.loggedInUser.name}" readonly required>
+                        </div>
+                        <div class="form-group">
+                            <label for="community-date">날짜</label>
+                            <input type="date" id="community-date" name="dateAllc" class="form-control" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="community-content">내용</label>
+                            <textarea class="form-control" name="allcContent" id="community-content" rows="5" required></textarea>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-outline-primary mr-2">등록</button>
+                            <a href="/AllCommunityView" class="btn btn-outline-primary">목록</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    </th:block>
+</th:block>
 </body>
-
 </html>

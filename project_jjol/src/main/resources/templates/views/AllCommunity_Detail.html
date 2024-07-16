@@ -2,100 +2,95 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/main_layout}">
 
+<head>
+	<title>커뮤니티 상세보기</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/all_community_detail.css">
+</head>
+
 <body>
 	<th:block layout:fragment="content">
-		<script th:inline="javascript">
-			let loggedInUserName = [[${session.loggedInUser.name}]];
-		</script>		
-		<div class="all-community-detail-container">
-			<div class="all-community-detail-row">
-				<div class="all-community-detail-col">
-					<div class="all-community-detail-card">
-						<div class="all-community-detail-card-header">
+		<input type="hidden" id="loggedInUserName" th:value="${session.loggedInUser.name}" />
+
+		<script>
+			let loggedInUserName = document.getElementById('loggedInUserName').value;
+		</script>
+		<div class="container all-community-detail-container">
+			<div class="row all-community-detail-row">
+				<div class="col-12 all-community-detail-col">
+					<div class="card all-community-detail-card">
+						<div class="card-header all-community-detail-card-header">
 							<form name="checkForm" id="checkForm" method="post">
 								<h3 th:text="${allcommunity.allcTitle}">제목 없음</h3>
 								<input type="hidden" name="allcNo" th:value="${allcommunity.allcNo}">
 							</form>
 						</div>
-						<div class="all-community-detail-card-body">
+						<div class="card-body all-community-detail-card-body">
 							<p class="card-text" th:text="${allcommunity.allcContent}">내용 없음</p>
+							<p>작성자: <span th:text="${allcommunity.allcName}">작성자 없음</span></p>
 							<hr>
 							<ul class="list-unstyled">
-								<li>작성자: <span th:text="${allcommunity.allcName}">작성자 없음</span></li>
-								<li th:if="${allcommunity.allcDate != null}">작성일: <span
-										th:text="${#dates.format(allcommunity.allcDate, 'yyyy-MM-dd')}"></span></li>
+								<li th:if="${allcommunity.allcDate != null}">작성일: <span th:text="${#dates.format(allcommunity.allcDate, 'yyyy-MM-dd')}"></span></li>
 								<li th:if="${allcommunity.allcDate == null}">작성일: 날짜 없음</li>
 							</ul>
 						</div>
-						<div class="all-community-detail-card-footer">
-							<a href="#" onclick="javascript:history.back();">뒤로 가기</a>
-							<input class="btn" type="button" id="allcommunityDelete" value="삭제"
-								th:if="${loggedInUser} == ${allcommunity.allcName}">
-							<input class="btn" type="button" id="allcommunityUpdateForm" value="수정하기 폼으로 이동"
-								th:if="${loggedInUser} == ${allcommunity.allcName}">
+						<div class="card-footer all-community-detail-card-footer">
+							<div class="d-flex justify-content-end">
+								<a href="#" onclick="javascript:history.back();" class="btn btn-outline-primary allcommunity-detail-back-btn">목록</a>
+								<button class="btn btn-outline-primary allcommunity-detail-update-btn" id="allcommunityUpdateForm" th:if="${loggedInUser} == ${allcommunity.allcName}">수정</button>
+								<button class="btn btn-outline-danger allcommunity-detail-delete-btn" id="allcommunityDelete" th:if="${loggedInUser} == ${allcommunity.allcName}"><i class="fas fa-trash-alt"></i></button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<!-- 댓글 작성 폼 -->
-			<div class="all-community-detail-row mt-4">
-				<div class="all-community-detail-col">
-					<div class="all-community-detail-card">
-						<div class="all-community-detail-card-header">
+			<!-- 댓글 작성 폼 및 댓글 목록 -->
+			<div class="row mt-4 all-community-detail-row">
+				<div class="col-12 all-community-detail-col">
+					<div class="card all-community-detail-card">
+						<div class="card-header all-community-detail-card-header">
 							<h5>댓글</h5>
 						</div>
-						<div class="all-community-detail-card-body">
-							<form id="cmccommentForm">
-								<input type="hidden" name="ccNo" th:value="${allcommunity.allcNo}">
-								<div class="form-group">
-									<label for="commentContent">댓글 내용</label>
-									<textarea class="form-control" id="commentContent" name="cmcContent" rows="3"
-										required></textarea>
-								</div>
-								<div class="form-group">
-									<!-- 작성자 필드는 숨깁니다 -->
-									<input type="hidden" id="commentWriter" name="cmcWriter" th:value="${session.loggedInUser.name}" required>
-								</div>
-								<button type="submit" class="btn btn-primary">댓글 등록</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- 댓글 목록 -->
-			<div class="all-community-detail-row mt-4">
-				<div class="all-community-detail-col">
-					<div class="all-community-detail-card">
-						<div class="all-community-detail-card-header">
-							<h5>댓글 목록</h5>
-						</div>
-						<div class="all-community-detail-card-body">
-							<ul id="comments">
+						<div class="card-body all-community-detail-card-body">
+							<ul id="comments" class="list-group list-group-flush mb-4">
 								<!-- Thymeleaf 반복문을 사용하여 댓글 목록을 출력 -->
-								<li th:each="comment : ${commentsList}" class="list-group-item">
-									<p th:text="${comment.cmcContent}">댓글 내용 없음</p>
-									<!-- 작성자 정보를 표시할 때, 댓글이 작성된 경우에만 작성자 이름을 보이도록 설정 -->
-									<p th:if="${comment.cmcWriter != null}">작성자: <span
-											th:text="${comment.cmcWriter}">작성자 없음</span></p>
-									<th:block th:if="${session.loggedInUser.name} == ${comment.cmcWriter}">
-									 <button type="button" class="delete-comment" 
-									 	th:data-comment-id="${comment.cmcNo}" 
-									 	th:data-bbs-no="${allcommunity.allcNo}">삭제</button>
-									</th:block>		
+								<li th:each="comment : ${commentsList}" class="list-group-item comment-item">
+									<div class="d-flex justify-content-between align-items-center">
+										<div>
+											<p class="mb-1" th:text="${comment.cmcContent}">댓글 내용 없음</p>
+											<small th:if="${comment.cmcWriter != null}">작성자: <span th:text="${comment.cmcWriter}">작성자 없음</span></small>
+										</div>
+										<th:block th:if="${session.loggedInUser.name} == ${comment.cmcWriter}">
+											<i class="fas fa-trash-alt delete-comment text-danger" th:data-comment-id="${comment.cmcNo}" th:data-bbs-no="${allcommunity.allcNo}" style="cursor: pointer;"></i>
+										</th:block>
+									</div>
 								</li>
 								<!-- 댓글이 없는 경우의 메시지 -->
 								<li th:if="${#lists.isEmpty(commentsList)}" class="list-group-item">
 									<p>등록된 댓글이 없습니다.</p>
 								</li>
 							</ul>
+							<form id="cmccommentForm">
+								<input type="hidden" name="ccNo" th:value="${allcommunity.allcNo}">
+								<div class="form-group">
+									<label for="commentContent">댓글 내용</label>
+									<textarea class="form-control" id="commentContent" name="cmcContent" rows="3" required></textarea>
+								</div>
+								<div class="form-group">
+									<!-- 작성자 필드는 숨깁니다 -->
+									<input type="hidden" id="commentWriter" name="cmcWriter" th:value="${session.loggedInUser.name}" required>
+								</div>
+								<button type="submit" class="btn btn-outline-primary">댓글 등록</button>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</th:block>
+	<script src="/js/all_community_detail.js"></script>
 </body>
 
 </html>

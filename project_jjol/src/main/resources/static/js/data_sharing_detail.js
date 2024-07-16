@@ -1,4 +1,6 @@
-$(function () {
+$(document).ready(function () {
+    loadComments();
+
     $("#data-sharing-detail-datasharingDelete").on("click", function () {
         var dataNo = $("input[name='dataNo']").val(); // 데이터 번호 가져오기
         $.ajax({
@@ -6,12 +8,11 @@ $(function () {
             url: "/deleteDataSharing",
             data: { dataNo: dataNo },
             success: function () {
-                alert("삭제되었습니다.");
-                window.location.href = "/DataSharingView"; // 삭제 후 목록 페이지로 리다이렉트
+                showModal("삭제되었습니다.", "/DataSharingView");
             },
             error: function (e) {
                 console.log("Error: ", e);
-                alert("삭제에 실패했습니다.");
+                showModal("삭제에 실패했습니다.");
             }
         });
     });
@@ -41,24 +42,80 @@ $(function () {
                 updateCommentList(response);
                 // 폼 초기화
                 $("#data-sharing-detail-commentContent").val("");
-                $("#data-sharing-detail-commentWriter").val("");
             },
             error: function (e) {
                 console.log("Error: ", e);
             }
         });
     });
+
+    // 모달 창 닫기 버튼 이벤트
+    $(".modal-close").on("click", function() {
+        $("#myModal").modal('hide');
+    });
 });
 
-// 댓글을 쓰거나, 수정하거나, 삭제 할 때 - 이벤트 handler로 사용
+function loadComments() {
+    var dataNo = $("input[name='dataNo']").val(); // 데이터 번호 가져오기
+    $.ajax({
+        type: "GET",
+        url: "/comments/byDataNo/" + dataNo,
+        success: function (response) {
+            updateCommentList(response);
+        },
+        error: function (e) {
+            console.log("Error: ", e);
+        }
+    });
+}
+
+function deleteComment(commentId) {
+    var currentUser = $("#data-sharing-detail-commentWriter").val();
+    $.ajax({
+        type: 'DELETE',
+        url: '/comments/' + commentId,
+        data: { currentUser: currentUser },
+        success: function(response) {
+            showModal('댓글이 삭제되었습니다.');
+            loadComments();
+        },
+        error: function(e) {
+            showModal('댓글 삭제에 실패했습니다.');
+            console.log(e);
+        }
+    });
+}
+
 function updateCommentList(data) {
     // 댓글 목록을 업데이트
     var listItems = "";
     if (data.length > 0) {
         $.each(data, function (index, comment) {
+            // Create a new Date object with the UTC time
+            var utcDate = new Date(comment.dscTime);
+
+            // Use Intl.DateTimeFormat to format the date in KST
+            var options = {
+                timeZone: 'Asia/Seoul',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            var kstDate = new Intl.DateTimeFormat('ko-KR', options).format(utcDate);
+
             listItems += '<li class="list-group-item">';
-            listItems += '<p>' + comment.dscContent + '</p>'; // 데이터베이스 속성명에 맞추기
-            listItems += '<small>작성자: ' + comment.dscWriter + '</small>'; // 데이터베이스 속성명에 맞추기
+            listItems += '<div>';
+            listItems += '<p>' + comment.dscContent + '</p>';
+            listItems += '<small>작성자: ' + comment.dscWriter + '</small><br>';
+            listItems += '<small>작성일: ' + kstDate + '</small>';
+            listItems += '</div>';
+            if (comment.dscWriter === $("#data-sharing-detail-commentWriter").val()) {
+                listItems += '<div><button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteComment(' + comment.dscNo + ')"><i class="fas fa-trash-alt"></i></button></div>';
+            }
             listItems += '</li>';
         });
     } else {
@@ -67,4 +124,19 @@ function updateCommentList(data) {
         listItems += '</li>';
     }
     $(".data-sharing-detail-comment-list").html(listItems); // 댓글 목록 업데이트
+}
+
+
+function showModal(message, redirectUrl) {
+    $("#modal-message").text(message);
+    $("#myModal").modal('show');
+    if (redirectUrl) {
+        $("#myModal").on('hidden.bs.modal', function () {
+            window.location.href = redirectUrl;
+        });
+    } else {
+        $("#myModal").on('hidden.bs.modal', function () {
+            loadComments();
+        });
+    }
 }
