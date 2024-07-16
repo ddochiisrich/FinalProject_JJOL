@@ -53,7 +53,7 @@ $(function() {
         
         $("#lectureDetailPriceAfterPoint").text(priceAfterPoint - usingPoint);
         
-        $("#lectureDetailEarningPoint").text(Math.ceil(parseInt($("#lectureDetailPriceAfterPoint").text()) * 5 / 100));
+        $("#lectureDetailEarningPoint").text(Math.floor(parseInt($("#lectureDetailPriceAfterPoint").text()) * 5 / 100));
     });
     
     // 포인트 전액 사용 버튼
@@ -70,7 +70,7 @@ $(function() {
         
         $("#lectureDetailPriceAfterPoint").text(priceAfterPoint - usingPoint);
         
-        $("#lectureDetailEarningPoint").text(Math.ceil(parseInt($("#lectureDetailPriceAfterPoint").text()) * 5 / 100));
+        $("#lectureDetailEarningPoint").text(Math.floor(parseInt($("#lectureDetailPriceAfterPoint").text()) * 5 / 100));
     });
     
     // 결제
@@ -100,6 +100,11 @@ $(function() {
             merchantUid: merchantUid
         };
         
+		if (parseInt($("#lectureDetailPriceAfterPoint").text()) <= 0) {
+			alert('1원 이상 결제 가능합니다.');
+			return false;
+		}
+		
         // 검증
         await $.ajax({
             type: "POST",
