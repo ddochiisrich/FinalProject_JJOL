@@ -3,6 +3,7 @@ $(document).ready(function() {
     console.log("Username from data attribute: " + username);
 
     const websocket = new WebSocket("ws://localhost:8080/ws/chat");
+    const entranceMessages = new Set();
 
     websocket.onopen = function(evt) {
         console.log("Connected to WebSocket.");
@@ -45,10 +46,13 @@ $(document).ready(function() {
         console.log("message : " + message);
 
         if (type === "entrance") {
-            var str = "<div class='chat-msg_box text-center fw-lighter'>";
-            str += "<b>" + message + "</b>";
-            str += "</div></div>";
-            $("#chat-msgArea").append(str);
+            if (!entranceMessages.has(sessionId)) {
+                entranceMessages.add(sessionId);
+                var str = "<div class='chat-msg_box fw-lighter'>";
+                str += "<b>" + message + "</b>";
+                str += "</div></div>";
+                $("#chat-msgArea").append(str);
+            }
         } else if (type === "message") {
             if (sessionId === username) {
                 var str = "<div class='chat-msg_box'>";
@@ -108,8 +112,9 @@ $(document).ready(function() {
         var exitMessage = username + "님이 나가셨습니다.";
         if (websocket.readyState === WebSocket.OPEN) {
             websocket.send("exit:" + username + ":" + exitMessage);
+            websocket.close();
+        } else {
+            window.location.href = "/";
         }
-        websocket.close();
-        window.location.href = "/";
     }
 });

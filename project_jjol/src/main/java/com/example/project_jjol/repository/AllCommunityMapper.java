@@ -22,8 +22,8 @@ public interface AllCommunityMapper {
 	AllCommunity findByNo(@Param("no") int no);
 
 	// 글 작성해서 올리기
-	@Insert("INSERT INTO allcommunity (allc_name, allc_title, allc_content, allc_date, allc_pass, allc_file)"
-			+ "VALUES (#{allcName}, #{allcTitle}, #{allcContent}, #{allcDate}, #{allcPass}, #{allcFile})")
+	@Insert("INSERT INTO allcommunity (allc_name, allc_title, allc_content, allc_date)"
+			+ "VALUES (#{allcName}, #{allcTitle}, #{allcContent}, #{allcDate})")
 	@Options(useGeneratedKeys = true, keyProperty = "allcNo")
 	void inserAllc(AllCommunity allcommunity);
 
