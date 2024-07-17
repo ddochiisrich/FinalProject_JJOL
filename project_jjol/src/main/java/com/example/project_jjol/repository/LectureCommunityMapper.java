@@ -8,13 +8,13 @@ import java.util.List;
 @Mapper
 public interface LectureCommunityMapper {
 
-    @Insert("INSERT INTO LectureCommunity (lecture_id, user_id, post_title, post_content, created_at) " +
+    @Insert("INSERT INTO lectureCommunity (lecture_id, user_id, post_title, post_content, created_at) " +
             "VALUES (#{lectureId}, #{userId}, #{postTitle}, #{postContent}, NOW())")
     void saveLectureCommunity(LectureCommunity lectureCommunity);
 
-    @Select("SELECT * FROM LectureCommunity WHERE lecture_id = #{lectureId}")
+    @Select("SELECT * FROM lectureCommunity WHERE lecture_id = #{lectureId}")
     List<LectureCommunity> findByLectureId(@Param("lectureId") int lectureId);
 
-    @Delete("DELETE FROM LectureCommunity WHERE post_id = #{postId}")
+    @Delete("DELETE FROM lectureCommunity WHERE post_id = #{postId}")
     void deleteLectureCommunityById(@Param("postId") int postId);
 }

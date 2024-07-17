@@ -12,18 +12,18 @@ import com.example.project_jjol.model.User;
 
 @Mapper
 public interface PaymentMapper {
-	@Insert("INSERT INTO Payment (pay_date, pay_way, price, user_id, lecture_id, lecture_title, merchant_uid) "
+	@Insert("INSERT INTO payment (pay_date, pay_way, price, user_id, lecture_id, lecture_title, merchant_uid) "
 			+ "VALUES (NOW(), 'kakaopay', #{price}, #{userId}, #{lectureId}, #{lectureTitle}, #{merchantUid})")
 	@Options(useGeneratedKeys = true, keyProperty = "payCode")
 	void savePayment(Payment payment);
 	
-	@Update("UPDATE User SET point = #{point} WHERE user_id = #{userId}")
+	@Update("UPDATE user SET point = #{point} WHERE user_id = #{userId}")
 	void updatePoint(User user);
 	
 	@Select("SELECT lecture_price - (lecture_price * lecture_discount / 100) "
-			+ "FROM Lecture WHERE lecture_id = #{lectureId}")
+			+ "FROM lecture WHERE lecture_id = #{lectureId}")
 	int discountedPrice(int lectureId);
 	
-	@Select("SELECT point FROM User WHERE user_id = #{userId} LIMIT 1")
+	@Select("SELECT point FROM user WHERE user_id = #{userId} LIMIT 1")
 	int userPoint(String userId);
 }

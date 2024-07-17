@@ -13,15 +13,15 @@ import com.example.project_jjol.model.LectureApplication;
 @Mapper
 public interface LectureApplicationMapper {
 
-    @Select("SELECT * FROM LectureApplication WHERE user_id = #{userId} AND lecture_id = #{lectureId}")
+    @Select("SELECT * FROM lectureApplication WHERE user_id = #{userId} AND lecture_id = #{lectureId}")
     List<LectureApplication> findByUserIdAndLectureId(@Param("userId") String userId, @Param("lectureId") int lectureId);
 
-    @Insert("INSERT INTO LectureApplication (user_id, lecture_id, application_date) VALUES (#{userId}, #{lectureId}, #{applicationDate})")
+    @Insert("INSERT INTO lectureApplication (user_id, lecture_id, application_date) VALUES (#{userId}, #{lectureId}, #{applicationDate})")
     void insertLectureApplication(LectureApplication lectureApplication);
 
-    @Select("SELECT COUNT(*) FROM LectureApplication WHERE lecture_id = #{lectureId}")
+    @Select("SELECT COUNT(*) FROM lectureApplication WHERE lecture_id = #{lectureId}")
     long countStudentsByLectureId(@Param("lectureId") int lectureId);
 
-    @Select("SELECT l.* FROM LectureApplication la JOIN Lecture l ON la.lecture_id = l.lecture_id WHERE la.user_id = #{userId}")
+    @Select("SELECT l.* FROM lectureApplication la JOIN lecture l ON la.lecture_id = l.lecture_id WHERE la.user_id = #{userId}")
     List<Lecture> findLecturesByUserId(@Param("userId") String userId);
 }

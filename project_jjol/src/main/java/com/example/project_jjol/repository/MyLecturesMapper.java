@@ -14,16 +14,16 @@ import com.example.project_jjol.model.Lecture;
 
 @Mapper
 public interface MyLecturesMapper {
-	@Select("SELECT * FROM Lecture WHERE instructor_id = #{userId}")
+	@Select("SELECT * FROM lecture WHERE instructor_id = #{userId}")
     List<Lecture> findMyLecturesByUserId(@Param("userId") String userId);
 	
-	@Delete("DELETE FROM Lecture WHERE lecture_id = #{lectureId}")
+	@Delete("DELETE FROM lecture WHERE lecture_id = #{lectureId}")
 	void deleteLecture(@Param("lectureId") int lectureId);
 	
-	@Select("SELECT * FROM Lecture WHERE lecture_id = #{lectureId}")
+	@Select("SELECT * FROM lecture WHERE lecture_id = #{lectureId}")
 	Lecture findLectureByLectureId(@Param("lectureId") int lectureId);
 	
-	@Select("SELECT * FROM Chapter WHERE lecture_id = #{lectureId}")
+	@Select("SELECT * FROM chapter WHERE lecture_id = #{lectureId}")
 	List<Chapter> findChaptersByLectureId(@Param("lectureId") int lectureId);
 	
 	@Update("<script>"
@@ -41,7 +41,7 @@ public interface MyLecturesMapper {
 	void updateLecture(Lecture lecture);
 	
 	@Update("<script>"
-			+ "UPDATE Chapter SET "
+			+ "UPDATE chapter SET "
 			+ "chapter_title = #{chapterTitle}, "
 			+ "chapter_description = #{chapterDescription}, "
 			+ "<if test='chapterUrl != null'>chapter_url = #{chapterUrl}, </if>"

@@ -6,7 +6,7 @@
 DROP DATABASE IF EXISTS project_jjol;
 CREATE DATABASE IF NOT EXISTS project_jjol;
 USE project_jjol;
-
+SHOW TABLES LIKE 'notification';
 -- 관리자 테이블
 DROP TABLE IF EXISTS admin;
 CREATE TABLE IF NOT EXISTS admin(
@@ -30,8 +30,10 @@ CREATE TABLE IF NOT EXISTS user(
     provider VARCHAR(50)                -- 소셜 로그인 제공자 (google 등)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+select * from user;
+
 -- 강의 테이블
-DROP TABLE IF EXISTS Lecture;
+DROP TABLE IF EXISTS lecture;
 CREATE TABLE Lecture (
     lecture_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- 강의 ID
     lecture_title VARCHAR(255) NOT NULL,                 -- 강의 제목
@@ -48,7 +50,7 @@ CREATE TABLE Lecture (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 챕터 테이블
-DROP TABLE IF EXISTS Chapter;
+DROP TABLE IF EXISTS chapter;
 CREATE TABLE IF NOT EXISTS Chapter (
     chapter_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- 챕터 ID
     lecture_id INT NOT NULL,                             -- 강의 ID
@@ -60,7 +62,7 @@ CREATE TABLE IF NOT EXISTS Chapter (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 비디오 테이블
-DROP TABLE IF EXISTS Video;
+DROP TABLE IF EXISTS video;
 CREATE TABLE IF NOT EXISTS Video (
     video_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,    -- 비디오 ID
     lecture_id INT NOT NULL,                             -- 강의 ID
@@ -73,7 +75,7 @@ CREATE TABLE IF NOT EXISTS Video (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 결제 테이블
-DROP TABLE IF EXISTS Payment;
+DROP TABLE IF EXISTS payment;
 CREATE TABLE IF NOT EXISTS Payment(
     pay_code INT AUTO_INCREMENT PRIMARY KEY,             -- 결제 코드
     pay_date TIMESTAMP DEFAULT NOW(),                    -- 결제 날짜
@@ -88,7 +90,7 @@ CREATE TABLE IF NOT EXISTS Payment(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 강의신청 테이블
-DROP TABLE IF EXISTS LectureApplication;
+DROP TABLE IF EXISTS lectureApplication;
 CREATE TABLE IF NOT EXISTS LectureApplication (
     application_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- 신청 ID
     application_date TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, -- 신청 날짜
@@ -99,7 +101,7 @@ CREATE TABLE IF NOT EXISTS LectureApplication (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 강의페이지 테이블
-DROP TABLE IF EXISTS LecturePage;
+DROP TABLE IF EXISTS lecturePage;
 CREATE TABLE IF NOT EXISTS LecturePage (
     page_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,       -- 페이지 ID
     lecture_id INT NOT NULL,                               -- 강의 ID
@@ -114,7 +116,7 @@ CREATE TABLE IF NOT EXISTS LecturePage (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 강의평가 테이블
-DROP TABLE IF EXISTS LectureReview;
+DROP TABLE IF EXISTS lectureReview;
 CREATE TABLE IF NOT EXISTS LectureReview (
     review_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,    -- 리뷰 ID
     review_content VARCHAR(1000) NULL,                    -- 리뷰 내용
@@ -127,7 +129,7 @@ CREATE TABLE IF NOT EXISTS LectureReview (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 강의노트 테이블
-DROP TABLE IF EXISTS LectureNote;
+DROP TABLE IF EXISTS lectureNote;
 CREATE TABLE IF NOT EXISTS LectureNote (
     note_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,      -- 노트 ID
     lecture_id INT NOT NULL,                              -- 강의 ID
@@ -302,7 +304,7 @@ CREATE TABLE IF NOT EXISTS lectureAnswers (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 수료증 테이블
-CREATE TABLE IF NOT EXISTS Certificate (
+CREATE TABLE IF NOT EXISTS certificate (
     certificate_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- 수료증 ID
     user_id VARCHAR(100) NOT NULL,                           -- 사용자 ID
     lecture_id INT NOT NULL,                                 -- 강의 ID
@@ -312,8 +314,8 @@ CREATE TABLE IF NOT EXISTS Certificate (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 알림 테이블
-DROP TABLE IF EXISTS Notification;
-CREATE TABLE Notification (
+DROP TABLE IF EXISTS notification;
+CREATE TABLE notification (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,                  -- 알림 ID
     subject VARCHAR(255) NOT NULL,                         -- 주제
     user_name VARCHAR(20) NOT NULL,                        -- 사용자 이름
