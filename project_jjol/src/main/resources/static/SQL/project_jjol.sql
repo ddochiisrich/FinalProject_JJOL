@@ -37,7 +37,7 @@ CREATE TABLE Lecture (
     lecture_title VARCHAR(255) NOT NULL,                 -- 강의 제목
     lecture_short_description VARCHAR(500) NULL,         -- 강의 짧은 설명
     lecture_long_description TEXT NULL,                  -- 강의 긴 설명
-    lecture_thumbnail_video VARCHAR(255) NULL,           -- 썸네일 비디오
+    lecture_thumbnail_video VARCHAR(1000) NULL,           -- 썸네일 비디오
     lecture_thumbnail_image VARCHAR(255) NULL,           -- 썸네일 이미지
     lecture_level VARCHAR(50) NULL,                      -- 강의 레벨
     lecture_price DECIMAL(10, 2) NULL,                   -- 강의 가격
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS Chapter (
     lecture_id INT NOT NULL,                             -- 강의 ID
     chapter_title VARCHAR(255) NOT NULL,                 -- 챕터 제목
     chapter_description VARCHAR(1000) NULL,              -- 챕터 설명
-    chapter_url VARCHAR(255) NOT NULL,                   -- 챕터 URL
+    chapter_url VARCHAR(1000) NOT NULL,                   -- 챕터 URL
     chapter_order INT NOT NULL,                          -- 챕터 순서
     FOREIGN KEY (lecture_id) REFERENCES Lecture(lecture_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

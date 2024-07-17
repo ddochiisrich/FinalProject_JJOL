@@ -32,9 +32,9 @@
             <div id="navbar-right-header">
                 <div th:if="${session.loggedInUser != null}" class="notification-header">
                     <a href="/notifications/form">
-                        <i class="fas fa-clock"></i>
-                        <span th:if="${mostUrgentNotification != null}">
-                            D - <span th:text="${mostUrgentNotification.daysUntilExam}"></span> : <span th:text="${mostUrgentNotification.subject}"></span>
+                        
+                        <span th:if="${mostUrgentNotification != null}" class="text-center">
+                           <i class="fas fa-clock"></i> D - <span th:text="${mostUrgentNotification.daysUntilExam}"></span> <br> <span th:text="${mostUrgentNotification.subject}"></span>
                         </span>
                         <span th:if="${mostUrgentNotification == null}">
                             일정 등록

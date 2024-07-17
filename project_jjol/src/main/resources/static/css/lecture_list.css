@@ -147,6 +147,12 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    width: 100%; /* 이 부분을 추가하여 중앙 정렬 유지 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 중앙 정렬 */
+    justify-content: center; /* 중앙 정렬 */
+    padding: 0 20px; /* 좌우 패딩 추가 */
 }
 
 .lecture_list-hero-title {
@@ -250,9 +256,6 @@ body {
     background-color: #0A1438; /* 호버 시 약간 더 어두운 색상 */
     transform: translateY(-5px);
 }
-
-
-
 
 @keyframes lecture_list-fadeInDown {
     from {
