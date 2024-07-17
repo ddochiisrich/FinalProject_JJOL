@@ -13,11 +13,11 @@ import com.example.project_jjol.model.Lecture;
 @Mapper
 public interface LectureMapper {
 
-	@Select("SELECT * FROM Lecture WHERE lecture_title LIKE CONCAT('%', #{keyword}, '%') OR lecture_short_description LIKE CONCAT('%', #{keyword}, '%')")
+	@Select("SELECT * FROM lecture WHERE lecture_title LIKE CONCAT('%', #{keyword}, '%') OR lecture_short_description LIKE CONCAT('%', #{keyword}, '%')")
 	List<Lecture> searchLectures(@Param("keyword") String keyword);
 
 	
-    @Insert("INSERT INTO Lecture (lecture_title, lecture_short_description, lecture_long_description, " +
+    @Insert("INSERT INTO lecture (lecture_title, lecture_short_description, lecture_long_description, " +
             "lecture_thumbnail_video, lecture_thumbnail_image, lecture_level, lecture_price, " +
             "lecture_discount, lecture_like, instructor_id, instructor_name) VALUES " +
             "(#{lectureTitle}, #{lectureShortDescription}, #{lectureLongDescription}, " +
@@ -26,13 +26,13 @@ public interface LectureMapper {
     @Options(useGeneratedKeys = true, keyProperty = "lectureId")
     void saveLecture(Lecture lecture);
 
-    @Select("SELECT * FROM Lecture")
+    @Select("SELECT * FROM lecture")
     List<Lecture> findAll();
 
-    @Select("SELECT * FROM Lecture WHERE lecture_id = #{id}")
+    @Select("SELECT * FROM lecture WHERE lecture_id = #{id}")
     Lecture findById(int id);
     
-    @Select("SELECT lecture_title FROM Lecture WHERE instructor_id = #{id}")
+    @Select("SELECT lecture_title FROM lecture WHERE instructor_id = #{id}")
     List<String> selectTitlesByInstructorId(@Param("id") String id);
     
     

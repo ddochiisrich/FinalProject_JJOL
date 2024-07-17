@@ -11,9 +11,9 @@ import com.example.project_jjol.model.LectureReview;
 @Mapper
 public interface LectureReviewMapper {
 
-    @Insert("INSERT INTO LectureReview (review_content, lecture_id, user_id, rating, review_date) VALUES (#{reviewContent}, #{lectureId}, #{userId}, #{rating}, NOW())")
+    @Insert("INSERT INTO lectureReview (review_content, lecture_id, user_id, rating, review_date) VALUES (#{reviewContent}, #{lectureId}, #{userId}, #{rating}, NOW())")
     void save(LectureReview review);
 
-    @Select("SELECT * FROM LectureReview WHERE lecture_id = #{lectureId}")
+    @Select("SELECT * FROM lectureReview WHERE lecture_id = #{lectureId}")
     List<LectureReview> findByLectureId(int lectureId);
 }
