@@ -35,20 +35,6 @@
     font-size: 1rem;
 }
 
-.notification_form-btn {
-    font-size: 0.875rem;
-    padding: 0.5rem 1rem;
-    border-color: #0C1844;
-    color: #0C1844;
-    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-}
-
-.notification_form-btn:hover {
-    background-color: #0C1844;
-    border-color: #0C1844;
-    color: white;
-}
-
 /* 추가 스타일 */
 .notification_form-table th, .notification_form-table td {
     vertical-align: middle;
@@ -139,11 +125,12 @@
 }
 
 /* 메인 페이지로 돌아가기 버튼 스타일 */
-.notification_form-go-back-btn {
+.notification_form-btn-go-back {
     font-size: 0.875rem;
     padding: 0.5rem 1rem;
     border-color: #0C1844;
     color: #0C1844;
+    background-color: white; /* 기본 배경색을 하얀색으로 설정 */
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
     border-radius: 5px;
     display: inline-flex;
@@ -151,8 +138,64 @@
     gap: 0.5rem;
 }
 
-.notification_form-go-back-btn:hover {
+.notification_form-btn-go-back:hover {
     background-color: #0C1844;
     border-color: #0C1844;
+    color: white;
+}
+
+/* 버튼 스타일 */
+.notification_form-btn-create,
+.notification_form-btn-edit,
+.notification_form-btn-delete,
+.notification_form-btn-submit-create,
+.notification_form-btn-submit-update,
+.notification_form-btn-close-create,
+.notification_form-btn-close-update {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    background-color: white; /* 기본 배경색을 하얀색으로 설정 */
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.notification_form-btn-create,
+.notification_form-btn-edit,
+.notification_form-btn-delete {
+    border-color: #0C1844;
+    color: #0C1844;
+}
+
+.notification_form-btn-create:hover,
+.notification_form-btn-edit:hover,
+.notification_form-btn-delete:hover {
+    background-color: #0C1844;
+    color: white;
+}
+
+.notification_form-btn-submit-create,
+.notification_form-btn-submit-update {
+    background-color: #3498DB;
+    border: none;
+    color: white;
+}
+
+.notification_form-btn-submit-create:hover,
+.notification_form-btn-submit-update:hover {
+    background-color: #2980B9;
+}
+
+.notification_form-btn-close-create,
+.notification_form-btn-close-update {
+    border-color: #0C1844;
+    color: #0C1844;
+}
+
+.notification_form-btn-close-create:hover,
+.notification_form-btn-close-update:hover {
+    background-color: #0C1844;
     color: white;
 }

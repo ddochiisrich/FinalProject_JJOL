@@ -1,190 +1,180 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/main_layout}">
-<head>
-<link rel="stylesheet" type="text/css"
-	th:href="@{/css/notification_form.css}">
-<script defer th:src="@{/js/notification_form.js}"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_layout}">
+
 <body>
-	<th:block layout:fragment="content">
-		<div class="notification_form-list-container">
-			<h2>
-				<i class="fas fa-list"></i> 알림 목록
-			</h2>
-			<button type="button"
-				class="btn btn-outline-primary notification_form-btn"
-				onclick="notification_form_openCreateModal()">
-				<i class="fas fa-plus"></i> 알림 추가
-			</button>
-			<form action="#" class="form-inline mb-2 mt-3 needs-validation">
-				<label for="notification_form_sortSelect" class="mr-2"><i
-					class="fas fa-sort"></i> 정렬:</label> <select
-					id="notification_form_sortSelect" class="form-control mr-2"
-					onchange="notification_form_changeSorting()">
-					<option value="default" th:selected="${sort eq 'default'}">기본
-						정렬</option>
-					<option value="subject" th:selected="${sort eq 'subject'}">과목
-						순</option>
-					<option value="examDate" th:selected="${sort eq 'examDate'}">시험
-						날짜 순</option>
-					<option value="id" th:selected="${sort eq 'id'}">번호 순</option>
-				</select>
-			</form>
-			<table class="table table-bordered notification_form-table">
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>과목</th>
-						<th>시험 날짜</th>
-						<th>수정 및 삭제</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="notification, iterStat : ${notifications}">
-						<td th:text="${iterStat.index + 1}"></td>
-						<td th:text="${notification.subject}"></td>
-						<td th:text="${notification.examDate}"></td>
-						<td class="notification_form-btn-group">
-							<button type="button"
-								class="btn btn-outline-warning notification_form-btn"
-								th:data-id="${notification.id}"
-								th:data-subject="${notification.subject}"
-								th:data-examdate="${notification.examDate}"
-								onclick="notification_form_openUpdateModal(this)">
-								<i class="fas fa-edit"></i> 수정
-							</button>
-							<form th:action="@{/notifications/delete}" method="post"
-								onsubmit="return notification_form_confirmDeletion()">
-								<input type="hidden" name="id" th:value="${notification.id}">
-								<button type="submit"
-									class="btn btn-outline-danger notification_form-btn">
-									<i class="fas fa-trash"></i> 삭제
-								</button>
-							</form>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+    <th:block layout:fragment="content">
+        <div class="notification_form-list-container">
+            <h2>
+                <i class="fas fa-list"></i> 알림 목록
+            </h2>
+            <div class="text-center mb-3">
+                <button type="button"
+                        class="notification_form-btn-create"
+                        id="notification_form_btn_create"
+                        onclick="notification_form_openCreateModal()">
+                    <i class="fas fa-plus"></i> 알림 추가
+                </button>
+            </div>
+            <form action="#" class="form-inline mb-2 mt-3 needs-validation">
+                <label for="notification_form_sortSelect" class="mr-2"><i
+                        class="fas fa-sort"></i> 정렬:</label>
+                <select id="notification_form_sortSelect" class="form-control mr-2"
+                        onchange="notification_form_changeSorting()">
+                    <option value="default" th:selected="${sort eq 'default'}">기본 정렬</option>
+                    <option value="subject" th:selected="${sort eq 'subject'}">과목 순</option>
+                    <option value="examDate" th:selected="${sort eq 'examDate'}">시험 날짜 순</option>
+                    <option value="id" th:selected="${sort eq 'id'}">번호 순</option>
+                </select>
+            </form>
+            <table class="table table-bordered notification_form-table">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>과목</th>
+                    <th>시험 날짜</th>
+                    <th>수정 및 삭제</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="notification, iterStat : ${notifications}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${notification.subject}"></td>
+                    <td th:text="${notification.examDate}"></td>
+                    <td class="notification_form-btn-group">
+                        <button type="button"
+                                class="notification_form-btn-edit"
+                                th:data-id="${notification.id}"
+                                th:data-subject="${notification.subject}"
+                                th:data-examdate="${notification.examDate}"
+                                onclick="notification_form_openUpdateModal(this)">
+                            <i class="fas fa-edit"></i> 수정
+                        </button>
+                        <form th:action="@{/notifications/delete}" method="post"
+                              onsubmit="return notification_form_confirmDeletion()">
+                            <input type="hidden" name="id" th:value="${notification.id}">
+                            <button type="submit"
+                                    class="notification_form-btn-delete">
+                                <i class="fas fa-trash"></i> 삭제
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-		<div class="text-center mt-3">
-			<button onclick="notification_form_goToMainPage()"
-				class="btn notification_form-go-back-btn">
-				<i class="fas fa-home"></i> 메인 페이지로 돌아가기
-			</button>
-		</div>
+        <div class="text-center mt-3">
+            <button onclick="notification_form_goToMainPage()"
+                    class="notification_form-btn-go-back">
+                <i class="fas fa-home"></i> 메인 페이지로 돌아가기
+            </button>
+        </div>
 
-		<div class="modal fade notification_form-modal"
-			id="notification_form_createModal" tabindex="-1" role="dialog"
-			aria-labelledby="notification_form_createModalLabel"
-			aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content notification_form-modal-content">
-					<div class="modal-header notification_form-modal-header">
-						<h5
-							class="modal-title notification_form-modal-title text-center w-100"
-							id="notification_form_createModalLabel">
-							<i class="fas fa-plus"></i> 새로운 알림 만들기
-						</h5>
-					</div>
-					<div class="modal-body notification_form-modal-body">
-						<form id="notification_form_createForm"
-							th:action="@{/notifications/notify}" th:object="${notification}"
-							method="post" class="needs-validation" novalidate>
-							<div class="notification_form-modal-form-group">
-								<label for="notification_form_subject"><i
-									class="fas fa-book"></i> 과목 :</label> <input type="text"
-									id="notification_form_subject" name="subject"
-									th:field="*{subject}"
-									class="notification_form-modal-form-control"
-									placeholder="과목을 입력해주세요" required>
-								<div class="notification_form-invalid-feedback">과목을
-									입력해주세요.</div>
-							</div>
-							<div class="notification_form-modal-form-group">
-								<label for="notification_form_examDate"><i
-									class="fas fa-calendar-alt"></i> 시험 날짜 :</label> <input type="date"
-									id="notification_form_examDate" name="examDate"
-									th:field="*{examDate}"
-									class="notification_form-modal-form-control"
-									placeholder="MM/DD/YYYY" required>
-								<div class="notification_form-invalid-feedback">시험 날짜를
-									입력해주세요.</div>
-							</div>
-							<div class="text-center mt-3">
-								<button type="submit"
-									class="btn btn-success notification_form-btn">
-									<i class="fas fa-check"></i> 알림 생성
-								</button>
-								<button type="button"
-									class="btn btn-secondary notification_form-modal-close-btn"
-									onclick="notification_form_closeCreateModal()">
-									<i class="fas fa-times"></i> 닫기
-								</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div class="modal fade notification_form-modal"
+             id="notification_form_createModal" tabindex="-1" role="dialog"
+             aria-labelledby="notification_form_createModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content notification_form-modal-content">
+                    <div class="modal-header notification_form-modal-header">
+                        <h5
+                                class="modal-title notification_form-modal-title text-center w-100"
+                                id="notification_form_createModalLabel">
+                            <i class="fas fa-plus"></i> 새로운 알림 만들기
+                        </h5>
+                    </div>
+                    <div class="modal-body notification_form-modal-body">
+                        <form id="notification_form_createForm"
+                              th:action="@{/notifications/notify}" th:object="${notification}"
+                              method="post" class="needs-validation" novalidate>
+                            <div class="notification_form-modal-form-group">
+                                <label for="notification_form_subject"><i
+                                        class="fas fa-book"></i> 과목 :</label> <input type="text"
+                                                                                       id="notification_form_subject" name="subject"
+                                                                                       th:field="*{subject}"
+                                                                                       class="notification_form-modal-form-control"
+                                                                                       placeholder="과목을 입력해주세요" required>
+                                <div class="notification_form-invalid-feedback">과목을 입력해주세요.</div>
+                            </div>
+                            <div class="notification_form-modal-form-group">
+                                <label for="notification_form_examDate"><i
+                                        class="fas fa-calendar-alt"></i> 시험 날짜 :</label> <input type="date"
+                                                                                                   id="notification_form_examDate" name="examDate"
+                                                                                                   th:field="*{examDate}"
+                                                                                                   class="notification_form-modal-form-control"
+                                                                                                   placeholder="MM/DD/YYYY" required>
+                                <div class="notification_form-invalid-feedback">시험 날짜를 입력해주세요.</div>
+                            </div>
+                            <div class="text-center mt-3 d-flex justify-content-center">
+                                <button type="submit"
+                                        class="notification_form-btn-submit-create mr-2">
+                                    <i class="fas fa-check"></i> 알림 생성
+                                </button>
+                                <button type="button"
+                                        class="notification_form-btn-close-create ml-2"
+                                        onclick="notification_form_closeCreateModal()">
+                                    <i class="fas fa-times"></i> 닫기
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div class="modal fade notification_form-modal"
-			id="notification_form_updateModal" tabindex="-1" role="dialog"
-			aria-labelledby="notification_form_updateModalLabel"
-			aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content notification_form-modal-content">
-					<div class="modal-header notification_form-modal-header">
-						<h5
-							class="modal-title notification_form-modal-title text-center w-100"
-							id="notification_form_updateModalLabel">
-							<i class="fas fa-edit"></i> 알림 수정
-						</h5>
-					</div>
-					<div class="modal-body notification_form-modal-body">
-						<form id="notification_form_updateForm"
-							th:action="@{/notifications/update}" method="post"
-							class="needs-validation" novalidate>
-							<input type="hidden" id="notification_form_updateNotificationId"
-								name="id">
-							<div class="notification_form-modal-form-group">
-								<label for="notification_form_updateSubject"><i
-									class="fas fa-book"></i> 과목 :</label> <input type="text"
-									id="notification_form_updateSubject" name="subject"
-									class="notification_form-modal-form-control"
-									placeholder="과목을 입력해주세요" required>
-								<div class="notification_form-invalid-feedback">과목을
-									입력해주세요.</div>
-							</div>
-							<div class="notification_form-modal-form-group">
-								<label for="notification_form_updateExamDate"><i
-									class="fas fa-calendar-alt"></i> 시험 날짜 :</label> <input type="date"
-									id="notification_form_updateExamDate" name="examDate"
-									class="notification_form-modal-form-control"
-									placeholder="MM/DD/YYYY" required>
-								<div class="notification_form-invalid-feedback">시험 날짜를
-									입력해주세요.</div>
-							</div>
-							<div class="text-center mt-3">
-								<button type="submit"
-									class="btn btn-primary notification_form-btn">
-									<i class="fas fa-save"></i> 저장
-								</button>
-								<button type="button"
-									class="btn btn-secondary notification_form-modal-close-btn"
-									onclick="notification_form_closeUpdateModal()">
-									<i class="fas fa-times"></i> 닫기
-								</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</th:block>
+        <div class="modal fade notification_form-modal"
+             id="notification_form_updateModal" tabindex="-1" role="dialog"
+             aria-labelledby="notification_form_updateModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content notification_form-modal-content">
+                    <div class="modal-header notification_form-modal-header">
+                        <h5
+                                class="modal-title notification_form-modal-title text-center w-100"
+                                id="notification_form_updateModalLabel">
+                            <i class="fas fa-edit"></i> 알림 수정
+                        </h5>
+                    </div>
+                    <div class="modal-body notification_form-modal-body">
+                        <form id="notification_form_updateForm"
+                              th:action="@{/notifications/update}" method="post"
+                              class="needs-validation" novalidate>
+                            <input type="hidden" id="notification_form_updateNotificationId"
+                                   name="id">
+                            <div class="notification_form-modal-form-group">
+                                <label for="notification_form_updateSubject"><i
+                                        class="fas fa-book"></i> 과목 :</label> <input type="text"
+                                                                                       id="notification_form_updateSubject" name="subject"
+                                                                                       class="notification_form-modal-form-control"
+                                                                                       placeholder="과목을 입력해주세요" required>
+                                <div class="notification_form-invalid-feedback">과목을 입력해주세요.</div>
+                            </div>
+                            <div class="notification_form-modal-form-group">
+                                <label for="notification_form_updateExamDate"><i
+                                        class="fas fa-calendar-alt"></i> 시험 날짜 :</label> <input type="date"
+                                                                                                   id="notification_form_updateExamDate" name="examDate"
+                                                                                                   class="notification_form-modal-form-control"
+                                                                                                   placeholder="MM/DD/YYYY" required>
+                                <div class="notification_form-invalid-feedback">시험 날짜를 입력해주세요.</div>
+                            </div>
+                            <div class="text-center mt-3 d-flex justify-content-center">
+                                <button type="submit"
+                                        class="notification_form-btn-submit-update mr-2">
+                                    <i class="fas fa-save"></i> 저장
+                                </button>
+                                <button type="button"
+                                        class="notification_form-btn-close-update ml-2"
+                                        onclick="notification_form_closeUpdateModal()">
+                                    <i class="fas fa-times"></i> 닫기
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
 </body>
 </html>

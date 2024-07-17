@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main_layout}">
-<head>
-    <meta charset="UTF-8">
-    <title>Lecture List</title>
-    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/lecture_list.css}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
 <body>
     <th:block layout:fragment="content">
         <section id="lecture_list-carousel" class="carousel slide lecture_list-hero-section" data-bs-ride="carousel" data-bs-interval="5000">
@@ -97,7 +90,7 @@
 			</a>
         <div class="lecture_list-container mt-5">
             <div class="lecture_list-content">
-                <h2 class="lecture_list-section-title">강의 목록</h2>
+                <h2 class="lecture_list-section-title"></h2>
                 <div class="row">
                     <div class="lecture_list-col-lg-custom mb-4" th:each="lecture : ${lectures}">
                         <div class="card lecture_list-card">
@@ -106,7 +99,7 @@
                                 <h5 class="card-title" th:text="${lecture.lectureTitle}">강의 제목</h5>
                                 <p class="card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
                                 <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}"
-                                    class="btn btn-info btn-block">강의 상세정보</a>
+                                    class="btn btn-info btn-block">상세정보</a>
                             </div>
                         </div>
                     </div>
