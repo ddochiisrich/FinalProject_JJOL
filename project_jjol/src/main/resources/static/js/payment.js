@@ -32,7 +32,7 @@ $(function() {
     // 포인트 사용
     var havePoint = parseInt($("#lectureDetailHavePoint").text());
     var priceAfterPoint = parseInt($("#lectureDetailPriceAfterPoint").text());
-    $("#lectureDetailEarningPoint").text(Math.ceil(priceAfterPoint * 5 / 100));
+    $("#lectureDetailEarningPoint").text(Math.floor(priceAfterPoint * 5 / 100));
     $("#lectureDetailPointInput").on("keyup change", function() {
         if (lecturePrice > havePoint) {
             $("#lectureDetailPointInput").attr("max", havePoint);
@@ -53,7 +53,8 @@ $(function() {
         
         $("#lectureDetailPriceAfterPoint").text(priceAfterPoint - usingPoint);
         
-        $("#lectureDetailEarningPoint").text(Math.floor(parseInt($("#lectureDetailPriceAfterPoint").text()) * 5 / 100));
+        $("#lectureDetailEarningPoint").text(Math.floor(parseInt(
+			$("#lectureDetailPriceAfterPoint").text()) * 5 / 100));
     });
     
     // 포인트 전액 사용 버튼
@@ -70,7 +71,8 @@ $(function() {
         
         $("#lectureDetailPriceAfterPoint").text(priceAfterPoint - usingPoint);
         
-        $("#lectureDetailEarningPoint").text(Math.floor(parseInt($("#lectureDetailPriceAfterPoint").text()) * 5 / 100));
+        $("#lectureDetailEarningPoint").text(Math.floor(parseInt(
+			$("#lectureDetailPriceAfterPoint").text()) * 5 / 100));
     });
     
     // 결제
