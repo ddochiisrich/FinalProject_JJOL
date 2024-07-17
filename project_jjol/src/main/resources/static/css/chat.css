@@ -9,6 +9,7 @@
     max-width: 1000px;
     text-align: center;
     animation: chat-fadeIn 1s ease-in-out;
+    margin: 0 auto; /* Center the container */
 }
 
 .chat-title {
@@ -62,12 +63,44 @@
 }
 
 #chat-msgArea {
-    background-color: lightblue;
+    background-color: #F3F4F6;
     height: 500px;
     overflow-y: auto;
     padding: 10px;
     border-radius: 15px;
     margin-bottom: 20px;
+    border: 1px solid #dfe3e8;
+    position: relative; /* Position relative for centering */
+}
+
+.chat-msg_box {
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.chat-msg_box p {
+    margin: 0;
+}
+
+.chat-msg_box .alert {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.alert-light {
+    background-color: #ffffff;
+    border: 1px solid #dfe3e8;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+}
+
+.entrance-message {
+    text-align: center;
+    font-weight: bold;
 }
 
 @keyframes chat-fadeIn {

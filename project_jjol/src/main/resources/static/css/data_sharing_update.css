@@ -8,22 +8,28 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 80vh;
 }
 
 .data-sharing-update-wrap {
-    margin-bottom: 20px;
+    flex: 1;
 }
 
 .data-sharing-update-content-box {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .data-sharing-update-content-box button,
 .data-sharing-update-content-box a {
     border: 1px solid #0C1844;
     color: #0C1844;
+    width: 150px; /* 동일한 너비를 설정 */
+    margin: 0 10px; /* 버튼 사이 간격 */
 }
 
 .data-sharing-update-form label {

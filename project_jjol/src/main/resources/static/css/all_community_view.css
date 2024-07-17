@@ -1,55 +1,76 @@
 .all-community-view-main {
     padding: 20px;
     background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.all-community-view-title {
+    color: #0C1844;
+}
+
+.all-community-view-subtitle {
+    color: #6c757d;
 }
 
 .all-community-content {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.community-all-box {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+#categories_search_select {
+    width: 120px;
+    height: 38px; /* Adjusted to match input and button height */
 }
 
-.community-search-box {
-    display: flex;
-    align-items: center;
+.input-search {
+    width: 250px;
+    height: 38px; /* Adjusted to match select and button height */
 }
 
-.data-search-textbox {
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ddd;
+.btn {
+    padding: 0 20px; /* Adjusted padding to center text vertically */
+    border: 1px solid #0C1844;
     border-radius: 5px;
-}
-
-.data-search-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4A90E2;
-    color: white;
+    background-color: white;
+    color: #0C1844;
     font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    height: 38px; /* Adjusted to match input and select height */
+    display: flex;
+    align-items: center; /* Align text vertically */
+    justify-content: center; /* Align text horizontally */
 }
 
-.data-search-button:hover {
-    opacity: 0.8;
+.btn:hover {
+    background-color: #0C1844;
+    color: white;
 }
 
-.pagination {
-    justify-content: center;
+.all-community-view-card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.pagination .active a {
-    background-color: #4A90E2;
-    border-color: #4A90E2;
+.all-community-view-table {
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.pagination .disabled a {
-    color: #ddd;
+.all-community-view-table th, .all-community-view-table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.all-community-view-table th {
+    background-color: #0C1844;
+    color: white;
+}
+
+.write-button {
+    height: 38px; /* Adjusted to match input and select height */
 }

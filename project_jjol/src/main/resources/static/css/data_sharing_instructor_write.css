@@ -1,60 +1,34 @@
 .data-sharing-instructor-write-container {
     padding: 20px;
     background-color: #f9f9f9;
-}
-
-.data-sharing-instructor-write {
-    background-color: #ffffff;
-    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 900px; /* 최대 너비를 지정하여 백그라운드 크기를 조정 */
+    margin: auto; /* 중앙 정렬 */
 }
 
-.data-sharing-instructor-write-wrap {
-    margin-bottom: 20px;
+.data-sharing-instructor-write-title {
+    color: #0C1844;
 }
 
-.data-sharing-instructor-content-box {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+.form-group {
+    margin-bottom: 1.5rem;
 }
 
-.data-sharing-instructor-content-box button,
-.data-sharing-instructor-content-box a {
+.form-control, .form-control-file {
+    border-radius: 5px;
+    width: 100%;
+}
+
+.data-sharing-instructor-write-submit-button, .data-sharing-instructor-write-cancel-button {
     border: 1px solid #0C1844;
     color: #0C1844;
+    transition: background-color 0.3s, color 0.3s;
+    margin: 0 10px;
+    width: 150px; /* 버튼의 가로 길이를 더 크게 설정 */
 }
 
-.data-sharing-instructor-write label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #0C1844;
-}
-
-.data-sharing-instructor-write input,
-.data-sharing-instructor-write textarea,
-.data-sharing-instructor-write select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.data-sharing-instructor-write-content label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #0C1844;
-}
-
-.data-sharing-instructor-write-content input,
-.data-sharing-instructor-write-content textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+.data-sharing-instructor-write-submit-button:hover, .data-sharing-instructor-write-cancel-button:hover {
+    background-color: #0C1844;
+    color: white;
 }

@@ -2,7 +2,7 @@ $(document).ready(function() {
     const username = $('div.chat-container').attr('data-username');
     console.log("Username from data attribute: " + username);
 
-    const websocket = new WebSocket("ws://localhost:8080/ws/chat");
+    const websocket = new WebSocket("ws://" + window.location.host + "/ws/chat");
     const entranceMessages = new Set();
 
     websocket.onopen = function(evt) {
@@ -48,38 +48,24 @@ $(document).ready(function() {
         if (type === "entrance") {
             if (!entranceMessages.has(sessionId)) {
                 entranceMessages.add(sessionId);
-                var str = "<div class='chat-msg_box fw-lighter'>";
+                var str = "<div class='chat-msg_box entrance-message'>";
                 str += "<b>" + message + "</b>";
-                str += "</div></div>";
+                str += "</div>";
                 $("#chat-msgArea").append(str);
+                setTimeout(function() {
+                    $('.entrance-message').remove(); // 일정 시간 후 메시지 제거
+                }, 3000); // 3초 후 제거
             }
         } else if (type === "message") {
+            var str = "<div class='chat-msg_box'>";
             if (sessionId === username) {
-                var str = "<div class='chat-msg_box'>";
-                var str1 = "<p class='text-end'>" + sessionId + "</p>";
                 str += "<div class='alert alert-light lh-base fw-light fs-6 text-end'>";
-                str += "<b>" + message + "</b>";
-                str += "</div></div>";
-                $("#chat-msgArea").append(str1, str);
             } else {
-                var str = "<div class='chat-msg_box'>";
-                var str1 = "<p>" + sessionId + "</p>";
-
-                if (message && message.includes("님이 나가셨습니다.")) {
-                    var formattedMessage = sessionId + " " + message;
-                    str += "<div class='alert alert-warning lh-base fw-light fs-6'>";
-                    str += "<b>" + formattedMessage + "</b>";
-                    str += "</div>";
-                } else {
-                    var formattedMessage = sessionId + (message ? " : " + message : "");
-                    str += "<div class='alert alert-warning lh-base fw-light fs-6'>";
-                    str += "<b>" + formattedMessage + "</b>";
-                    str += "</div>";
-                }
-
-                str += "</div>";
-                $("#chat-msgArea").append(str1, str);
+                str += "<div class='alert alert-warning lh-base fw-light fs-6'>";
             }
+            str += "<b>" + sessionId + " : " + message + "</b>";
+            str += "</div></div>";
+            $("#chat-msgArea").append(str);
         }
 
         var $msgArea = $("#chat-msgArea");

@@ -1,53 +1,14 @@
-.data-sharing-detail-container {
-    padding: 20px;
-    background-color: #f9f9f9;
+.data-sharing-detail-footer {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
 }
 
-.data-sharing-detail-card {
+.data-sharing-comment-card, .data-sharing-comment-list-card {
+    margin-top: 20px;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.data-sharing-detail-header h3 {
-    font-weight: bold;
-    color: #0C1844;
-}
-
-.data-sharing-detail-body {
-    padding-top: 20px;
-    color: #0C1844;
-}
-
-.data-sharing-detail-info li {
-    margin-bottom: 10px;
-    color: #0C1844;
-}
-
-.data-sharing-detail-footer {
-    display: flex;
-    justify-content: space-between;
-}
-
-.data-sharing-detail-back-button {
-    border: 1px solid #0C1844;
-    color: #0C1844;
-}
-
-.data-sharing-detail-delete-button {
-    border: 1px solid #0C1844;
-    color: #0C1844;
-}
-
-.data-sharing-detail-update-button {
-    border: 1px solid #0C1844;
-    color: #0C1844;
-}
-
-.data-sharing-detail-comment-card,
-.data-sharing-detail-comment-list-card {
-    margin-top: 20px;
 }
 
 .data-sharing-detail-comment-list {
@@ -62,10 +23,59 @@
 
 .data-sharing-detail-comment-list .list-group-item p {
     margin: 0;
-    color: #0C1844;
 }
 
-.data-sharing-detail-submit-button {
+.data-sharing-detail-comment-list .list-group-item:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.data-sharing-detail-comment-list .list-group-item:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.data-sharing-detail-comment-list .list-group-item:last-child {
+    border-bottom: 0;
+}
+
+.data-sharing-detail-comment-list .list-group-item p:last-child {
+    margin-bottom: 0;
+}
+
+.data-sharing-detail-comment-list li {
+    border: none; /* 테두리 제거 */
+}
+
+/* 버튼 스타일 */
+.data-sharing-detail-btn,
+.data-sharing-detail-delete-btn,
+.data-sharing-detail-update-btn,
+.data-sharing-detail-back-btn,
+.data-sharing-detail-comment-btn {
+    width: 100px; /* 버튼의 너비를 조정 */
     border: 1px solid #0C1844;
     color: #0C1844;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.data-sharing-detail-btn:hover,
+.data-sharing-detail-delete-btn:hover,
+.data-sharing-detail-update-btn:hover,
+.data-sharing-detail-back-btn:hover,
+.data-sharing-detail-comment-btn:hover {
+    background-color: #0C1844;
+    color: white;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    border-radius: 5px;
+    width: 100%;
+}
+
+.form-control-file {
+    border-radius: 5px;
 }

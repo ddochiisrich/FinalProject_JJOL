@@ -14,17 +14,27 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DataSharingCommentService {
 
-	@Autowired
-	private DataSharingCommentMapper datasharingcommentMapper;
-	
-	//댓글 정보 추가
-	public DataSharingComment insertdatacomment(DataSharingComment datasharingcomment) {
-		datasharingcommentMapper.insertdatacomment(datasharingcomment);
-		return datasharingcomment;
-	}
-	
-	//글 no를 통해 데이터 조회
-	public List<DataSharingComment> getCommentsByDataNo(int no){
-		return datasharingcommentMapper.getCommentsByDataNo(no);
-	}
+    @Autowired
+    private DataSharingCommentMapper datasharingcommentMapper;
+
+    //댓글 정보 추가
+    public DataSharingComment insertdatacomment(DataSharingComment datasharingcomment) {
+        datasharingcommentMapper.insertdatacomment(datasharingcomment);
+        return datasharingcomment;
+    }
+
+    //글 no를 통해 데이터 조회
+    public List<DataSharingComment> getCommentsByDataNo(int no) {
+        return datasharingcommentMapper.getCommentsByDataNo(no);
+    }
+
+    //댓글 삭제
+    public void deleteComment(int id) {
+        datasharingcommentMapper.deleteComment(id);
+    }
+
+    // 댓글 조회
+    public DataSharingComment getCommentById(int id) {
+        return datasharingcommentMapper.getCommentById(id);
+    }
 }

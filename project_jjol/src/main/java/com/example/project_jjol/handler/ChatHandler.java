@@ -45,6 +45,10 @@ public class ChatHandler extends TextWebSocketHandler {
             if (loggedInUser != null) {
                 // WebSocket 세션을 리스트에 추가하여 관리합니다.
                 list.add(session);
+                String entranceMessage = "entrance:" + loggedInUser.getName() + ":" + loggedInUser.getName() + "님 입장";
+                for (WebSocketSession sess : list) {
+                    sess.sendMessage(new TextMessage(entranceMessage));
+                }
                 log.info(session + " 클라이언트 접속");
             } else {
                 // 로그인한 사용자 정보가 없으면 연결을 거부하고 세션을 닫습니다.

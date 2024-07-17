@@ -10,11 +10,6 @@
         <div class="data-sharing-update">
             <div class="data-sharing-update-wrap">
                 <form th:action="@{/updateDataSharing}" method="post" enctype="multipart/form-data">
-                    <div class="data-sharing-update-content-box mb-4">
-                        <button type="submit" class="btn btn-outline-primary data-sharing-update-submit-button">수정 완료</button>
-                        <a href="/DataSharingView" class="btn btn-outline-primary data-sharing-update-cancel-button">취소</a>
-                    </div>
-                    <input type="hidden" name="dataNo" th:value="${datasharing.dataNo}">
                     <div class="form-group">
                         <label for="data-sharing-update-lecture-title">강의 제목</label>
                         <input type="text" id="data-sharing-update-lecture-title" name="dataTitle" class="form-control" th:value="${datasharing.dataTitle}" required>
@@ -38,6 +33,11 @@
                     <div class="form-group">
                         <label for="data-sharing-update-content">내용</label>
                         <textarea class="form-control" name="dataContent" id="data-sharing-update-content" rows="5" required th:text="${datasharing.dataContent}"></textarea>
+                    </div>
+                    <input type="hidden" name="dataNo" th:value="${datasharing.dataNo}">
+                    <div class="data-sharing-update-content-box mb-4">
+                        <button type="submit" class="btn btn-outline-primary data-sharing-update-submit-button">수정 완료</button>
+                        <a href="/DataSharingView" class="btn btn-outline-primary data-sharing-update-cancel-button">취소</a>
                     </div>
                 </form>
             </div>
