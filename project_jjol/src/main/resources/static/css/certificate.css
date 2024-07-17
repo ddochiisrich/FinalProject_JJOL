@@ -101,7 +101,7 @@
     margin-top: 20px;
 }
 
-.certificate-print-button {
+.certificate-print-button-certificate {
     display: inline-block;
     font-weight: 400;
     color: #212529;
@@ -118,7 +118,7 @@
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.certificate-print-button:hover {
+.certificate-print-button-certificate:hover {
     color: #fff;
     background-color: #0C1844;
     border-color: #0C1844;

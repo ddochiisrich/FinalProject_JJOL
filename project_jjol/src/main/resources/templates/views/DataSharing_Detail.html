@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main_layout}">
-
 <body>
 <th:block layout:fragment="content">
     <div class="container data-sharing-detail-main">
@@ -26,11 +25,11 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="card-footer data-sharing-detail-footer">
-                        <a href="/DataSharingView" class="btn btn-outline-secondary data-sharing-detail-back-btn">목록</a>
+                    <div class="card-footer data-sharing-detail-footer text-center">
+                        <button type="button" class="data-sharing-detail-back-btn" onclick="location.href='/DataSharingView'">목록</button>
                         <div th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}">
-                            <button type="button" class="btn btn-outline-danger data-sharing-detail-delete-btn" id="data-sharing-detail-datasharingDelete">삭제</button>
-                            <button type="button" class="btn btn-outline-primary data-sharing-detail-update-btn" id="data-sharing-detail-datasharingUpdateForm">수정하기</button>
+                            <button type="button" class="data-sharing-detail-delete-btn" id="data-sharing-detail-datasharingDelete">삭제</button>
+                            <button type="button" class="data-sharing-detail-update-btn" id="data-sharing-detail-datasharingUpdateForm">수정하기</button>
                         </div>
                     </div>
                 </div>
@@ -58,7 +57,7 @@
                                 <label for="data-sharing-detail-commentWriter">작성자</label>
                                 <input type="text" class="form-control" id="data-sharing-detail-commentWriter" name="commentWriter" th:value="${session.loggedInUser.name}" readonly>
                             </div>
-                            <button type="submit" class="btn btn-outline-primary data-sharing-detail-comment-btn">댓글 등록</button>
+                            <button type="submit" class="data-sharing-detail-comment-btn">댓글 등록</button>
                         </form>
                     </div>
                 </div>
@@ -69,10 +68,10 @@
     <!-- 모달 창 -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
+            <div class="modal-content data-sharing-detail-modal-content">
+                <div class="modal-header data-sharing-detail-modal-header">
                     <h5 class="modal-title" id="myModalLabel">알림</h5>
-                    <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close data-sharing-detail-modal-close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -80,7 +79,7 @@
                     <p id="modal-message"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary modal-close" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn data-sharing-detail-modal-close-btn" data-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>

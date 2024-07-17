@@ -65,30 +65,29 @@ public class LectureController {
 
     @GetMapping({"/", "/lectures"})
     public String lectureList(Model model, HttpSession session) {
-        // 세션에서 로그인된 사용자 정보 가져오기
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        
 
-        // 로그인된 사용자가 있는 경우에만 처리
         if (loggedInUser != null) {
-        	
-        	// 세션 업데이트
-        	User updatedUser = userService.findById(loggedInUser.getUserId());
-        	session.setAttribute("loggedInUser", updatedUser);
-        	
-            // 사용자 이름 가져오기
-            String userId = loggedInUser.getUserId(); // 혹은 다른 사용자 식별자 필드
-
-            // 가장 임박한 알림 추가
+            User updatedUser = userService.findById(loggedInUser.getUserId());
+            session.setAttribute("loggedInUser", updatedUser);
+            String userId = loggedInUser.getUserId();
             model.addAttribute("mostUrgentNotification", notificationService.getMostUrgentNotification(userId));
-            
         }
 
-        // 강의 리스트 추가
-        model.addAttribute("lectures", lectureService.getAllLectures());
+        Map<String, List<Lecture>> categorizedLectures = new HashMap<>();
+        String[] keywords = {"spring", "react", "script"};
 
-        return "views/lecture_list";  // "templates/lectures.html" 반환
+        for (String keyword : keywords) {
+            categorizedLectures.put(keyword, lectureService.getLecturesByKeyword(keyword, 5));
+        }
+
+        model.addAttribute("categorizedLectures", categorizedLectures);
+        model.addAttribute("latestLectures", lectureService.getAllLectures());
+
+        return "views/lecture_list";  
     }
+
+
 
     @GetMapping("/lectures/search")
     public String searchLectures(@RequestParam("keyword") String keyword, Model model) {
@@ -318,6 +317,6 @@ public class LectureController {
         return ResponseEntity.ok(response);
     }
 
-
+    
 
 }

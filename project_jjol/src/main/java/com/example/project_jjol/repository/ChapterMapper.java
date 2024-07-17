@@ -23,7 +23,7 @@ public interface ChapterMapper {
             "WHERE lp.lecture_id = #{lectureId} AND lp.user_id = #{userId} ORDER BY lp.last_viewed DESC LIMIT 1")
     Chapter findLastViewedChapterByLectureIdAndUserId(@Param("lectureId") int lectureId, @Param("userId") String userId);
     
-    @Select("SELECT * FROM Chapter WHERE chapter_id = #{chapterId}")
+    @Select("SELECT * FROM chapter WHERE chapter_id = #{chapterId}")
     Chapter findById(@Param("chapterId") int chapterId);
     
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_layout}">
+<head>
+    <link rel="stylesheet" th:href="@{/css/notice_view.css}">
+</head>
+<body>
+    <th:block layout:fragment="content">
+        <div class="notice-view-container text-center">
+            <h1 th:text="${notice.title}" class="mt-3">공지사항 제목</h1>
+            <p class="my-5"><span th:text="${#temporals.format(notice.createdDate, 'yyyy년 MM월 dd일')}">2024-07-17</span></p>
+            <div th:utext="${notice.content}">공지사항 내용</div>
+            <div class="notice-button-group mt-5">
+                <a th:href="@{/notices/edit/{id}(id=${notice.id})}" class="btn btn-primary" th:if="${loggedInUser != null && loggedInUser.role == 'admin'}">수정</a>
+                <form th:action="@{/notices/delete/{id}(id=${notice.id})}" method="post" th:if="${loggedInUser != null && loggedInUser.role == 'admin'}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">삭제</button>
+                </form>
+                <a href="/notices" class="btn btn-secondary">목록으로</a>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>

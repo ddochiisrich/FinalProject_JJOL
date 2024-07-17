@@ -27,19 +27,13 @@
                         </div>
                     </div>
                     <div class="mt-3">
-					    <button class="btn btn-outline-primary btn-sm shareBtn-lectureDetail" id="lectureDetailShareButton">공유하기</button>
+					    <button class="lectureDetail-btn-share" id="lectureDetailShareButton">공유하기</button>
 					</div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-12 col-lg-8 lectureDetail-left-column">
-                    <div class="lectureDetail-progress-container">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 14.29%;" aria-valuenow="14.29" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <p class="mt-2">진도율: 4강/28강 (14.29%)</p>
-                    </div>
+                <div class="col-12 col-lg-8 lectureDetail-left-column">               
                     <ul class="nav nav-tabs lectureDetail-tab" id="lectureDetailTab" role="tablist">
                         <li class="nav-item"><a class="nav-link active" id="lectureDetail-description-tab" data-toggle="tab" href="#lectureDetail-description" role="tab" aria-controls="lectureDetail-description" aria-selected="true">강의소개</a></li>
                         <li class="nav-item"><a class="nav-link" id="lectureDetail-reviews-tab" data-toggle="tab" href="#lectureDetail-reviews" role="tab" aria-controls="lectureDetail-reviews" aria-selected="false">수강평</a></li>
@@ -83,7 +77,7 @@
                                             <label for="lectureDetailReviewContent">리뷰 내용</label>
                                             <textarea class="form-control" id="lectureDetailReviewContent" name="reviewContent" rows="3" required></textarea>
                                         </div>
-                                        <button type="submit" class="btn btn-outline-primary lectureDetail-btn-primary">리뷰 작성</button>
+                                        <button type="submit" class="lectureDetail-btn-primary">리뷰 작성</button>
                                     </form>
                                 </div>
                                 <div th:each="review : ${reviews}">
@@ -136,7 +130,7 @@
                                                 <label for="lectureDetailAnswerContent">답변</label>
                                                 <textarea class="form-control" id="lectureDetailAnswerContent" name="content" rows="3" required></textarea>
                                             </div>
-                                            <button type="submit" class="btn btn-outline-primary lectureDetail-btn-primary">답변달기</button>
+                                            <button type="submit" class="lectureDetail-btn-primary">답변달기</button>
                                         </form>
                                     </div>
                                 </div>
@@ -147,7 +141,7 @@
                                             <label for="lectureDetailQuestionContent">질문</label>
                                             <textarea class="form-control" id="lectureDetailQuestionContent" name="content" rows="3" required></textarea>
                                         </div>
-                                        <button type="submit" class="btn btn-outline-primary lectureDetail-btn-primary">질문달기</button>
+                                        <button type="submit" class="lectureDetail-btn-primary">질문달기</button>
                                     </form>
                                 </div>
                             </div>
@@ -159,8 +153,8 @@
                         <th:block th:if="${lecture.instructorId} != ${loggedInUser.userId}">
                             <h5 class="lectureDetail-info-title" th:if="${hasApplied}">학습중</h5>
                             <h5 class="lectureDetail-info-title" th:if="${!hasApplied}">수강 신청</h5>
-                            <a th:if="${hasApplied}" th:href="@{'/videos/player?lectureId=' + ${lecture.lectureId}}"><button class="btn btn-outline-primary btn-block mb-3 lectureDetail-btn-primary">학습하기</button></a>
-                            <button th:if="${!hasApplied}" data-toggle="modal" data-target="#lectureDetailPaymentModal" class="btn btn-outline-primary btn-block mb-3 lectureDetail-btn-primary">수강 신청하기</button>
+                            <a th:if="${hasApplied}" th:href="@{'/videos/player?lectureId=' + ${lecture.lectureId}}"><button class="lectureDetail-btn-primary btn-block mb-3">학습하기</button></a>
+                            <button th:if="${!hasApplied}" data-toggle="modal" data-target="#lectureDetailPaymentModal" class="lectureDetail-btn-primary btn-block mb-3">수강 신청하기</button>
                         </th:block>
                         <th:block th:if="${lecture.instructorId} == ${loggedInUser.userId}">
                             <h5 class="lectureDetail-info-title">나의 강의입니다.</h5>
@@ -170,14 +164,13 @@
                         </form>
                         <div class="lectureDetail-info-text">
                             <p><strong>지식공유자:</strong> <span th:text="${lecture.instructorName}"></span></p>
-                            <p><strong>총 28개 수업:</strong> 5시간 21분</p>
                             <p><strong>수강기한:</strong> 무제한</p>
                             <p><strong>수준:</strong> <span th:text="${lecture.lectureLevel}"></span></p>
                         </div>
                     </div>
                     <div class="lectureDetail-info-section">
                         <h5 class="lectureDetail-info-title">수강 전 궁금한 점이 있나요?</h5>
-                        <button class="btn btn-outline-primary btn-block lectureDetail-btn-secondary">문의하기</button>
+                        <button class="lectureDetail-btn-secondary btn-block">문의하기</button>
                     </div>
                 </div>
             </div>
@@ -190,7 +183,7 @@
                             <h5 class="modal-title lectureDetail-modal-title" id="lectureDetailPaymentModalLabel">
                                 <i class="fas fa-shopping-cart"></i> 강의 구매하기
                             </h5>
-                            <button type="button" class="close lectureDetail-close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="lectureDetail-close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -237,7 +230,7 @@
                                     <input type="number" class="form-control" min="0" id="lectureDetailPointInput" value="0"/>
                                 </div>
                                 <div class="col-4">
-                                    <button class="btn btn-outline-primary w-100 lectureDetail-custom-modal-button" id="lectureDetailUseAllPoint">전액 사용</button>
+                                    <button class="lectureDetail-custom-modal-button w-100" id="lectureDetailUseAllPoint">전액 사용</button>
                                 </div>
                             </div>
                             <div class="row mb-4">
@@ -258,10 +251,10 @@
                             </div>
                         </div>
                         <div class="modal-footer lectureDetail-modal-footer">
-                            <button type="button" class="btn btn-outline-primary lectureDetail-custom-modal-button" data-dismiss="modal">
+                            <button type="button" class="lectureDetail-custom-modal-button" data-dismiss="modal">
                                 <i class="fas fa-times"></i> 닫기
                             </button>
-                            <button type="button" class="btn btn-outline-primary lectureDetail-custom-modal-button" id="lectureDetailPayBt">
+                            <button type="button" class="lectureDetail-custom-modal-button" id="lectureDetailPayBt">
                                 <i class="fas fa-credit-card"></i> 카카오페이 결제
                             </button>
                         </div>

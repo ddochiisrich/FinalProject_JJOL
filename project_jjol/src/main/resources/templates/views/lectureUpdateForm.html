@@ -66,7 +66,7 @@
                 <hr>
                 <div id="lecture-update-chapter-container">
                     <div class="lecture-update-chapter" th:each="chapter, iterStat : ${chapters}">
-                	<input type="hidden" name="chapterIds" th:value="${chapter.chapterId}" />
+                        <input type="hidden" name="chapterIds" th:value="${chapter.chapterId}" />
                         <h3>챕터 [[${iterStat.index + 1}]]</h3>
                         <div class="form-group">
                             <label for="chapterTitle[[${iterStat.index + 1}]]">챕터 제목 :</label>
@@ -94,9 +94,9 @@
                     </div>
                 </div>
                 <div class="lecture-update-button-group">
-                    <button type="button" id="addChapter" class="btn btn-secondary mb-4">챕터 추가</button>
-                    <button type="submit" class="btn btn-primary mb-4">수정 확인</button>
-                    <a href="/lectures" class="btn btn-secondary mb-4">취소</a>
+                    <button type="button" id="addChapterLectureUpdate" class="lecture-update-btn-secondary mb-4">챕터 추가</button>
+                    <button type="submit" class="lecture-update-btn-primary mb-4">수정 확인</button>
+                    <a href="/lectures" class="lecture-update-btn-secondary mb-4">취소</a>
                 </div>
             </form>
         </div>
@@ -104,6 +104,5 @@
 
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
     <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
 </body>
 </html>
