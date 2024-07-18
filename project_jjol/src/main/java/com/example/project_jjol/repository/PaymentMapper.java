@@ -1,5 +1,7 @@
 package com.example.project_jjol.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -12,6 +14,9 @@ import com.example.project_jjol.model.User;
 
 @Mapper
 public interface PaymentMapper {
+	@Select("SELECT * FROM payment")
+	List<Payment> getPayment();
+	
 	@Insert("INSERT INTO payment (pay_date, pay_way, price, user_id, lecture_id, lecture_title, merchant_uid) "
 			+ "VALUES (NOW(), 'kakaopay', #{price}, #{userId}, #{lectureId}, #{lectureTitle}, #{merchantUid})")
 	@Options(useGeneratedKeys = true, keyProperty = "payCode")

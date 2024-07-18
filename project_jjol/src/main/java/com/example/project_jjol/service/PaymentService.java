@@ -1,5 +1,7 @@
 package com.example.project_jjol.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,10 @@ public class PaymentService {
 
 	@Autowired
 	private PaymentMapper paymentMapper;
+	
+	public List<Payment> paymentList() {
+		return paymentMapper.getPayment();
+	}
 	
 	public void savePayment(Payment payment) {
 		paymentMapper.savePayment(payment);
