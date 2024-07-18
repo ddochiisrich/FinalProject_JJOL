@@ -15,7 +15,7 @@
             <div id="notice-section">
                 <ul class="notice-list mt-5">
                     <li th:each="notice, iterStat : ${notices}">
-                        <span class="notice-id ms-5" th:text="${notices.size() - iterStat.index}">1</span>
+                        <span class="badge text-bg-danger ms-5">공지</span>
                         <a th:href="@{/notices/{id}(id=${notice.id})}" th:text="${notice.title}">Sample Title</a>
                         <span class="notice-date me-5" th:text="${#temporals.format(notice.createdDate, 'yyyy-MM-dd')}">2024-07-17</span>
                     </li>
