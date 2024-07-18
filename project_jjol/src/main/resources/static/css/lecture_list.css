@@ -1,3 +1,5 @@
+/* lecture_list.css */
+
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -209,11 +211,14 @@ body {
     border-radius: 10px 10px 0 0;
     width: 100%;
     height: 200px;
-    object-fit: cover;
+    object-fit: cover; /* 이 속성을 추가하여 비율 무시 */
 }
 
 .lecture_list-card .card-body {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .lecture_list-card .card-title {
@@ -236,6 +241,12 @@ body {
     -webkit-line-clamp: 2;
     overflow: hidden;
     height: 2.8em; /* 두 줄의 높이 */
+}
+
+.lecture_list-card .btn-info {
+    width: 100%; /* 버튼의 너비를 카드의 너비와 일치시키기 */
+    text-align: center; /* 버튼 텍스트 중앙 정렬 */
+    margin-top: auto; /* 버튼을 카드 하단으로 이동 */
 }
 
 .btn-info {

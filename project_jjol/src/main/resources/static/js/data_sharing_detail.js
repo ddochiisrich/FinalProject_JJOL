@@ -49,6 +49,13 @@ $(document).ready(function () {
         });
     });
 
+    // 파일 다운로드 링크 클릭 이벤트
+    $("a[data-file-name]").on("click", function(event) {
+        event.preventDefault(); // 기본 동작 방지
+        var fileName = $(this).data("fileName");
+        downloadFile(fileName);
+    });
+
     // 모달 창 닫기 버튼 이벤트
     $(".data-sharing-detail-modal-close").on("click", function() {
         $("#myModal").modal('hide');
@@ -138,4 +145,14 @@ function showModal(message, redirectUrl) {
             loadComments();
         });
     }
+}
+
+function downloadFile(fileName) {
+    const url = '/downloadFile/' + fileName;
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }

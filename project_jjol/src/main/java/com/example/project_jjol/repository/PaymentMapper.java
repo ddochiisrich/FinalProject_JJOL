@@ -14,7 +14,7 @@ import com.example.project_jjol.model.User;
 
 @Mapper
 public interface PaymentMapper {
-	@Select("SELECT * FROM payment")
+	@Select("SELECT * FROM payment ORDER BY pay_date DESC")
 	List<Payment> getPayment();
 	
 	@Insert("INSERT INTO payment (pay_date, pay_way, price, user_id, lecture_id, lecture_title, merchant_uid) "

@@ -28,24 +28,29 @@ $(function() {
 
     // 비밀번호 확인 모달 처리
     $('#mylectures-passwordModalButton').on("click", function() {
-        const action = $(this).attr('data-action');
-        const password = $('#mylectures-passwordInput').val();
+    const action = $(this).attr('data-action');
+    const password = $('#mylectures-passwordInput').val();
 
-        if (action === 'delete' && password) {
+    if (password) {
+        if (action === 'delete') {
             $(`#mylecturesCheckForm${lectureIdToDelete}`).attr("action", "deleteLecture");
             $(`#mylecturesCheckForm${lectureIdToDelete}`).attr("method", "post");
             $(`#mylecturesCheckForm${lectureIdToDelete}`).append(`<input type="hidden" name="password" value="${password}">`);
             $(`#mylecturesCheckForm${lectureIdToDelete}`).submit();
-        } else if (action === 'update' && password) {
+        } else if (action === 'update') {
             $(`#mylecturesCheckForm${lectureIdToUpdate}`).attr("action", "updateLecture");
             $(`#mylecturesCheckForm${lectureIdToUpdate}`).attr("method", "post");
             $(`#mylecturesCheckForm${lectureIdToUpdate}`).append(`<input type="hidden" name="password" value="${password}">`);
             $(`#mylecturesCheckForm${lectureIdToUpdate}`).submit();
         }
+    } else {
+        alert("비밀번호를 입력하세요."); // 비밀번호가 입력되지 않은 경우 경고 메시지 추가
+    }
 
-        $('#mylectures-passwordModal').modal('hide');
-        $('#mylectures-passwordInput').val('');
-    });
+    $('#mylectures-passwordModal').modal('hide');
+    $('#mylectures-passwordInput').val('');
+});
+
 
     // 모달 닫기 버튼 명시적으로 처리
     $('.mylectures-modal-close').on("click", function() {

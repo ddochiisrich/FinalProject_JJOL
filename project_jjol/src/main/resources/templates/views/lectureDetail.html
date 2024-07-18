@@ -23,7 +23,7 @@
                             <i class="fas fa-users"></i> <span th:text="${numberOfStudents} + '명의 수강생'"></span>
                         </div>
                         <div>
-                            <i class="fa-solid fa-wallet"></i> <span class="lectureDetailPrice" th:text="'가격: ' + ${lecture.lecturePrice} + '원'"></span> <span id="lectureDetailDiscount">(할인 [[ ${lecture.lectureDiscount} ]]% 적용)</span>
+                            <i class="fas fa-wallet"></i> <span class="lectureDetailPrice" th:text="'가격: ' + ${lecture.lecturePrice} + '원'"></span> <span id="lectureDetailDiscount">(할인 [[ ${lecture.lectureDiscount} ]]% 적용)</span>
                         </div>
                     </div>
                     <div class="mt-3">
@@ -77,7 +77,7 @@
                                             <label for="lectureDetailReviewContent">리뷰 내용</label>
                                             <textarea class="form-control" id="lectureDetailReviewContent" name="reviewContent" rows="3" required></textarea>
                                         </div>
-                                        <button type="submit" class="lectureDetail-btn-primary">리뷰 작성</button>
+                                        <button type="submit" class="lectureDetail-btn-primary mb-4">리뷰 작성</button>
                                     </form>
                                 </div>
                                 <div th:each="review : ${reviews}">

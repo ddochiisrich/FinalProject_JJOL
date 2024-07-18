@@ -230,6 +230,14 @@ CREATE TABLE communitycomment (
   CONSTRAINT reply_fkk FOREIGN KEY (cc_no) REFERENCES allcommunity (allc_no) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- 기존 외래 키 제약 조건 제거
+ALTER TABLE communitycomment DROP FOREIGN KEY reply_fkk;
+
+-- 새로운 외래 키 제약 조건 추가 (ON DELETE CASCADE)
+ALTER TABLE communitycomment
+ADD CONSTRAINT reply_fkk FOREIGN KEY (cc_no) REFERENCES allcommunity (allc_no) ON DELETE CASCADE;
+
+
 -- 개인채팅 테이블
 DROP TABLE IF EXISTS personal_chat;
 CREATE TABLE IF NOT EXISTS personal_chat(    

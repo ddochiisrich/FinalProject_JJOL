@@ -27,7 +27,7 @@ public interface DataSharingMapper {
     @Options(useGeneratedKeys = true, keyProperty="dataNo")
     void insertData(DataSharing datasharing);
 
-    @Select("SELECT * FROM datasharing")
+    @Select("SELECT * FROM datasharing ORDER BY data_no DESC")
     List<DataSharing> getDataSharing();
     
     @Delete("DELETE FROM datasharing WHERE data_no = #{no}")

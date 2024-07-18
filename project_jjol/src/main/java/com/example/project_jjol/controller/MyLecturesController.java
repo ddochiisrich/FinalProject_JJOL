@@ -36,25 +36,25 @@ public class MyLecturesController {
     @Autowired
     private S3Service s3Service;
 	
-	@GetMapping("/myLectures")
-	public String myLectureList(HttpSession session, Model model) throws IOException {
-		User loggedInUser = (User) session.getAttribute("loggedInUser");
-		if(loggedInUser == null) {
-			return "redirect:/login";
-		}
-		
-		if("student".equals(loggedInUser.getRole())) {
-			model.addAttribute("errorMessage", "강사 전용 페이지입니다.");
-			return "views/myLectures";
-		}
-		
-		List<Lecture> lectures = myLecturesService.findMyLecturesByUserId(loggedInUser.getUserId());
-		
-		model.addAttribute("lectures", lectures);
-		model.addAttribute("user", loggedInUser);
-		
-		return "views/myLectures";
-	}
+    @GetMapping("/myLectures")
+    public String myLectureList(HttpSession session, Model model) throws IOException {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+        if ("student".equals(loggedInUser.getRole())) {
+            model.addAttribute("errorMessage", "강사 전용 페이지입니다.");
+            return "views/myLectures";
+        }
+
+        List<Lecture> lectures = myLecturesService.findMyLecturesByUserId(loggedInUser.getUserId());
+
+        model.addAttribute("lectures", lectures);
+        model.addAttribute("user", loggedInUser);  // user 객체를 모델에 추가
+
+        return "views/myLectures";
+    }
 	
 	@PostMapping("/deleteLecture")
 	public String deleteLecture(HttpSession session, @RequestParam("lectureId") int lectureId,
@@ -78,26 +78,27 @@ public class MyLecturesController {
 	
 	@PostMapping("updateLecture")
 	public String updateLecture(HttpSession session, Model model,
-			@RequestParam("lectureId") int lectureId,
-			@RequestParam("password") String password) throws IOException {
-		
-		User loggedInUser = (User) session.getAttribute("loggedInUser");
-		
-		if (password.equals(loggedInUser.getPass())) {
-			Lecture lecture = myLecturesService.findLectureByLectureId(lectureId);
-			List<Chapter> chapters = myLecturesService.findChaptersByLectureId(lectureId);
-			
-			model.addAttribute("lecture", lecture);
-			model.addAttribute("loggedInUser", loggedInUser);
-			model.addAttribute("chapters", chapters);
-			
-		} else {
-			model.addAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
-			return "views/myLectures";
-		}
-		
-		return "views/lectureUpdateForm";
+	                            @RequestParam("lectureId") int lectureId,
+	                            @RequestParam("password") String password,
+	                            RedirectAttributes redirectAttributes) throws IOException {
+
+	    User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+	    if (password.equals(loggedInUser.getPass())) {
+	        Lecture lecture = myLecturesService.findLectureByLectureId(lectureId);
+	        List<Chapter> chapters = myLecturesService.findChaptersByLectureId(lectureId);
+
+	        model.addAttribute("lecture", lecture);
+	        model.addAttribute("loggedInUser", loggedInUser);
+	        model.addAttribute("chapters", chapters);
+
+	        return "views/lectureUpdateForm";
+	    } else {
+	        redirectAttributes.addFlashAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
+	        return "redirect:/myLectures";
+	    }
 	}
+
 	
 	@PostMapping("updateProcess")
 	public String updateLectureProcess(@ModelAttribute Lecture lecture,
