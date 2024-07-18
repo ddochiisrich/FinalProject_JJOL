@@ -13,7 +13,12 @@
                 <a id="navbar-brand-header" href="/"><img src="/images/mainlogo.png" alt="Logo" class="me-5"></a>
                 <ul id="navbar-nav-header">
                     <li class="nav-item-header"><a class="nav-link-header" href="/notices">공지사항</a></li>
-                    <li class="nav-item-header"><a class="nav-link-header" href="/chat">채팅</a></li>
+                    <th:block th:unless="${session.loggedInUser != null and session.loggedInUser.role == 'admin'}" >
+	                    <li class="nav-item-header"><a class="nav-link-header" href="/chat">채팅</a></li>
+                    </th:block>
+                    <th:block th:if="${session.loggedInUser != null and session.loggedInUser.role == 'admin'}" >
+	                    <li class="nav-item-header"><a class="nav-link-header" href="/paymentList">결제기록</a></li>
+                    </th:block>
                     <li class="nav-item-header"><a class="nav-link-header" href="/AllCommunityView">커뮤니티</a></li>
                     <li class="nav-item-header">
                         <a th:if="${session.loggedInUser != null}" href="/DataSharing" class="nav-link-header">자료실</a>
