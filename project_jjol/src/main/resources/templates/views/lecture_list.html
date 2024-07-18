@@ -90,10 +90,10 @@
         </a>
         <div class="lecture_list-container mt-5">
             <div class="lecture_list-content">
-                <div th:each="entry : ${categorizedLectures}">
-                    <h2 class="lecture-section-title" th:text="${ '인기 ' + #strings.capitalize(entry.key) + ' 강의'}"></h2>
+                <div th:if="${isSearch}">
+                    <h2 class="lecture-section-title" th:text="'&quot;' + ${keyword} + '&quot; 검색 강의'"></h2>
                     <div class="row">
-                        <div class="lecture_list-col-lg-custom mb-4" th:each="lecture : ${entry.value}">
+                        <div class="lecture_list-col-lg-custom mb-4" th:each="lecture : ${lectures}">
                             <div class="card lecture_list-card">
                                 <img class="card-img-top" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
                                 <div class="card-body">
@@ -110,19 +110,41 @@
                     </div>
                 </div>
 
-                <h2 class="lecture-section-title">최신 강의</h2>
-                <div class="row">
-                    <div class="lecture_list-col-lg-custom mb-4" th:each="lecture : ${latestLectures}">
-                        <div class="card lecture_list-card">
-                            <img class="card-img-top" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
-                            <div class="card-body">
-                                <h5 class="card-title" th:text="${lecture.lectureTitle}">강의 제목</h5>
-                                <p class="card-instructor">
-                                    <i class="fas fa-user"></i>
-                                    <span th:text="${lecture.instructorName}">강사</span>
-                                </p>
-                                <p class="card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
-                                <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-info">상세정보</a>
+                <div th:if="${isSearch == false or isSearch == null}">
+                    <div th:each="entry : ${categorizedLectures}">
+                        <h2 class="lecture-section-title " th:text="${ '인기 ' + #strings.capitalize(entry.key) + ' 강의'}"></h2>
+                        <div class="row">
+                            <div class="lecture_list-col-lg-custom mb-4" th:each="lecture : ${entry.value}">
+                                <div class="card lecture_list-card">
+                                    <img class="card-img-top" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
+                                    <div class="card-body">
+                                        <h5 class="card-title" th:text="${lecture.lectureTitle}">강의 제목</h5>
+                                        <p class="card-instructor">
+                                            <i class="fas fa-user"></i>
+                                            <span th:text="${lecture.instructorName}">강사</span>
+                                        </p>
+                                        <p class="card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
+                                        <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-info">상세정보</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="lecture-section-title">최신 강의</h2>
+                    <div class="row">
+                        <div class="lecture_list-col-lg-custom mb-4" th:each="lecture : ${latestLectures}">
+                            <div class="card lecture_list-card">
+                                <img class="card-img-top" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${lecture.lectureTitle}">강의 제목</h5>
+                                    <p class="card-instructor">
+                                        <i class="fas fa-user"></i>
+                                        <span th:text="${lecture.instructorName}">강사</span>
+                                    </p>
+                                    <p class="card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
+                                    <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-info">상세정보</a>
+                                </div>
                             </div>
                         </div>
                     </div>

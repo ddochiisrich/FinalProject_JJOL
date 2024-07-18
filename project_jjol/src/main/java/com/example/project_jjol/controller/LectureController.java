@@ -83,18 +83,21 @@ public class LectureController {
 
         model.addAttribute("categorizedLectures", categorizedLectures);
         model.addAttribute("latestLectures", lectureService.getAllLectures());
+        model.addAttribute("isSearch", false); // 기본 상태에서 isSearch를 false로 설정
 
         return "views/lecture_list";  
     }
 
-
-
     @GetMapping("/lectures/search")
-    public String searchLectures(@RequestParam("keyword") String keyword, Model model) {
+    public String searchLectures(@RequestParam("keyword") String keyword, Model model, HttpSession session) {
         List<Lecture> lectures = lectureService.searchLectures(keyword);
         model.addAttribute("lectures", lectures);
+        model.addAttribute("isSearch", true); // 검색 작업을 나타내는 플래그 추가
+        model.addAttribute("keyword", keyword); // 검색어를 모델에 추가
         return "views/lecture_list";
     }
+
+
     
     @PostMapping("/lectures/review")
     public String addReview(@RequestParam("lectureId") int lectureId,

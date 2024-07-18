@@ -6,7 +6,7 @@
 DROP DATABASE IF EXISTS project_jjol;
 CREATE DATABASE IF NOT EXISTS project_jjol;
 USE project_jjol;
-SHOW TABLES LIKE 'notification';
+
 -- 관리자 테이블
 DROP TABLE IF EXISTS admin;
 CREATE TABLE IF NOT EXISTS admin(
@@ -336,3 +336,16 @@ CREATE TABLE IF NOT EXISTS notice (
     user_id VARCHAR(100),                      -- 작성자 ID (user 테이블의 user_id를 참조)
     CONSTRAINT fk_notice_user FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- 각 레코드의 기본 키(allc_no)를 미리 확인합니다.
+UPDATE allcommunity SET allc_date = '2024-07-01 08:45:00' WHERE allc_no = 1;
+UPDATE allcommunity SET allc_date = '2024-07-03 11:15:00' WHERE allc_no = 2;
+UPDATE allcommunity SET allc_date = '2024-07-05 14:20:00' WHERE allc_no = 3;
+UPDATE allcommunity SET allc_date = '2024-07-07 09:10:00' WHERE allc_no = 4;
+UPDATE allcommunity SET allc_date = '2024-07-09 13:55:00' WHERE allc_no = 5;
+UPDATE allcommunity SET allc_date = '2024-07-10 15:35:00' WHERE allc_no = 6;
+UPDATE allcommunity SET allc_date = '2024-07-12 10:25:00' WHERE allc_no = 7;
+UPDATE allcommunity SET allc_date = '2024-07-13 17:45:00' WHERE allc_no = 8;
+UPDATE allcommunity SET allc_date = '2024-07-15 12:40:00' WHERE allc_no = 9;
+UPDATE allcommunity SET allc_date = '2024-07-17 08:50:00' WHERE allc_no = 10;
