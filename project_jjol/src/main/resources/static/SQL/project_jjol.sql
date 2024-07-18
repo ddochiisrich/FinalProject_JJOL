@@ -206,7 +206,7 @@ CREATE TABLE datasharingcomment (
   dsc_content TEXT NOT NULL,                              -- 댓글 내용
   dsc_writer VARCHAR(100) NOT NULL,                       -- 작성자
   dsc_time TIMESTAMP NOT NULL,                            -- 작성 시간
-  CONSTRAINT reply_fk FOREIGN KEY (ddno) REFERENCES datasharing (data_no)
+  CONSTRAINT reply_fk FOREIGN KEY (ddno) REFERENCES datasharing (data_no) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 커뮤니티 테이블
@@ -227,7 +227,7 @@ CREATE TABLE communitycomment (
   cmc_content TEXT NOT NULL,                              -- 댓글 내용
   cmc_writer VARCHAR(100) NOT NULL,                       -- 작성자
   cmc_time TIMESTAMP NOT NULL,                            -- 작성 시간
-  CONSTRAINT reply_fkk FOREIGN KEY (cc_no) REFERENCES allcommunity (allc_no)
+  CONSTRAINT reply_fkk FOREIGN KEY (cc_no) REFERENCES allcommunity (allc_no) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 개인채팅 테이블
