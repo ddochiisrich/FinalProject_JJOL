@@ -108,4 +108,10 @@ public class LectureService {
         return lectureMapper.selectTitlesByInstructorId(instructorId);
     }
     
+    @Transactional(readOnly = true)
+    public List<Lecture> getLecturesByKeyword(String keyword, int limit) {
+        return lectureMapper.searchLecturesWithLimit(keyword, limit);
+    }
+
+    
 }

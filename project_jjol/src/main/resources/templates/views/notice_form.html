@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main_layout}">
+<head>
+    <link rel="stylesheet" th:href="@{/css/notice_form.css}">
+</head>
+<body>
+    <th:block layout:fragment="content">
+        <div class="notice-form-container">
+            <h1 th:text="${notice.id == null} ? '공지사항 작성' : '공지사항 수정'">공지사항 작성</h1>
+            <form th:action="${notice.id == null} ? @{/notices/create} : @{/notices/edit/{id}(id=${notice.id})}" method="post">
+                <div class="notice-form-group">
+                    <label for="notice-form-title">제목</label>
+                    <input type="text" id="notice-form-title" name="title" th:value="${notice.title}" required>
+                </div>
+                <div class="notice-form-group">
+                    <label for="notice-form-content">내용</label>
+                    <textarea id="notice-form-content" name="content" rows="10" required th:text="${notice.content}"></textarea>
+                </div>
+                <div class="notice-form-group notice-button-group">
+                    <button type="submit" class="btn btn-primary">저장</button>
+                    <a href="/notices" class="btn btn-secondary">취소</a>
+                </div>
+            </form>
+        </div>
+    </th:block>
+</body>
+</html>

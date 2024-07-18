@@ -2,7 +2,7 @@ $(document).ready(function() {
     var chapters = document.getElementsByClassName('lecture-update-chapter');
     var numberOfChapters = chapters.length;
     let chapterIndex = numberOfChapters;
-    $('#addChapter').click(function() {
+    $('#addChapterLectureUpdate').click(function() {
         chapterIndex++;
         const chapterTemplate = `
             <div class="lecture-update-chapter">

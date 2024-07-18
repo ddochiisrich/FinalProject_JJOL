@@ -26,23 +26,24 @@ body.mypage-body {
 }
 
 /* 정보 수정 버튼 위치 조정 */
-.mypage-editProfile-btn {
+.mypage-btn-editProfile {
     font-size: 0.875rem;
     padding: 0.5rem 1rem;
-    border-color: #0C1844;
+    border: 1px solid #0C1844; /* 외곽선 */
     color: #0C1844;
+    background-color: white; /* 기본 배경색을 하얀색으로 설정 */
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    border-radius: 7px;
     position: absolute;
     top: 20px;
     right: 20px;
+    text-decoration: none; /* 밑줄 제거 */
 }
 
-.mypage-editProfile-btn:hover {
+.mypage-btn-editProfile:hover {
     background-color: #0C1844;
-    border-color: #0C1844;
     color: white;
 }
-
 
 /* 안녕하세요 멘트 스타일 */
 .mypage-container h3 {
@@ -95,26 +96,30 @@ body.mypage-body {
     text-align: center;
 }
 
-
 /* 카드 버튼 스타일 */
-.mypage-card-btn-group {
+.mypage-card-btn-group-horizontal {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* 한 줄로 배치 */
     gap: 0.5rem;
 }
 
-.mypage-card-btn {
+.mypage-btn-outline {
     font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
-    border-color: #0C1844;
+    padding: 0.5rem 1rem;
+    border: 1px solid #0C1844; /* 외곽선 */
     color: #0C1844;
+    background-color: white; /* 기본 배경색을 하얀색으로 설정 */
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    border-radius: 7px; /* 모서리를 둥글게 */
+    text-decoration: none; /* 밑줄 제거 */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.mypage-card-btn:hover {
+.mypage-btn-outline:hover {
     background-color: #0C1844;
-    border-color: #0C1844;
     color: white;
 }
 
@@ -184,23 +189,6 @@ body.mypage-body {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-/* 모달 버튼 스타일 */
-.mypage-btn {
-    width: 100%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 5px;
-    border-color: #0C1844;
-    color: #0C1844;
-    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-}
-
-.mypage-btn:hover {
-    background-color: #0C1844;
-    border-color: #0C1844;
-    color: white;
-}
-
 /* 버튼 그룹 스타일 */
 .mypage-button-group {
     display: flex;
@@ -209,7 +197,7 @@ body.mypage-body {
 }
 
 /* 강의 카드 컬럼 스타일 */
-.mypage-col-md-2 {
-    flex: 0 0 20%;
-    max-width: 20%;
+.mypage-col-md-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
 }

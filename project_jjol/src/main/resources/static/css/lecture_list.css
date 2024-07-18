@@ -72,13 +72,13 @@ body {
     bottom: 0;
     width: 100%;
     height: 2px;
-    background-color: #1e90ff;
+    background-color: #0C1844;
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
 
 .lecture_list-nav-link:hover {
-    color: #1e90ff;
+    color: #0C1844;
 }
 
 .lecture_list-nav-link:hover::after {
@@ -114,67 +114,78 @@ body {
     font-size: 18px; /* 버튼 아이콘 크기 증가 */
 }
 
-.lecture_list-hero-section {
+.carousel-hero-section {
     position: relative;
     overflow: hidden;
 }
 
-.lecture_list-carousel-item {
-    transition: opacity 0.2s ease-in-out; /* 전환 시간을 줄여 부드럽게 넘어가도록 수정 */
-    opacity: 0; /* 초기 상태로 투명하게 설정 */
+.carousel-text-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
 }
 
-.lecture_list-carousel-item.active {
+.carousel-item {
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item.active {
     opacity: 1; /* 활성 상태일 때 불투명하게 설정 */
 }
 
-
-.lecture_list-hero-section .carousel-item img {
+.carousel-item img {
     height: 400px;
     object-fit: cover;
     border-radius: 10px; /* 이미지에 약간의 border-radius 추가 */
     transition: transform 0.1s ease-in-out; /* 부드러운 전환 효과 추가 */
 }
 
-.lecture_list-carousel-inner {
-    display: flex;
-    align-items: center;
-}
-
-.lecture_list-hero-section .carousel-caption {
+.carousel-caption {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 100%;
     text-align: center;
-    width: 100%; /* 이 부분을 추가하여 중앙 정렬 유지 */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* 중앙 정렬 */
-    justify-content: center; /* 중앙 정렬 */
-    padding: 0 20px; /* 좌우 패딩 추가 */
+    color: #fff;
 }
 
-.lecture_list-hero-title {
+.carousel-hero-title {
     font-size: 3.5rem;
     margin-bottom: 20px;
     font-weight: 700;
-    animation: lecture_list-fadeInDown 1s ease-in-out;
+    animation: fadeInDown 1s ease-in-out;
 }
 
-.lecture_list-hero-subtitle {
+.carousel-hero-subtitle {
     font-size: 1.5rem;
     margin-bottom: 30px;
-    animation: lecture_list-fadeInUp 1s ease-in-out;
+    animation: fadeInUp 1s ease-in-out;
 }
 
-.lecture_list-section-title {
+.lecture-section-title {
     font-size: 2.5rem;
     margin-bottom: 30px;
+    margin-top: 100px;
     font-weight: 700;
-    color: #2C3E50;
+    color: #0C1844;
     text-align: center;
-    animation: lecture_list-fadeIn 1s ease-in-out;
+    animation: fadeIn 1s ease-in-out;
+    position: relative;
+}
+
+.lecture-section-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    width: 50px;
+    height: 2px;
+    background-color: #0C1844;
 }
 
 .lecture_list-col-lg-custom {
@@ -209,12 +220,22 @@ body {
     font-size: 1.2rem;
     color: #2C3E50;
     margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    height: 2.4em; /* 두 줄의 높이 */
 }
 
 .lecture_list-card .card-text {
     font-size: 1rem;
     color: #7F8C8D;
     margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    height: 2.8em; /* 두 줄의 높이 */
 }
 
 .btn-info {
@@ -257,7 +278,7 @@ body {
     transform: translateY(-5px);
 }
 
-@keyframes lecture_list-fadeInDown {
+@keyframes fadeInDown {
     from {
         opacity: 0;
         transform: translateY(-50px);
@@ -269,7 +290,7 @@ body {
     }
 }
 
-@keyframes lecture_list-fadeInUp {
+@keyframes fadeInUp {
     from {
         opacity: 0;
         transform: translateY(50px);
@@ -281,22 +302,12 @@ body {
     }
 }
 
-@keyframes lecture_list-fadeIn {
+@keyframes fadeIn {
     from {
         opacity: 0;
     }
 
     to {
         opacity: 1;
-    }
-}
-
-@keyframes lecture_list-rotate {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
     }
 }

@@ -6,6 +6,7 @@
     text-align: center;
     width: 100%;
     max-width: 800px;
+    margin: 0 auto;
 }
 
 .lecture-update-container h1 {
@@ -19,22 +20,36 @@
     text-align: left;
 }
 
-.lecture-update-container .btn-primary {
-    background-color: #3498DB;
-    border: none;
+.lecture-update-btn-primary,
+.lecture-update-btn-secondary {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #0C1844;
+    color: #0C1844;
+    background-color: white;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    border-radius: 7px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.lecture-update-container .btn-primary:hover {
-    background-color: #2980B9;
+.lecture-update-btn-primary:hover {
+    background-color: #0C1844;
+    border-color: #0C1844;
+    color: white;
 }
 
-.lecture-update-container .btn-secondary {
-    background-color: #E74C3C;
-    border: none;
+.lecture-update-btn-secondary {
+    border-color: #0C1844;
+    color: #0C1844;
 }
 
-.lecture-update-container .btn-secondary:hover {
-    background-color: #C0392B;
+.lecture-update-btn-secondary:hover {
+    background-color: #0C1844;
+    border-color: #0C1844;
+    color: white;
 }
 
 .lecture-update-button-group {

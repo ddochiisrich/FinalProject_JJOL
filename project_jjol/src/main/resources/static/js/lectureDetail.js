@@ -23,12 +23,10 @@ $(document).ready(function () {
         
         var $button = $(this);
         $button.text('복사완료');
-        $button.addClass('copied');
+        $button.addClass('lectureDetail-btn-share copied');
         setTimeout(function() {
             $button.text('공유하기');
-            $button.removeClass('copied');
+            $button.removeClass('lectureDetail-btn-share copied');
         }, 2000); // 2초 후에 원래 상태로 돌아옴
     });
 });
-
-

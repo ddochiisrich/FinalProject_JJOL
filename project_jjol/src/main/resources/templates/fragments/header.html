@@ -12,7 +12,7 @@
             <div id="navbar-left-header">
                 <a id="navbar-brand-header" href="/"><img src="/images/mainlogo.png" alt="Logo" class="me-5"></a>
                 <ul id="navbar-nav-header">
-                    <li class="nav-item-header"><a class="nav-link-header" href="/lectures">강의</a></li>
+                    <li class="nav-item-header"><a class="nav-link-header" href="/notices">공지사항</a></li>
                     <li class="nav-item-header"><a class="nav-link-header" href="/chat">채팅</a></li>
                     <li class="nav-item-header"><a class="nav-link-header" href="/AllCommunityView">커뮤니티</a></li>
                     <li class="nav-item-header">
@@ -54,6 +54,10 @@
                     <div th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}" class="user-info-header">
                         <span th:text="${session.loggedInUser.name} + '  강사님,' + '  안녕하세요!'" class="me-3"></span>
                         <a href="/myLectures" class="icon-link-header"><i class="fas fa-user-circle"></i></a>
+                        <a href="/logout" class="icon-link-header"><i class="fas fa-sign-out-alt"></i></a>
+                    </div>
+                    <div th:if="${session.loggedInUser != null and session.loggedInUser.role == 'admin'}" class="user-info-header">
+                        <span th:text="${session.loggedInUser.name} + '  님,' + '  안녕하세요!'" class="me-3"></span>
                         <a href="/logout" class="icon-link-header"><i class="fas fa-sign-out-alt"></i></a>
                     </div>
                 </div>

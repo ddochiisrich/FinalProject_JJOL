@@ -28,12 +28,15 @@ body.mylectures-body {
 .mylectures-editProfile-btn {
     font-size: 0.875rem;
     padding: 0.5rem 1rem;
-    border-color: #0C1844;
+    border: 1px solid #0C1844;
     color: #0C1844;
+    background-color: white;
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    border-radius: 7px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .mylectures-editProfile-btn:hover {
@@ -101,17 +104,55 @@ body.mylectures-body {
     gap: 0.5rem;
 }
 
-.mylectures-card-btn {
+.mylectures-btn-primary,
+.mylectures-btn-danger,
+.mylectures-btn-success,
+.mylectures-btn-secondary {
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
-    border-color: #0C1844;
+    border: 1px solid #0C1844;
     color: #0C1844;
+    background-color: white;
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    border-radius: 7px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.mylectures-card-btn:hover {
+.mylectures-btn-primary:hover {
     background-color: #0C1844;
-    border-color: #0C1844;
+    color: white;
+}
+
+.mylectures-btn-danger {
+    border-color: #E74C3C;
+    color: #E74C3C;
+}
+
+.mylectures-btn-danger:hover {
+    background-color: #E74C3C;
+    color: white;
+}
+
+.mylectures-btn-success {
+    border-color: #2ECC71;
+    color: #2ECC71;
+}
+
+.mylectures-btn-success:hover {
+    background-color: #2ECC71;
+    color: white;
+}
+
+.mylectures-btn-secondary {
+    border-color: #7F8C8D;
+    color: #7F8C8D;
+}
+
+.mylectures-btn-secondary:hover {
+    background-color: #7F8C8D;
     color: white;
 }
 
@@ -183,7 +224,6 @@ body.mylectures-body {
     justify-content: center;
     align-items: center;
 }
-
 
 .mylectures-form-group {
     margin-bottom: 1rem;

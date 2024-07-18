@@ -32,6 +32,10 @@ CREATE TABLE IF NOT EXISTS user(
 
 select * from user;
 
+UPDATE user SET role = 'admin' WHERE user_id = 'admin';
+UPDATE user SET pass = '1234' WHERE user_id = 'admin';
+
+
 -- 강의 테이블
 DROP TABLE IF EXISTS lecture;
 CREATE TABLE lecture (
@@ -320,4 +324,15 @@ CREATE TABLE notification (
     subject VARCHAR(255) NOT NULL,                         -- 주제
     user_name VARCHAR(20) NOT NULL,                        -- 사용자 이름
     exam_date DATE NOT NULL                                -- 시험 날짜
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 공지사항 테이블
+DROP TABLE IF EXISTS notice;
+CREATE TABLE IF NOT EXISTS notice (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,      -- 공지사항 ID
+    title VARCHAR(255) NOT NULL,               -- 공지사항 제목
+    content TEXT NOT NULL,                     -- 공지사항 내용
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 작성 일자
+    user_id VARCHAR(100),                      -- 작성자 ID (user 테이블의 user_id를 참조)
+    CONSTRAINT fk_notice_user FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

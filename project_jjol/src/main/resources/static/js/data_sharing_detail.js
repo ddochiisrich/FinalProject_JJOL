@@ -50,7 +50,7 @@ $(document).ready(function () {
     });
 
     // 모달 창 닫기 버튼 이벤트
-    $(".modal-close").on("click", function() {
+    $(".data-sharing-detail-modal-close").on("click", function() {
         $("#myModal").modal('hide');
     });
 });
@@ -114,7 +114,7 @@ function updateCommentList(data) {
             listItems += '<small>작성일: ' + kstDate + '</small>';
             listItems += '</div>';
             if (comment.dscWriter === $("#data-sharing-detail-commentWriter").val()) {
-                listItems += '<div><button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteComment(' + comment.dscNo + ')"><i class="fas fa-trash-alt"></i></button></div>';
+                listItems += '<div><button type="button" class="btn btn-outline-danger btn-sm data-sharing-detail-delete-comment-btn" onclick="deleteComment(' + comment.dscNo + ')"><i class="fas fa-trash-alt"></i></button></div>';
             }
             listItems += '</li>';
         });
@@ -125,7 +125,6 @@ function updateCommentList(data) {
     }
     $(".data-sharing-detail-comment-list").html(listItems); // 댓글 목록 업데이트
 }
-
 
 function showModal(message, redirectUrl) {
     $("#modal-message").text(message);

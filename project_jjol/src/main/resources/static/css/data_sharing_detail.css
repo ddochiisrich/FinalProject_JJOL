@@ -1,6 +1,11 @@
+/* DataSharing_Detail 관련 CSS */
+
+/* 카드 및 컨테이너 스타일 */
 .data-sharing-detail-footer {
     display: flex;
-    justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+    justify-content: center; /* 버튼을 가운데 정렬 */
+    gap: 10px; /* 버튼 간 간격 */
+    padding-top: 20px; /* 버튼과 내용 사이 간격 */
 }
 
 .data-sharing-comment-card, .data-sharing-comment-list-card {
@@ -50,19 +55,27 @@
 .data-sharing-detail-delete-btn,
 .data-sharing-detail-update-btn,
 .data-sharing-detail-back-btn,
-.data-sharing-detail-comment-btn {
-    width: 100px; /* 버튼의 너비를 조정 */
+.data-sharing-detail-comment-btn,
+.data-sharing-detail-modal-close-btn {
     border: 1px solid #0C1844;
     color: #0C1844;
-    background-color: transparent;
     transition: background-color 0.3s, color 0.3s;
+    border-radius: 7px; /* 모서리를 둥글게 */
+    text-decoration: none; /* 밑줄 제거 */
+    display: inline-block;
+    width: 100px; /* 버튼 너비 */
+    height: 40px; /* 버튼 높이 */
+    line-height: 30px; /* 텍스트를 수직 중앙 정렬 */
+    text-align: center; /* 텍스트를 수평 중앙 정렬 */
+    vertical-align: middle;
 }
 
 .data-sharing-detail-btn:hover,
 .data-sharing-detail-delete-btn:hover,
 .data-sharing-detail-update-btn:hover,
 .data-sharing-detail-back-btn:hover,
-.data-sharing-detail-comment-btn:hover {
+.data-sharing-detail-comment-btn:hover,
+.data-sharing-detail-modal-close-btn:hover {
     background-color: #0C1844;
     color: white;
 }
@@ -78,4 +91,60 @@
 
 .form-control-file {
     border-radius: 5px;
+}
+
+/* 모달 창 스타일 */
+.data-sharing-detail-modal-content {
+    background-color: #ffffff; /* 모달 배경 색상 */
+    border-radius: 10px; /* 모서리를 둥글게 */
+    padding: 0; /* 모달 내부 패딩 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    max-width: 500px; /* 모달 최대 너비 */
+    margin: auto; /* 모달 가운데 정렬 */
+}
+
+.data-sharing-detail-modal-header {
+    background-color: #0C1844; /* 헤더 배경 색상 */
+    border-top-left-radius: 10px; /* 모서리를 둥글게 */
+    border-top-right-radius: 10px; /* 모서리를 둥글게 */
+    padding: 15px; /* 패딩 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.data-sharing-detail-modal-title {
+    font-size: 1.5rem; /* 타이틀 폰트 크기 */
+    color: #fff; /* 타이틀 색상 */
+    margin: 0; /* 타이틀 마진 제거 */
+}
+
+.data-sharing-detail-modal-close {
+    font-size: 1.5rem; /* 닫기 버튼 크기 */
+    color: #fff; /* 닫기 버튼 색상 */
+    cursor: pointer;
+    background: none; /* 배경 제거 */
+    border: none; /* 테두리 제거 */
+}
+
+.data-sharing-detail-modal-close:hover {
+    color: #ddd; /* 닫기 버튼 호버 시 색상 */
+}
+
+.data-sharing-detail-modal-body {
+    font-size: 1rem; /* 바디 폰트 크기 */
+    color: #0C1844; /* 바디 텍스트 색상 */
+    padding: 20px; /* 바디 패딩 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.data-sharing-detail-modal-body p {
+    margin-bottom: 15px; /* 문단 간격 */
+}
+
+.data-sharing-detail-modal-footer {
+    display: flex;
+    justify-content: center; /* 푸터 내부의 요소를 가운데 정렬 */
+    padding: 15px 20px; /* 푸터 패딩 */
+    border-top: 1px solid #ddd; /* 상단 테두리 추가 */
 }

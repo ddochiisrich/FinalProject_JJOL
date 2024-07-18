@@ -10,7 +10,7 @@
                     <h1><i class="fas fa-user"></i> 마이페이지</h1>
                 </div>
                 <div class="mypage-col text-right">
-                    <button type="button" class="btn btn-outline-primary mypage-editProfile-btn btn-sm" data-toggle="modal" data-target="#mypage-editProfileModal">
+                    <button type="button" class="mypage-btn-editProfile" data-toggle="modal" data-target="#mypage-editProfileModal">
                         <i class="fas fa-edit"></i> 정보 수정
                     </button>
                 </div>
@@ -27,24 +27,24 @@
             <div th:if="${#lists.isEmpty(lectures)}" class="text-center mb-4">
                 <h5>수강한 강의가 없습니다.</h5>
             </div>
-            <div class="mypage-row" th:if="${!#lists.isEmpty(lectures)}">
-                <div class="mypage-col-md-2 mb-4" th:each="lecture, iterStat : ${lectures}">
+            <div class="mypage-row row" th:if="${!#lists.isEmpty(lectures)}">
+                <div class="mypage-col-md-3 col-md-3 mb-4" th:each="lecture, iterStat : ${lectures}">
                     <div class="card shadow-sm mypage-card">
                         <img class="mypage-card-img" th:src="${lecture.lectureThumbnailImage}" alt="Lecture Thumbnail">
                         <div class="mypage-card-body">
                             <h5 class="mypage-card-title" th:text="${lecture.lectureTitle}"><i class="fas fa-book"></i> 강의 제목</h5>
                             <p class="mypage-card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
-                            <div class="mypage-card-btn-group">
-                                <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-outline-primary mypage-card-btn">
-                                    <i class="fas fa-info-circle"></i> 강의 상세정보
+                            <div class="mypage-card-btn-group-horizontal">
+                                <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="mypage-btn-outline">
+                                    <i class="fas fa-info-circle"></i> 강의 정보
                                 </a>
                                 <div th:if="${allChaptersCompleted[iterStat.index] && !certificatesIssued[iterStat.index]}">
-                                    <a th:href="@{/mypage/issueCertificate/{lectureId}(lectureId=${lecture.lectureId})}" class="btn btn-outline-success mypage-card-btn">
+                                    <a th:href="@{/mypage/issueCertificate/{lectureId}(lectureId=${lecture.lectureId})}" class="mypage-btn-outline">
                                         <i class="fas fa-certificate"></i> 수료증 발급
                                     </a>
                                 </div>
                                 <div th:if="${certificatesIssued[iterStat.index]}">
-                                    <a th:href="@{/mypage/certificate/{lectureId}(lectureId=${lecture.lectureId})}" class="btn btn-outline-info mypage-card-btn">
+                                    <a th:href="@{/mypage/certificate/{lectureId}(lectureId=${lecture.lectureId})}" class="mypage-btn-outline">
                                         <i class="fas fa-award"></i> 수료증 보기
                                     </a>
                                 </div>
@@ -80,8 +80,8 @@
                                 <div class="mypage-invalid-feedback">전화번호는 000-0000-0000 형식이어야 합니다.</div>
                             </div>
                             <div class="text-center mypage-button-group">
-                                <button type="submit" class="btn btn-outline-primary mypage-btn"><i class="fas fa-check"></i> 수정하기</button>
-                                <button type="button" class="btn btn-outline-danger mypage-btn" data-dismiss="modal"><i class="fas fa-times"></i> 닫기</button>
+                                <button type="submit" class="mypage-btn-outline"><i class="fas fa-check"></i> 수정하기</button>
+                                <button type="button" class="mypage-btn-outline" data-dismiss="modal"><i class="fas fa-times"></i> 닫기</button>
                             </div>
                         </form>
                         <div th:if="${successMessage}" class="alert alert-success mt-3 mypage-alert" th:text="${successMessage}"></div>

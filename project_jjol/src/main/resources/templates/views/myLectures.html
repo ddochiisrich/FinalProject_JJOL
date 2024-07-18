@@ -8,7 +8,7 @@
             <div class="row mb-4 justify-content-center">
                 <div class="col text-center">
                     <h1><i class="fas fa-user"></i> 마이페이지</h1>
-                    <button type="button" class="btn btn-outline-primary mylectures-editProfile-btn btn-sm" data-toggle="modal" data-target="#mylectures-editProfileModal">
+                    <button type="button" class="mylectures-btn-primary mylectures-editProfile-btn btn-sm" data-toggle="modal" data-target="#mylectures-editProfileModal">
                         <i class="fas fa-edit"></i> 정보 수정
                     </button>
                 </div>
@@ -88,7 +88,46 @@
 			    </div>
 			</div>
 
+            <!-- Success Modal -->
+            <div th:if="${successMessage}" class="modal fade" id="successModal_mylectures" tabindex="-1" role="dialog" aria-labelledby="successModalLabel_mylectures" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content mylectures-modal-content">
+                        <div class="modal-header mylectures-modal-header">
+                            <h5 class="modal-title" id="successModalLabel_mylectures">Success</h5>
+                            <button type="button" class="mylectures-modal-close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p th:text="${successMessage}"></p>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <button type="button" class="mylectures-btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Password Modal -->
+            <div class="modal fade mylectures-modal" id="mylectures-passwordModal" tabindex="-1" role="dialog" aria-labelledby="mylectures-passwordModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content mylectures-modal-content">
+                        <div class="modal-header mylectures-modal-header">
+                            <h5 class="modal-title" id="mylectures-passwordModalLabel">비밀번호 확인</h5>
+                            <button type="button" class="mylectures-modal-close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body mylectures-modal-body">
+                            <input type="password" id="mylectures-passwordInput" class="form-control" placeholder="비밀번호를 입력하세요">
+                        </div>
+                        <div class="modal-footer mylectures-modal-footer">
+                            <button type="button" class="mylectures-btn-primary" id="mylectures-passwordModalButton">확인</button>
+                            <button type="button" class="mylectures-btn-secondary" data-dismiss="modal">닫기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div th:if="${#lists.isEmpty(lectures)}" class="text-center mb-4">
                 <h5>업로드한 강의가 없습니다.</h5>
@@ -101,13 +140,13 @@
                             <h5 class="mylectures-card-title" th:text="${lecture.lectureTitle}"><i class="fas fa-book"></i> 강의 제목</h5>
                             <p class="mylectures-card-text" th:text="${lecture.lectureShortDescription}">강의 설명</p>
                             <div class="mylectures-card-btn-group">
-                                <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="btn btn-outline-primary mylectures-card-btn">
+                                <a th:href="@{/lectures/detail/{id}(id=${lecture.lectureId})}" class="mylectures-btn-primary mylectures-card-btn">
                                     <i class="fas fa-info-circle"></i> 강의 상세정보
                                 </a>
-                                <a class="btn btn-outline-danger mylectures-card-btn" th:attr="id='mylecturesDeleteLecture' + ${lecture.lectureId}">
+                                <a class="mylectures-btn-danger mylectures-card-btn" th:attr="id='mylecturesDeleteLecture' + ${lecture.lectureId}">
                                     <i class="fas fa-trash"></i> 삭제
                                 </a>
-                                <a class="btn btn-outline-success mylectures-card-btn" th:attr="id='mylecturesUpdateLecture' + ${lecture.lectureId}">
+                                <a class="mylectures-btn-success mylectures-card-btn" th:attr="id='mylecturesUpdateLecture' + ${lecture.lectureId}">
                                     <i class="fas fa-edit"></i> 수정
                                 </a>
                             </div>
@@ -126,7 +165,7 @@
                 <div class="modal-content mylectures-modal-content">
                     <div class="modal-header mylectures-modal-header">
                         <h5 class="modal-title mylectures-modal-title text-center w-100" id="mylectures-editProfileModalLabel"><i class="fas fa-user-edit"></i> 회원정보 수정</h5>
-                        <button type="button" class="close mylectures-modal-close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="mylectures-modal-close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -148,8 +187,8 @@
                                 <div class="mylectures-invalid-feedback">전화번호는 000-0000-0000 형식이어야 합니다.</div>
                             </div>
                             <div class="text-center mylectures-button-group">
-                                <button type="submit" class="btn btn-outline-primary mylectures-btn"><i class="fas fa-check"></i> 수정하기</button>
-                                <button type="button" class="btn btn-outline-secondary mylectures-btn" data-dismiss="modal"><i class="fas fa-times"></i> 닫기</button>
+                                <button type="submit" class="mylectures-btn-primary"><i class="fas fa-check"></i> 수정하기</button>
+                                <button type="button" class="mylectures-btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> 닫기</button>
                             </div>
                         </form>
                     </div>
@@ -163,7 +202,7 @@
                 <div class="modal-content mylectures-modal-content">
                     <div class="modal-header mylectures-modal-header">
                         <h5 class="modal-title" id="mylectures-passwordModalLabel">비밀번호 확인</h5>
-                        <button type="button" class="close mylectures-modal-close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="mylectures-modal-close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -171,8 +210,8 @@
                         <input type="password" id="mylectures-passwordInput" class="form-control" placeholder="비밀번호를 입력하세요">
                     </div>
                     <div class="modal-footer mylectures-modal-footer">
-                        <button type="button" class="btn btn-outline-primary mylectures-btn" id="mylectures-passwordModalButton">확인</button>
-                        <button type="button" class="btn btn-outline-secondary mylectures-btn" data-dismiss="modal">닫기</button>
+                        <button type="button" class="mylectures-btn-primary" id="mylectures-passwordModalButton">확인</button>
+                        <button type="button" class="mylectures-btn-secondary" data-dismiss="modal">닫기</button>
                     </div>
                 </div>
             </div>
