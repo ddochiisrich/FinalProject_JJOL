@@ -70,6 +70,15 @@
     background-color: #0C1844;
     color: white;
 }
+.all-community-view-table a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: #000; /* 기본 텍스트 색상으로 변경 */
+}
+
+.all-community-view-table a:hover {
+    color: #0C1844; /* 링크에 마우스를 올렸을 때 색상 변경 */
+}
+
 
 .write-button {
     height: 38px; /* Adjusted to match input and select height */
