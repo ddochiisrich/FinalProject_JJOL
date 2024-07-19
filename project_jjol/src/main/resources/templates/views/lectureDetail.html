@@ -119,7 +119,7 @@
                                         <p><strong th:text="${question.userId}"></strong>: <span th:text="${question.content}"></span></p>
                                         <div th:each="answer : ${question.answers}">
                                             <div class="lectureDetail-answer" style="margin-left: 20px;">
-                                                <p><strong th:text="${answer.instructorId}"></strong>: <span th:text="${answer.content}"></span></p>
+                                                <p><strong th:text="'ㄴ ' + ${answer.instructorId}"></strong>: <span th:text="${answer.content}"></span></p>
                                             </div>
                                         </div>
                                     </div>
