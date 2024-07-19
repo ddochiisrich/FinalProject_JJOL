@@ -287,8 +287,7 @@ video {
 			<a class="navbar-brand ms-5" href="/">JJol</a>
 			<div class="collapse navbar-collapse">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link ms-5" href="/lectures">강의
-							목록</a></li>
+					<li class="nav-item"><a class="nav-link ms-5" href="javascript:history.back()">강의 정보</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -333,13 +332,13 @@ video {
 
 				<div class="lecture-sections" th:each="chapter : ${chapters}">
 					<div class="section-title"
-						th:text="'섹션 ' + ${chapter.chapterOrder} + ': ' + ${chapter.chapterTitle}">섹션
+						th:text="'챕터 ' + ${chapter.chapterOrder} + ': ' + ${chapter.chapterTitle}">섹션
 						제목</div>
 					<div class="lecture" th:data-chapter-id="${chapter.chapterId}"
 						th:data-url="${chapter.chapterUrl}"
 						th:data-chapter-order="${chapter.chapterOrder}">
 						<span class="lecture-title" th:text="${chapter.chapterTitle}">강의
-							제목</span> <span class="lecture-duration">5분</span>
+							제목</span>
 					</div>
 				</div>
 			</div>
