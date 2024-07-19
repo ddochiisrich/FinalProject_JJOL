@@ -85,8 +85,8 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </section>
-        <a th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}" href="/lectures/upload" class="btn btn-primary fixed-upload-btn">
-            강의<br><i class="fas fa-plus"></i>
+        <a th:if="${session.loggedInUser != null and session.loggedInUser.role == 'instructor'}" href="/lectures/upload" class="fixed-upload-btn">
+            강의<i class="fas fa-plus"></i>
         </a>
         <div class="lecture_list-container mt-5">
             <div class="lecture_list-content">
