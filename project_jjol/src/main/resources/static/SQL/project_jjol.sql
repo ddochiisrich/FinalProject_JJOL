@@ -32,9 +32,7 @@ CREATE TABLE IF NOT EXISTS user(
 
 select * from user;
 
-UPDATE user SET role = 'admin' WHERE user_id = 'admin';
-UPDATE user SET pass = '1234' WHERE user_id = 'admin';
-
+UPDATE user SET phone = '010-1111-1111' WHERE user_id = 'ddochi';
 
 -- 강의 테이블
 DROP TABLE IF EXISTS lecture;
@@ -52,6 +50,10 @@ CREATE TABLE lecture (
     instructor_id VARCHAR(100) NOT NULL,                 -- 강사 ID
     instructor_name VARCHAR(255) NULL                    -- 강사 이름
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+select * from lecture;
+
+update lecture set lecture_title = '스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술(spring boot)' where lecture_id = '1';
 
 -- 챕터 테이블
 DROP TABLE IF EXISTS chapter;
@@ -346,14 +348,15 @@ CREATE TABLE IF NOT EXISTS notice (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- 각 레코드의 기본 키(allc_no)를 미리 확인합니다.
-UPDATE allcommunity SET allc_date = '2024-07-01 08:45:00' WHERE allc_no = 1;
-UPDATE allcommunity SET allc_date = '2024-07-03 11:15:00' WHERE allc_no = 2;
-UPDATE allcommunity SET allc_date = '2024-07-05 14:20:00' WHERE allc_no = 3;
-UPDATE allcommunity SET allc_date = '2024-07-07 09:10:00' WHERE allc_no = 4;
-UPDATE allcommunity SET allc_date = '2024-07-09 13:55:00' WHERE allc_no = 5;
-UPDATE allcommunity SET allc_date = '2024-07-10 15:35:00' WHERE allc_no = 6;
-UPDATE allcommunity SET allc_date = '2024-07-12 10:25:00' WHERE allc_no = 7;
-UPDATE allcommunity SET allc_date = '2024-07-13 17:45:00' WHERE allc_no = 8;
-UPDATE allcommunity SET allc_date = '2024-07-15 12:40:00' WHERE allc_no = 9;
-UPDATE allcommunity SET allc_date = '2024-07-17 08:50:00' WHERE allc_no = 10;
+-- 공지사항 샘플 데이터 삽입
+INSERT INTO notice (title, content, user_id) VALUES
+('강의 일정 안내', '다음 주부터 시작되는 "Spring Boot의 비밀" 강의는 매주 월, 수, 금 오후 7시부터 9시까지 진행됩니다. 수강생 여러분은 강의 시작 전까지 준비물을 확인해 주세요.', 'admin'),
+('강의 자료 업로드 안내', '첫 번째 강의 자료가 강의 포털에 업로드되었습니다. 로그인 후 "자료실"에서 다운로드할 수 있습니다. 모든 수강생은 강의 전 미리 자료를 읽어보시기 바랍니다.', 'admin'),
+('라이브 세션 참여 방법', '라이브 강의는 ZOOM을 통해 진행됩니다. 참여 링크는 강의 시작 10분 전에 이메일로 발송되며, 채팅창을 통해 실시간 질문이 가능합니다.', 'admin'),
+('과제 제출 마감일 공지', '첫 번째 과제의 제출 마감일은 9월 25일입니다. 플랫폼의 "과제" 섹션을 통해 제출해 주세요.', 'admin'),
+('수강생 Q&A 세션 안내', '수강생을 위한 Q&A 세션이 매주 금요일 오후 8시에 진행됩니다. 자유롭게 질문을 남겨주세요.', 'admin'),
+('플랫폼 점검 공지', '9월 20일 자정부터 새벽 3시까지 서버 점검이 예정되어 있습니다. 이 시간 동안 플랫폼 이용이 제한되니 양해 부탁드립니다.', 'admin'),
+('수료증 발급 기준 안내', '강의를 80% 이상 수강하고 모든 과제를 제출한 수강생에게 수료증이 발급됩니다.', 'admin'),
+('강의 평가 참여 요청', '수강생 여러분의 피드백이 필요합니다. 강의 종료 후 플랫폼에서 강의 평가에 참여해 주세요.', 'admin'),
+('강의 녹화본 제공 안내', '강의 녹화본은 강의 종료 후 24시간 이내에 업로드됩니다. "녹화본" 섹션에서 확인해 주세요.', 'admin'),
+('보안 정책 변경 안내', '플랫폼의 보안 정책이 10월 1일부터 강화됩니다. 강의 자료 다운로드 시 2단계 인증이 필요하니 미리 설정해 주시기 바랍니다.', 'admin');

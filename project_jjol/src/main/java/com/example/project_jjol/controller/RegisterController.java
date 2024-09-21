@@ -44,6 +44,7 @@ public class RegisterController {
             @RequestParam("role") String role,
             @RequestParam(value = "provider", required = false, defaultValue = "normal") String provider,
             Model model) {
+    	System.out.println("register 컨트롤러 호출됨"); // 컨트롤러 호출 확인용 로그
 
         // 아이디 중복 검사
         if (userService.findById(userId) != null) {
@@ -64,7 +65,7 @@ public class RegisterController {
         }
 
         User user = new User(userId, password, name, email, phone, role, 0, null, provider);
-        userService.saveUser(user);
+        userService.registerUser(user);
         return "redirect:/lectures";
     }
 

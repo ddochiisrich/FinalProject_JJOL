@@ -2,6 +2,7 @@ package com.example.project_jjol.controller;
 
 import com.example.project_jjol.model.User;
 import com.example.project_jjol.service.UserService;
+import com.example.project_jjol.service.PasswordService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordService passwordService;
 
     @Autowired
     private HttpSession session;
@@ -43,7 +47,8 @@ public class LoginController {
             return response;
         }
 
-        if (!user.getPass().equals(password)) {
+        // 수정된 부분: 암호화된 비밀번호와 사용자가 입력한 비밀번호 비교
+        if (!passwordService.matches(password, user.getPass())) { 
             response.put("error", "비밀번호가 일치하지 않습니다.");
             response.put("field", "password");
             return response;

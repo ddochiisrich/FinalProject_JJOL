@@ -10,20 +10,11 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 
 import com.example.project_jjol.service.CustomOAuth2UserService;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Configuration
-@Slf4j
 public class SecurityConfig {
 
-    private final CustomOAuth2UserService customOAuth2UserService;
-
-    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService) {
-        this.customOAuth2UserService = customOAuth2UserService;
-    }
-    
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authorizeRequests ->
@@ -39,7 +30,6 @@ public class SecurityConfig {
                     .defaultSuccessUrl("/lectures", true)
                     .failureHandler(customAuthenticationFailureHandler());
             })
-        
 	        .logout(logout -> {
 	            logout
 	                .logoutUrl("/logout")
@@ -52,9 +42,12 @@ public class SecurityConfig {
     }
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     public SimpleUrlAuthenticationFailureHandler customAuthenticationFailureHandler() {
         return new SimpleUrlAuthenticationFailureHandler("/register?error=true");
     }
 }
-
-

@@ -127,7 +127,7 @@
             color: #2C3E50;
             animation: fadeIn 1.5s ease-in-out;
         }
-        
+
         .close-icon {
             position: absolute;
             top: 20px;
@@ -183,7 +183,7 @@
                 opacity: 1;
             }
         }
-        
+
         .fadeIn {
             animation: fadeIn 1s ease-in-out;
         }
@@ -242,8 +242,15 @@
                 <div class="form-group">
                     <label for="studentPhone">핸드폰</label>
                     <input type="text" class="form-control" id="studentPhone" name="phone" placeholder="전화번호">
+                    <button type="button" class="btn btn-secondary mt-2" id="sendVerificationCodeStudent">인증코드발송</button>
                     <small id="studentPhoneFeedback" class="form-text"></small>
                 </div>
+                <div class="form-group" id="verificationCodeFieldStudent" style="display: none;">
+                    <label for="studentVerificationCode">인증 코드</label>
+                    <input type="text" class="form-control" id="studentVerificationCode" name="verificationCode" placeholder="인증 코드">
+                    <small id="studentVerificationFeedBack" class="form-text"></small>
+                </div>
+
                 <button type="submit" class="btn btn-primary btn-block mt-3">학생 회원가입</button>
             </form>
             <div class="divider">또는</div>

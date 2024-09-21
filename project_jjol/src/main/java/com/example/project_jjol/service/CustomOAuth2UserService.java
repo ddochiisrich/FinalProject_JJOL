@@ -32,28 +32,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
-        String email = null;
-        String name = null;
+        String email = extractEmail(oAuth2User, userRequest);
+        String name = extractName(oAuth2User, userRequest);
         String provider = userRequest.getClientRegistration().getRegistrationId();
-
-        if ("naver".equals(provider)) {
-            Map<String, Object> response = (Map<String, Object>) oAuth2User.getAttributes().get("response");
-            email = (String) response.get("email");
-            name = (String) response.get("name");
-
-        } else if ("kakao".equals(provider)) {
-            Map<String, Object> kakaoAccount = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
-            if (kakaoAccount != null) {
-                email = (String) kakaoAccount.get("email");
-                Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
-                if (profile != null) {
-                    name = (String) profile.get("nickname");
-                }
-            }
-        } else {
-            email = oAuth2User.getAttribute("email");
-            name = oAuth2User.getAttribute("name");
-        }
 
         if (email == null) {
             throw new OAuth2AuthenticationException("이메일을 가져올 수 없습니다.");
@@ -61,10 +42,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         User user = userService.findByEmailAndProvider(email, provider);
         if (user == null) {
-            // 세션에 사용자 정보를 저장
-            session.setAttribute("socialEmail", email);
-            session.setAttribute("socialName", name);
-            session.setAttribute("socialProvider", provider);
+            storeSocialUserInfoInSession(email, name, provider);
             throw new OAuth2AuthenticationException("회원가입을 진행해주세요.");
         }
 
@@ -77,5 +55,41 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 attributes,
                 "email");
     }
-}
 
+    private String extractEmail(OAuth2User oAuth2User, OAuth2UserRequest userRequest) {
+        String provider = userRequest.getClientRegistration().getRegistrationId();
+        if ("naver".equals(provider)) {
+            Map<String, Object> response = (Map<String, Object>) oAuth2User.getAttributes().get("response");
+            return (String) response.get("email");
+        } else if ("kakao".equals(provider)) {
+            Map<String, Object> kakaoAccount = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
+            if (kakaoAccount != null) {
+                return (String) kakaoAccount.get("email");
+            }
+        }
+        return oAuth2User.getAttribute("email");
+    }
+
+    private String extractName(OAuth2User oAuth2User, OAuth2UserRequest userRequest) {
+        String provider = userRequest.getClientRegistration().getRegistrationId();
+        if ("naver".equals(provider)) {
+            Map<String, Object> response = (Map<String, Object>) oAuth2User.getAttributes().get("response");
+            return (String) response.get("name");
+        } else if ("kakao".equals(provider)) {
+            Map<String, Object> kakaoAccount = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
+            if (kakaoAccount != null) {
+                Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+                if (profile != null) {
+                    return (String) profile.get("nickname");
+                }
+            }
+        }
+        return oAuth2User.getAttribute("name");
+    }
+
+    private void storeSocialUserInfoInSession(String email, String name, String provider) {
+        session.setAttribute("socialEmail", email);
+        session.setAttribute("socialName", name);
+        session.setAttribute("socialProvider", provider);
+    }
+}
